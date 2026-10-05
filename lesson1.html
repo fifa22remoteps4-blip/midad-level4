@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مِداد - المستوى الرابع | الدرس 1 (عِشْقُ الْقِرَاءَةِ)</title>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone@7.23.10/babel.min.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Framer Motion -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --font-main: 'Baloo Bhaijaan 2', cursive;
+            --font-content: 'Noto Naskh Arabic', serif;
+        }
+
+        body { 
+            font-family: var(--font-main);
+            background: #f8fafc;
+            margin: 0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .font-content { 
+            font-family: var(--font-content); 
+            line-height: 2.8; 
+            word-spacing: 0.4em; 
+            letter-spacing: 0.03em;
+        }
+        
+        .mesh-bg {
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(86, 36, 208, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(15, 129, 148, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .card-royal {
+            background: white;
+            border-radius: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 25px 50px -12px rgba(86, 36, 208, 0.12);
+        }
+
+        .btn-3d {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-bottom-width: 8px;
+            border-bottom-style: solid;
+        }
+        .btn-3d:active { transform: translateY(6px); border-bottom-width: 2px; margin-top: 6px; }
+
+        .btn-purple { background-color: #5624d0; border-bottom-color: #3b1796; color: white; }
+        .btn-pink { background-color: #d024b0; border-bottom-color: #96177b; color: white; }
+        .btn-teal { background-color: #0f8194; border-bottom-color: #0a5c6a; color: white; }
+        .btn-emerald { background-color: #10b981; border-bottom-color: #047857; color: white; }
+        .btn-amber { background-color: #f59e0b; border-bottom-color: #b45309; color: white; }
+        .btn-sky { background-color: #0ea5e9; border-bottom-color: #0369a1; color: white; }
+        .btn-rose { background-color: #f43f5e; border-bottom-color: #be123c; color: white; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-8px) rotate(-1deg); }
+            50% { transform: translateX(8px) rotate(1deg); }
+            75% { transform: translateX(-8px) rotate(-1deg); }
+        }
+        .animate-shake { animation: shake 0.4s ease-in-out; }
+        
+        @keyframes shield-flash {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); border-color: inherit; }
+            50% { box-shadow: 0 0 30px 15px rgba(56, 189, 248, 0.6); border-color: #38bdf8 !important; }
+        }
+        .animate-shield { animation: shield-flash 0.6s ease-out; }
+
+        .slide-up-fade { animation: slideUp 0.5s ease-out forwards; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Skin Styles */
+        .skin-scroll { background-color: #fffbeb; border-color: #fde68a; color: #78350f; }
+        .skin-scroll .content-box { background: transparent; border: none; }
+        .skin-tablet { background-color: #0f172a; border-color: #334155; color: #f8fafc; }
+        .skin-tablet .content-box { background: #1e293b; border: 2px solid #475569; color: #cbd5e1; }
+        .theme-var { background-color: #f0f9ff; border-color: #bae6fd; }
+        .theme-var .q-box { background: #1e293b; color: #38bdf8; border: 4px solid #334155; border-radius: 1rem; position: relative; }
+        .theme-var .q-box::before { content: 'REC ●'; position: absolute; top: 10px; left: 15px; color: #ef4444; font-family: monospace; font-weight: bold; animation: pulse 2s infinite; }
+        .theme-var .ans-btn { background: white; border-color: #94a3b8; color: #1e293b; border-radius: 0.5rem; }
+        .theme-det { background-color: #fffbeb; border-color: #fde68a; color: #78350f; }
+        .theme-det .q-box { background: #fef3c7; color: #78350f; border: 2px dashed #b45309; }
+        .theme-det .ans-btn { background: #fdf6e3; border-color: #d6d3d1; color: #44403c; }
+        .theme-scale { background-color: #f0fdf4; border-color: #bbf7d0; }
+        .theme-scale .q-box { background: white; color: #064e3b; border: 4px solid #10b981; border-radius: 3rem; }
+        .theme-scale .ans-btn { background: white; border-color: #86efac; color: #064e3b; border-radius: 3rem; }
+        .skin-hacker { background-color: #020617; border-color: #10b981; color: #4ade80; font-family: monospace; }
+        .skin-detective { background-color: #fef3c7; border-color: #d97706; color: #78350f; }
+        .skin-doctor { background-color: #f0f9ff; border-color: #0284c7; color: #0c4a6e; }
+        .skin-kitchen { background-color: #fff7ed; border-color: #f97316; }
+        .skin-builder { background-color: #f8fafc; border-color: #64748b; }
+        .skin-factory { background-color: #e2e8f0; border-color: #94a3b8; color: #1e293b; }
+        .skin-studio { background-color: #faf5ff; border-color: #d8b4fe; }
+        .skin-diver { background-color: #ecfeff; border-color: #7dd3fc; }
+
+        .memory-card { perspective: 1000px; cursor: pointer; }
+        .memory-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .memory-card.flipped .memory-card-inner { transform: rotateY(180deg); }
+        .memory-card-front, .memory-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 1.5rem; display: flex; align-items: center; justify-content: center; }
+        .memory-card-front { background: linear-gradient(135deg, #3b82f6, #8b5cf6); transform: rotateY(0deg); border: 4px solid #fff; }
+        .memory-card-back { background: white; transform: rotateY(180deg); border: 4px solid #8b5cf6; }
+    </style>
+</head>
+<body class="mesh-bg">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const { motion, AnimatePresence } = window.Motion;
+
+        const shuffleArray = (array) => {
+            const newArr = [...array];
+            for (let i = newArr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+            }
+            return newArr;
+        };
+
+        const Icons = {
+            BookOpen: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
+            Gamepad2: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="2"/></svg>,
+            Target: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+            Ear: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 8.5a6.5 6.5 0 1 1 13 0c0 6-6 6-6 10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1c0-4 6-4 6-10a4.5 4.5 0 1 0-9 0c0 3-1 4-2 4h-1a2 2 0 0 1-2-2v-2c0-1.1.9-2 2-2Z"/></svg>,
+            Zap: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+            Play: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>,
+            Pause: <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>,
+            Home: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+            Coins: <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7 .71-2.82 2.82"/></svg>,
+            Trophy: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>,
+            CheckCircle2: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>,
+            Shield: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+            Star: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+            EyeOff: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>,
+            Puzzle: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.611c-.47.47-1.088.706-1.705.706s-1.233-.235-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c-.464.18-1.088-.135-1.162-.627l-.022-.146A1.97 1.97 0 0 1 2 15V9a1.97 1.97 0 0 1 1.834-1.982l.146-.022c.492-.074.808.551.627 1.162a2.5 2.5 0 1 0 3.237 3.237c.464-.18.894-.527 1.386-.6A1.026 1.026 0 0 0 10.106 10l1.568-1.568c.47-.47 1.087-.706 1.704-.706s1.233.235 1.704.706l1.611 1.611c.215.215.54.34.837.276.47-.07.802-.48.968-.925a2.501 2.501 0 1 1 3.214-3.214c-.446-.166-.855-.497-.925-.968A.979.979 0 0 0 19.44 7.85Z"/></svg>,
+            Brain: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>,
+            Check: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+            Wrench: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>,
+            Tv: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>,
+            Search: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>,
+            Scale: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>,
+            Bug: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m8 2 1.88 1.88"/><path d="M14.12 3.88 16 2"/><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/><path d="M17.47 9c1.93-.2 3.53-1.9 3.53-3.9"/><path d="m6.53 15-3.6-3.6"/><path d="m17.47 15 3.6-3.6"/><path d="m9.5 20-2.36 2.36"/><path d="m14.5 20 2.36 2.36"/></svg>,
+            Stethoscope: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>,
+            ChefHat: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><line x1="6" x2="18" y1="17" y2="17"/></svg>,
+            HardHat: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z"/><path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path d="M4 15v-3a6 6 0 0 1 6-6h0"/><path d="M14 6h0a6 6 0 0 1 6 6v3"/></svg>,
+            Lightbulb: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+        };
+
+        const AppIcon = ({ name, size = 24, className = "" }) => (
+            <span style={{ width: size, height: size, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }} className={className}>
+                {Icons[name]}
+            </span>
+        );
+
+        // ==========================================
+        // 📖 صَفَحَاتُ الْقِصَّةِ الْمُصَوَّرَةِ (مِنْ مَلَفِّ The Little Reader)
+        // ==========================================
+        const STORY_PAGES = [
+            { title: "الشَّغَفُ يَبْدَأُ", text: "وَلَقَدْ كُنْتُ فِي طُفُولَتِي، أَطُوفُ عَلَى الْمَكْتَبَاتِ،", img: "img/19fbc1251d.jpeg" },
+            { title: "خَلْفَ الزُّجَاجِ", text: "فَأَقِفُ أَمَامَ وَاجِهَاتِهَا الزُّجَاجِيَّةِ، أُطِيلُ النَّظَرَ إِلَى الْكُتُبِ الْمَعْرُوضَةِ فِيهَا،", img: "img/6e776dcb42.jpeg" },
+            { title: "حُلْمٌ فِي الْغُيُومِ", text: "أَقْرَأُ عَنَاوِينَهَا، وَأَتَمَنَّى لَوْ أَمْلِكُ ثَمَنَهَا لِأَشْتَرِيَهَا وَأَقْرَأَهَا.", img: "img/e91968026d.jpeg" },
+            { title: "الْقِرْشُ الذَّهَبِيُّ", text: "وَكُنْتُ إِذَا حَصَلْتُ عَلَى قِرْشٍ أَوْ قِرْشَيْنِ، أَسْرَعْتُ إِلَى بَائِعِ الْكُتُبِ الْقَدِيمَةِ،", img: "img/8a9483e6f5.jpeg" },
+            { title: "كِتَابٌ مُمَزَّقٌ.. كَنْزٌ ثَمِينٌ", text: "فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ، أَوْ نَاقِصَ الصَّفَحَاتِ،", img: "img/33e5660698.jpeg" },
+            { title: "قِرَاءَةٌ بِلَا تَوَقُّفٍ", text: "فَأَقْرَؤُهُ كُلَّهُ فِي يَوْمِي،", img: "img/b2dccd8d86.jpeg" },
+            { title: "سِرُّ الْبَطَلِ: الِاسْتِبْدَالُ", text: "ثُمَّ أَعُودُ فِي الْيَوْمِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ، وَأَدْفَعَ لَهُ أُجْرَةَ الْقِرَاءَةِ.", img: "img/19f72b62eb.jpeg" }
+        ];
+
+        const THEMES = {
+            boy: { primary: '#5624d0', iconColor: 'text-purple-600', bg: 'bg-slate-50', btn: 'btn-purple', lightBg: 'bg-purple-50' },
+            girl: { primary: '#d024b0', iconColor: 'text-pink-600', bg: 'bg-rose-50/30', btn: 'btn-pink', lightBg: 'bg-pink-50' }
+        };
+
+        // ==========================================
+        // 🔴 المحرك المزدوج (الدرس 1 - المستوى الرابع المتقدم)
+        // ==========================================
+        const LESSON_CONTENT = {
+            boy: {
+                hero: '👦', heroName: 'طَارِق',
+                title: "عِشْقُ الْقِرَاءَةِ 📚", subtitle: "هُوِيَّتِي وَإِرَادَتِي (أَدَبُ السِّيرَةِ الذَّاتِيَّةِ)",
+                fluencyText: "وَلَقَدْ كُنْتُ فِي طُفُولَتِي، أَطُوفُ عَلَى الْمَكْتَبَاتِ، فَأَقِفُ أَمَامَ وَاجِهَاتِهَا الزُّجَاجِيَّةِ، أُطِيلُ النَّظَرَ إِلَى الْكُتُبِ الْمَعْرُوضَةِ فِيهَا، أَقْرَأُ عَنَاوِينَهَا، وَأَتَمَنَّى لَوْ أَمْلِكُ ثَمَنَهَا لِأَشْتَرِيَهَا وَأَقْرَأَهَا. وَكُنْتُ إِذَا حَصَلْتُ عَلَى قِرْشٍ أَوْ قِرْشَيْنِ، أَسْرَعْتُ إِلَى بَائِعِ الْكُتُبِ الْقَدِيمَةِ، فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ، أَوْ نَاقِصَ الصَّفَحَاتِ، فَأَقْرَؤُهُ كُلَّهُ فِي يَوْمِي، ثُمَّ أَعُودُ فِي الْيَوْمِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ، وَأَدْفَعَ لَهُ أُجْرَةَ الْقِرَاءَةِ.",
+                readingChunks: [
+                    "وَلَقَدْ كُنْتُ فِي طُفُولَتِي، أَطُوفُ عَلَى الْمَكْتَبَاتِ،",
+                    "فَأَقِفُ أَمَامَ وَاجِهَاتِهَا الزُّجَاجِيَّةِ، أُطِيلُ النَّظَرَ إِلَى الْكُتُبِ الْمَعْرُوضَةِ فِيهَا، أَقْرَأُ عَنَاوِينَهَا،",
+                    "وَأَتَمَنَّى لَوْ أَمْلِكُ ثَمَنَهَا لِأَشْتَرِيَهَا وَأَقْرَأَهَا.",
+                    "وَكُنْتُ إِذَا حَصَلْتُ عَلَى قِرْشٍ أَوْ قِرْشَيْنِ، أَسْرَعْتُ إِلَى بَائِعِ الْكُتُبِ الْقَدِيمَةِ،",
+                    "فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ، أَوْ نَاقِصَ الصَّفَحَاتِ، فَأَقْرَؤُهُ كُلَّهُ فِي يَوْمِي،",
+                    "ثُمَّ أَعُودُ فِي الْيَوْمِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ، وَأَدْفَعَ لَهُ أُجْرَةَ الْقِرَاءَةِ."
+                ],
+                st1Questions: [
+                    { type: "order", q: "لَخِّصْ أَحْدَاثَ الْقِصَّةِ بِتَرْتِيبِهَا الصَّحِيحِ:", items: ["الْوُقُوفُ أَمَامَ الْمَكْتَبَاتِ وَتَمَنِّي شِرَاءِ الْكُتُبِ.", "الْحُصُولُ عَلَى قِرْشٍ وَالْإِسْرَاعُ لِبَائِعِ الْكُتُبِ الْقَدِيمَةِ.", "شِرَاءُ كِتَابٍ مُمَزَّقٍ وَقِرَاءَتُهُ فِي نَفْسِ الْيَوْمِ.", "الْعَوْدَةُ لِاسْتِبْدَالِ الْكِتَابِ وَدَفْعِ أُجْرَةِ الْقِرَاءَةِ."], correctOrder: [0, 1, 2, 3] },
+                    { type: "mcq", q: "مَا هِيَ الْفِكْرَةُ الرَّئِيسِيَّةُ لِلْقِصَّةِ؟", options: ["الشَّغَفُ بِالْقِرَاءَةِ يَدْفَعُنَا لِابْتِكَارِ حُلُولٍ لِتَجَاوُزِ قِلَّةِ الْمَالِ.", "الْكُتُبُ الْمُمَزَّقَةُ أَفْضَلُ دَائِماً مِنَ الْكُتُبِ الْجَدِيدَةِ لِأَنَّهَا رَخِيصَةٌ.", "يَجِبُ أَنْ نَقِفَ كَثِيراً أَمَامَ الزُّجَاجِ قَبْلَ دُخُولِ الْمَكْتَبَةِ."], correct: 0 }
+                ],
+                varGame: [
+                    { type: "tf", q: "كَانَ الْبَطَلُ يَشْتَرِي الْكِتَابَ لِيَحْتَفِظَ بِهِ فِي مَكْتَبَتِهِ الْخَاصَّةِ دَائِماً.", correct: false },
+                    { type: "mcq", q: "كَيْفَ تَحَوَّلَ الْعَائِقُ (كِتَابٌ مُمَزَّقٌ وَمَالٌ قَلِيلٌ) إِلَى فُرْصَةٍ لِلْبَطَلِ؟", options: ["ابْتَكَرَ نِظَامَ 'اسْتِئْجَارِ الْكُتُبِ' بِالْقِرْشِ الْوَاحِدِ لِيَقْرَأَ كُتُباً أَكْثَرَ.", "طَلَبَ مِنَ الْبَائِعِ أَنْ يُعْطِيَهُ الْكُتُبَ مَجَّاناً بِلَا مُقَابِلٍ.", "قَامَ بِتَمْزِيقِ صَفَحَاتِ الْكِتَابِ لِيَسْتَطِيعَ قِرَاءَتَهُ بِسُرْعَةٍ."], correct: 0 },
+                    { type: "fill", q: "أَكْمِلْ مِنَ النَّصِّ: «أَسْرَعْتُ إِلَى بَائِعِ الْكُتُبِ ........، فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ»", parts: ["«أَسْرَعْتُ إِلَى بَائِعِ الْكُتُبِ ", "، فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ»"], options: ["الْقَدِيمَةِ", "الْجَدِيدَةِ", "الْغَالِيَةِ"], correct: 0 },
+                    { type: "mcq", q: "مَاذَا تَعْنِي عِبَارَةُ «وَأَدْفَعَ لَهُ أُجْرَةَ الْقِرَاءَةِ»؟", options: ["أَنَّهُ كَانَ يَسْتَأْجِرُ الْكِتَابَ لِيَوْمٍ وَاحِدٍ بَدَلاً مِنْ شِرَائِهِ بِالْكَامِلِ.", "أَنَّهُ كَانَ يَدْفَعُ لِلْبَائِعِ لِيَقْرَأَ لَهُ الْكِتَابَ بِصَوْتٍ عَالٍ.", "أَنَّهُ كَانَ يَشْتَرِي الْمَكْتَبَةَ كُلَّهَا بِقِرْشٍ وَاحِدٍ فَقَطْ."], correct: 0 },
+                    { type: "order", q: "رَتِّبْ خُطُوَاتِ ذَكَاءِ الْبَطَلِ فِي الْقِصَّةِ:", items: ["الرَّغْبَةُ فِي الْقِرَاءَةِ رَغْمَ الْفَقْرِ.", "اسْتِغْلَالُ الْقِرْشِ الْوَاحِدِ لَدَى بَائِعِ الْقَدِيمِ.", "قِرَاءَةُ الْكِتَابِ بِسُرْعَةٍ فِي يَوْمٍ وَاحِدٍ.", "اسْتِئْجَارُ كِتَابٍ جَدِيدٍ فِي الْيَوْمِ التَّالِي."], correctOrder: [0, 1, 2, 3] }
+                ],
+                accuracyClinic: {
+                    textBlocks: [
+                        { word: "وَلَقَدْ", isTrap: false }, { word: "كُنْتُ", isTrap: false }, { word: "فِي", isTrap: false },
+                        { word: "طُفُولَتِي،", isTrap: false }, { word: "أَطُوفُ", isTrap: false }, { word: "عَلَى", isTrap: false },
+                        { word: "الْمَكْتَبَاتِ،", isTrap: false }, { word: "فَأَقِفُ", isTrap: false }, { word: "أَمَامَ", isTrap: false },
+                        { word: "وَاجِهَتِهَا", isTrap: true }, { word: "الزُّجَاجِيَّةِ،", isTrap: false }, { word: "أُطِيلُ", isTrap: false },
+                        { word: "النَّظَرَ", isTrap: false }, { word: "إِلَى", isTrap: false }, { word: "الْكُتُبِ", isTrap: false },
+                        { word: "الْمَعْرُودَةِ", isTrap: true }, { word: "فِيهَا،", isTrap: false }, { word: "أَقْرَأُ", isTrap: false },
+                        { word: "عَنَاوِينَهَا،", isTrap: false }, { word: "وَأَتَمَنَّى", isTrap: false }, { word: "لَوْ", isTrap: false },
+                        { word: "أَمْلِكُ", isTrap: false }, { word: "شَمَنَهَا", isTrap: true }, { word: "لِأَشْتَرِيَهَا", isTrap: false },
+                        { word: "وَأَقْرَأَهَا.", isTrap: false }, { word: "وَكُنْتُ", isTrap: false }, { word: "إِذَا", isTrap: false },
+                        { word: "حَصَلْتُ", isTrap: false }, { word: "عَلَى", isTrap: false }, { word: "قِرْشٍ", isTrap: false },
+                        { word: "أَوْ", isTrap: false }, { word: "قِرْشَيْنِ،", isTrap: false }, { word: "أَسْرَعْتُ", isTrap: false },
+                        { word: "إِلَى", isTrap: false }, { word: "بَائِعِ", isTrap: false }, { word: "الْكُتُبِ", isTrap: false },
+                        { word: "الْقَدِيمَةِ،", isTrap: false }, { word: "فَاشْتَرَيْتُ", isTrap: false }, { word: "مِنْهُ", isTrap: false },
+                        { word: "كِتَاباً", isTrap: false }, { word: "مُمَرَّقَ", isTrap: true }, { word: "الْغِلَافِ،", isTrap: false },
+                        { word: "أَوْ", isTrap: false }, { word: "نَاقِصَ", isTrap: false }, { word: "الصَّفَحَاتِ،", isTrap: false },
+                        { word: "فَأَقْرَؤُهُ", isTrap: false }, { word: "كُلَّهُ", isTrap: false }, { word: "فِي", isTrap: false },
+                        { word: "يَوْمِكَ،", isTrap: true }, { word: "ثُمَّ", isTrap: false }, { word: "أَعُودُ", isTrap: false },
+                        { word: "فِي", isTrap: false }, { word: "الْيَوْمِ", isTrap: false }, { word: "التَّالِي", isTrap: false },
+                        { word: "لِأَسْتَبْدِلَ", isTrap: false }, { word: "بِهِ", isTrap: false }, { word: "غَيْرَهُ،", isTrap: false },
+                        { word: "وَأَدْفَعَ", isTrap: false }, { word: "لَهُ", isTrap: false }, { word: "أُجْرَةَ", isTrap: false },
+                        { word: "الْقِرَاءَةِ.", isTrap: false }
+                    ],
+                    trapCount: 5
+                },
+                hardWords: [
+                    { full: "الْمَكْتَبَاتِ", chunks: ["الْـ", "مَكْـ", "تَـ", "بَا", "تِ"] },
+                    { full: "الزُّجَاجِيَّةِ", chunks: ["الزُّ", "جَا", "جِـ", "يَّـ", "ةِ"] },
+                    { full: "لِأَسْتَبْدِلَ", chunks: ["لِـ", "أَسْـ", "تَبْـ", "دِ", "لَ"] }
+                ],
+                audioSync: {
+                    questions: [
+                        { options: [{ text: "وَلَقَدْ كُنْتُ فِي طُفُولَتِي، أَطُوفُ عَلَى الْمَكْتَبَاتِ،", isCorrect: true }, { text: "وَلَقَدْ كُنْتُ فِي طُفُولَتِي، أَلْعَبُ أَمَامَ الْمَكْتَبَاتِ،", isCorrect: false }, { text: "وَلَقَدْ كُنْتُ فِي صِغَرِي، أَبْحَثُ فِي الْمَكْتَبَاتِ،", isCorrect: false }] },
+                        { options: [{ text: "فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ، أَوْ نَاقِصَ الصَّفَحَاتِ،", isCorrect: true }, { text: "فَاشْتَرَيْتُ مِنْهُ كِتَاباً جَدِيدَ الْغِلَافِ، أَوْ كَامِلَ الصَّفَحَاتِ،", isCorrect: false }, { text: "فَأَخَذْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ، دُونَ أَنْ أَدْفَعَ،", isCorrect: false }] },
+                        { options: [{ text: "ثُمَّ أَعُودُ فِي الْيَوْمِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ،", isCorrect: true }, { text: "ثُمَّ أَعُودُ فِي الشَّهْرِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ،", isCorrect: false }, { text: "ثُمَّ أَعُودُ فِي الْأُسْبُوعِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ،", isCorrect: false }] }
+                    ]
+                },
+                syllables: [
+                    { word: "الْمَكْتَبَاتِ", syllables: ["الْـ", "مَكْـ", "تَـ", "بَا", "تِ"], hint: "أَمَاكِنُ مَلِيئَةٌ بِالْكُتُبِ لِلْبَيْعِ أَوِ الْقِرَاءَةِ." },
+                    { word: "الزُّجَاجِيَّةِ", syllables: ["الزُّ", "جَا", "جِـ", "يَّـ", "ةِ"], hint: "نَوَافِذُ شَفَّافَةٌ تُعْرَضُ خَلْفَهَا الْكُتُبُ لِيَرَاهَا النَّاسُ." },
+                    { word: "لِأَسْتَبْدِلَ", syllables: ["لِـ", "أَسْـ", "تَبْـ", "دِ", "لَ"], hint: "لِأُعْطِيَهُ الْكِتَابَ الْقَدِيمَ وَآخُذَ بَدَلاً مِنْهُ كِتَاباً آخَرَ." }
+                ],
+                memoryCards: ["شَغَف", "قِرَاءَة", "ابْتِكَار", "كِتَاب"],
+                sightWords: ["كُنْتُ", "إِلَى", "لَوْ", "إِذَا"],
+                homework: "مُهِمَّةُ الْبَطَلِ: صَمِّمْ بِطَاقَةَ قَارِئِ الْمُسْتَقْبَلِ! اكْتُبْ فِيهَا الْعَقَبَةَ الَّتِي تَمْنَعُكَ مِنَ الْقِرَاءَةِ، وَخُطَّتَكَ الذَّكِيَّةَ لِتَجَاوُزِهَا كَمَا فَعَلَ الطَّنْطَاوِي.",
+                preambleAudio: "تَخَيَّلْ أَنَّكَ تُسَافِرُ عَبْرَ آَلَةِ الزَّمَنِ لِتَقِفَ فِي زُقَاقٍ ضَيِّقٍ مِنْ أَزِقَّةِ دِمَشْقَ الْقَدِيمَةِ قَبْلَ مِائَةِ عَامٍ.. الطَّقْسُ بَارِدٌ، وَالْمَطَرُ يَهْطِلُ بِخِفَّةٍ. يَقِفُ طِفْلٌ صَغِيرٌ فِي مِثْلِ عُمْرِكَ، يَلْصَقُ وَجْهَهُ بِزُجَاجِ مَكْتَبَةٍ قَدِيمَةٍ، يَبْحَثُ فِي جَيْبِهِ فَلا يَجِدُ إِلاَّ قِرْشاً وَاحِداً لا يَكْفِي لِشِرَاءِ أَيِّ كِتَابٍ! تَعَالَ نَسْتَمِعْ إِلَيْهِ وَهُوَ يَحْكِي لَنَا كَيْفَ صَنَعَ مِنْ هَذَا القِرْشِ العَجَبَ!"
+            },
+            girl: {
+                hero: '👧', heroName: 'سَلْمَى',
+                title: "عِشْقُ الْقِرَاءَةِ 📚", subtitle: "هُوِيَّتِي وَإِرَادَتِي (أَدَبُ السِّيرَةِ الذَّاتِيَّةِ)",
+                fluencyText: "وَلَقَدْ كُنْتُ فِي طُفُولَتِي، أَطُوفُ عَلَى الْمَكْتَبَاتِ، فَأَقِفُ أَمَامَ وَاجِهَاتِهَا الزُّجَاجِيَّةِ، أُطِيلُ النَّظَرَ إِلَى الْكُتُبِ الْمَعْرُوضَةِ فِيهَا، أَقْرَأُ عَنَاوِينَهَا، وَأَتَمَنَّى لَوْ أَمْلِكُ ثَمَنَهَا لِأَشْتَرِيَهَا وَأَقْرَأَهَا. وَكُنْتُ إِذَا حَصَلْتُ عَلَى قِرْشٍ أَوْ قِرْشَيْنِ، أَسْرَعْتُ إِلَى بَائِعِ الْكُتُبِ الْقَدِيمَةِ، فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ، أَوْ نَاقِصَ الصَّفَحَاتِ، فَأَقْرَؤُهُ كُلَّهُ فِي يَوْمِي، ثُمَّ أَعُودُ فِي الْيَوْمِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ، وَأَدْفَعَ لَهُ أُجْرَةَ الْقِرَاءَةِ.",
+                readingChunks: [
+                    "وَلَقَدْ كُنْتُ فِي طُفُولَتِي، أَطُوفُ عَلَى الْمَكْتَبَاتِ،",
+                    "فَأَقِفُ أَمَامَ وَاجِهَاتِهَا الزُّجَاجِيَّةِ، أُطِيلُ النَّظَرَ إِلَى الْكُتُبِ الْمَعْرُوضَةِ فِيهَا، أَقْرَأُ عَنَاوِينَهَا،",
+                    "وَأَتَمَنَّى لَوْ أَمْلِكُ ثَمَنَهَا لِأَشْتَرِيَهَا وَأَقْرَأَهَا.",
+                    "وَكُنْتُ إِذَا حَصَلْتُ عَلَى قِرْشٍ أَوْ قِرْشَيْنِ، أَسْرَعْتُ إِلَى بَائِعِ الْكُتُبِ الْقَدِيمَةِ،",
+                    "فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ، أَوْ نَاقِصَ الصَّفَحَاتِ، فَأَقْرَؤُهُ كُلَّهُ فِي يَوْمِي،",
+                    "ثُمَّ أَعُودُ فِي الْيَوْمِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ، وَأَدْفَعَ لَهُ أُجْرَةَ الْقِرَاءَةِ."
+                ],
+                st1Questions: [
+                    { type: "order", q: "لَخِّصِي أَحْدَاثَ الْقِصَّةِ بِتَرْتِيبِهَا الصَّحِيحِ:", items: ["الْوُقُوفُ أَمَامَ الْمَكْتَبَاتِ وَتَمَنِّي شِرَاءِ الْكُتُبِ.", "الْحُصُولُ عَلَى قِرْشٍ وَالْإِسْرَاعُ لِبَائِعِ الْكُتُبِ الْقَدِيمَةِ.", "شِرَاءُ كِتَابٍ مُمَزَّقٍ وَقِرَاءَتُهُ فِي نَفْسِ الْيَوْمِ.", "الْعَوْدَةُ لِاسْتِبْدَالِ الْكِتَابِ وَدَفْعِ أُجْرَةِ الْقِرَاءَةِ."], correctOrder: [0, 1, 2, 3] },
+                    { type: "mcq", q: "مَا هِيَ الْفِكْرَةُ الرَّئِيسِيَّةُ لِلْقِصَّةِ؟", options: ["الشَّغَفُ بِالْقِرَاءَةِ يَدْفَعُنَا لِابْتِكَارِ حُلُولٍ لِتَجَاوُزِ قِلَّةِ الْمَالِ.", "الْكُتُبُ الْمُمَزَّقَةُ أَفْضَلُ دَائِماً مِنَ الْكُتُبِ الْجَدِيدَةِ لِأَنَّهَا رَخِيصَةٌ.", "يَجِبُ أَنْ نَقِفَ كَثِيراً أَمَامَ الزُّجَاجِ قَبْلَ دُخُولِ الْمَكْتَبَةِ."], correct: 0 }
+                ],
+                varGame: [
+                    { type: "tf", q: "كَانَ الْبَطَلُ يَشْتَرِي الْكِتَابَ لِيَحْتَفِظَ بِهِ فِي مَكْتَبَتِهِ الْخَاصَّةِ دَائِماً.", correct: false },
+                    { type: "mcq", q: "كَيْفَ تَحَوَّلَ الْعَائِقُ (كِتَابٌ مُمَزَّقٌ وَمَالٌ قَلِيلٌ) إِلَى فُرْصَةٍ؟", options: ["ابْتَكَرَ نِظَامَ 'اسْتِئْجَارِ الْكُتُبِ' بِالْقِرْشِ الْوَاحِدِ لِيَقْرَأَ كُتُباً أَكْثَرَ.", "طَلَبَ مِنَ الْبَائِعِ أَنْ يُعْطِيَهُ الْكُتُبَ مَجَّاناً بِلَا مُقَابِلٍ.", "قَامَ بِتَمْزِيقِ صَفَحَاتِ الْكِتَابِ لِيَسْتَطِيعَ قِرَاءَتَهُ بِسُرْعَةٍ."], correct: 0 },
+                    { type: "fill", q: "أَكْمِلِي مِنَ النَّصِّ: «أَسْرَعْتُ إِلَى بَائِعِ الْكُتُبِ ........، فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ»", parts: ["«أَسْرَعْتُ إِلَى بَائِعِ الْكُتُبِ ", "، فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ»"], options: ["الْقَدِيمَةِ", "الْجَدِيدَةِ", "الْغَالِيَةِ"], correct: 0 },
+                    { type: "mcq", q: "مَاذَا تَعْنِي عِبَارَةُ «وَأَدْفَعَ لَهُ أُجْرَةَ الْقِرَاءَةِ»؟", options: ["أَنَّهُ كَانَ يَسْتَأْجِرُ الْكِتَابَ لِيَوْمٍ وَاحِدٍ بَدَلاً مِنْ شِرَائِهِ بِالْكَامِلِ.", "أَنَّهُ كَانَ يَدْفَعُ لِلْبَائِعِ لِيَقْرَأَ لَهُ الْكِتَابَ بِصَوْتٍ عَالٍ.", "أَنَّهُ كَانَ يَشْتَرِي الْمَكْتَبَةَ كُلَّهَا بِقِرْشٍ وَاحِدٍ فَقَطْ."], correct: 0 },
+                    { type: "order", q: "رَتِّبِي خُطُوَاتِ ذَكَاءِ الْبَطَلِ فِي الْقِصَّةِ:", items: ["الرَّغْبَةُ فِي الْقِرَاءَةِ رَغْمَ الْفَقْرِ.", "اسْتِغْلَالُ الْقِرْشِ الْوَاحِدِ لَدَى بَائِعِ الْقَدِيمِ.", "قِرَاءَةُ الْكِتَابِ بِسُرْعَةٍ فِي يَوْمٍ وَاحِدٍ.", "اسْتِئْجَارُ كِتَابٍ جَدِيدٍ فِي الْيَوْمِ التَّالِي."], correctOrder: [0, 1, 2, 3] }
+                ],
+                accuracyClinic: {
+                    textBlocks: [
+                        { word: "وَلَقَدْ", isTrap: false }, { word: "كُنْتُ", isTrap: false }, { word: "فِي", isTrap: false },
+                        { word: "طُفُولَتِي،", isTrap: false }, { word: "أَطُوفُ", isTrap: false }, { word: "عَلَى", isTrap: false },
+                        { word: "الْمَكْتَبَاتِ،", isTrap: false }, { word: "فَأَقِفُ", isTrap: false }, { word: "أَمَامَ", isTrap: false },
+                        { word: "وَاجِهَتِهَا", isTrap: true }, { word: "الزُّجَاجِيَّةِ،", isTrap: false }, { word: "أُطِيلُ", isTrap: false },
+                        { word: "النَّظَرَ", isTrap: false }, { word: "إِلَى", isTrap: false }, { word: "الْكُتُبِ", isTrap: false },
+                        { word: "الْمَعْرُودَةِ", isTrap: true }, { word: "فِيهَا،", isTrap: false }, { word: "أَقْرَأُ", isTrap: false },
+                        { word: "عَنَاوِينَهَا،", isTrap: false }, { word: "وَأَتَمَنَّى", isTrap: false }, { word: "لَوْ", isTrap: false },
+                        { word: "أَمْلِكُ", isTrap: false }, { word: "شَمَنَهَا", isTrap: true }, { word: "لِأَشْتَرِيَهَا", isTrap: false },
+                        { word: "وَأَقْرَأَهَا.", isTrap: false }, { word: "وَكُنْتُ", isTrap: false }, { word: "إِذَا", isTrap: false },
+                        { word: "حَصَلْتُ", isTrap: false }, { word: "عَلَى", isTrap: false }, { word: "قِرْشٍ", isTrap: false },
+                        { word: "أَوْ", isTrap: false }, { word: "قِرْشَيْنِ،", isTrap: false }, { word: "أَسْرَعْتُ", isTrap: false },
+                        { word: "إِلَى", isTrap: false }, { word: "بَائِعِ", isTrap: false }, { word: "الْكُتُبِ", isTrap: false },
+                        { word: "الْقَدِيمَةِ،", isTrap: false }, { word: "فَاشْتَرَيْتُ", isTrap: false }, { word: "مِنْهُ", isTrap: false },
+                        { word: "كِتَاباً", isTrap: false }, { word: "مُمَرَّقَ", isTrap: true }, { word: "الْغِلَافِ،", isTrap: false },
+                        { word: "أَوْ", isTrap: false }, { word: "نَاقِصَ", isTrap: false }, { word: "الصَّفَحَاتِ،", isTrap: false },
+                        { word: "فَأَقْرَؤُهُ", isTrap: false }, { word: "كُلَّهُ", isTrap: false }, { word: "فِي", isTrap: false },
+                        { word: "يَوْمِكِ،", isTrap: true }, { word: "ثُمَّ", isTrap: false }, { word: "أَعُودُ", isTrap: false },
+                        { word: "فِي", isTrap: false }, { word: "الْيَوْمِ", isTrap: false }, { word: "التَّالِي", isTrap: false },
+                        { word: "لِأَسْتَبْدِلَ", isTrap: false }, { word: "بِهِ", isTrap: false }, { word: "غَيْرَهُ،", isTrap: false },
+                        { word: "وَأَدْفَعَ", isTrap: false }, { word: "لَهُ", isTrap: false }, { word: "أُجْرَةَ", isTrap: false },
+                        { word: "الْقِرَاءَةِ.", isTrap: false }
+                    ],
+                    trapCount: 5
+                },
+                hardWords: [
+                    { full: "الْمَكْتَبَاتِ", chunks: ["الْـ", "مَكْـ", "تَـ", "بَا", "تِ"] },
+                    { full: "الزُّجَاجِيَّةِ", chunks: ["الزُّ", "جَا", "جِـ", "يَّـ", "ةِ"] },
+                    { full: "لِأَسْتَبْدِلَ", chunks: ["لِـ", "أَسْـ", "تَبْـ", "دِ", "لَ"] }
+                ],
+                audioSync: {
+                    questions: [
+                        { options: [{ text: "وَلَقَدْ كُنْتُ فِي طُفُولَتِي، أَطُوفُ عَلَى الْمَكْتَبَاتِ،", isCorrect: true }, { text: "وَلَقَدْ كُنْتُ فِي طُفُولَتِي، أَلْعَبُ أَمَامَ الْمَكْتَبَاتِ،", isCorrect: false }, { text: "وَلَقَدْ كُنْتُ فِي صِغَرِي، أَبْحَثُ فِي الْمَكْتَبَاتِ،", isCorrect: false }] },
+                        { options: [{ text: "فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ، أَوْ نَاقِصَ الصَّفَحَاتِ،", isCorrect: true }, { text: "فَاشْتَرَيْتُ مِنْهُ كِتَاباً جَدِيدَ الْغِلَافِ، أَوْ كَامِلَ الصَّفَحَاتِ،", isCorrect: false }, { text: "فَأَخَذْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ، دُونَ أَنْ أَدْفَعَ،", isCorrect: false }] },
+                        { options: [{ text: "ثُمَّ أَعُودُ فِي الْيَوْمِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ،", isCorrect: true }, { text: "ثُمَّ أَعُودُ فِي الشَّهْرِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ،", isCorrect: false }, { text: "ثُمَّ أَعُودُ فِي الْأُسْبُوعِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ،", isCorrect: false }] }
+                    ]
+                },
+                syllables: [
+                    { word: "الْمَكْتَبَاتِ", syllables: ["الْـ", "مَكْـ", "تَـ", "بَا", "تِ"], hint: "أَمَاكِنُ مَلِيئَةٌ بِالْكُتُبِ لِلْبَيْعِ أَوِ الْقِرَاءَةِ." },
+                    { word: "الزُّجَاجِيَّةِ", syllables: ["الزُّ", "جَا", "جِـ", "يَّـ", "ةِ"], hint: "نَوَافِذُ شَفَّافَةٌ تُعْرَضُ خَلْفَهَا الْكُتُبُ لِيَرَاهَا النَّاسُ." },
+                    { word: "لِأَسْتَبْدِلَ", syllables: ["لِـ", "أَسْـ", "تَبْـ", "دِ", "لَ"], hint: "لِأُعْطِيَهُ الْكِتَابَ الْقَدِيمَ وَآخُذَ بَدَلاً مِنْهُ كِتَاباً آخَرَ." }
+                ],
+                memoryCards: ["شَغَف", "قِرَاءَة", "ابْتِكَار", "كِتَاب"],
+                sightWords: ["كُنْتُ", "إِلَى", "لَوْ", "إِذَا"],
+                homework: "مُهِمَّةُ الْبَطَلَةِ: صَمِّمِي بِطَاقَةَ قَارِئَةِ الْمُسْتَقْبَلِ! اكْتُبِي فِيهَا الْعَقَبَةَ الَّتِي تَمْنَعُكِ مِنَ الْقِرَاءَةِ، وَخُطَّتَكِ الذَّكِيَّةَ لِتَجَاوُزِهَا كَمَا فَعَلَ الطَّنْطَاوِي.",
+                preambleAudio: "تَخَيَّلِي أَنَّكِ تُسَافِرِينَ عَبْرَ آَلَةِ الزَّمَنِ لِتَقِفِي فِي زُقَاقٍ ضَيِّقٍ مِنْ أَزِقَّةِ دِمَشْقَ الْقَدِيمَةِ قَبْلَ مِائَةِ عَامٍ.. الطَّقْسُ بَارِدٌ، وَالْمَطَرُ يَهْطِلُ بِخِفَّةٍ. يَقِفُ طِفْلٌ صَغِيرٌ فِي مِثْلِ عُمْرِكِ، يَلْصَقُ وَجْهَهُ بِزُجَاجِ مَكْتَبَةٍ قَدِيمَةٍ، يَبْحَثُ فِي جَيْبِهِ فَلا يَجِدُ إِلاَّ قِرْشاً وَاحِداً لا يَكْفِي لِشِرَاءِ أَيِّ كِتَابٍ! تَعَالَيْ نَسْتَمِعْ إِلَيْهِ وَهُوَ يَحْكِي لَنَا كَيْفَ صَنَعَ مِنْ هَذَا القِرْشِ العَجَبَ!"
+            }
+        };
+
+        const SkinSelector = ({ title, desc, skins, onSelect, theme }) => (
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="card-royal p-10 md:p-14 w-full max-w-5xl text-center mx-auto shadow-2xl bg-white border-4 border-slate-100">
+                <h2 className={`text-4xl md:text-5xl font-black mb-6 ${theme.iconColor}`}>{title}</h2>
+                <p className="text-xl text-slate-500 font-bold mb-10">{desc}</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {skins.map(sk => (
+                        <button key={sk.id} onClick={() => onSelect(sk.id)} className={`card-royal p-8 border-4 transition-all hover:-translate-y-2 group flex flex-col items-center btn-3d ${sk.btnClass}`}>
+                            <AppIcon name={sk.icon} size={64} className={`mb-4 transition-transform group-hover:scale-110 ${sk.iconClass}`} />
+                            <h3 className={`text-2xl font-black mb-2 ${sk.textClass}`}>{sk.name}</h3>
+                            <p className={`font-bold text-sm ${sk.descClass}`}>{sk.desc}</p>
+                        </button>
+                    ))}
+                </div>
+            </motion.div>
+        );
+
+        const StationIntro = ({ id, theme, setStage }) => {
+            const STATIONS_INFO = {
+                st1: { name: 'مُخْتَبَرُ الْمَعْنَى', icon: 'BookOpen', standards: 'الفهم المباشر الاستنتاجي.', concept: 'قراءة النص متتابعاً ثم ترتيب الخلاصة.', treatment: 'الاندفاع في القراءة دون فهم.' },
+                st2: { name: 'لُعْبَةُ الْـ VAR', icon: 'Gamepad2', standards: 'التحليل المنطقي والسبب والنتيجة.', concept: 'أسئلة استنتاجية بواجهات متعددة.', treatment: 'الفهم السطحي للأحداث.' },
+                st3: { name: 'عِيَادَةُ الدِّقَّة', icon: 'Target', standards: 'التمييز البصري للكلمات.', concept: 'اصطياد 5 كلمات مشوهة من داخل النص.', treatment: 'التخمين العشوائي (الخَمَّان).' },
+                st4: { name: 'لِيجُو الْمَقَاطِع', icon: 'Wrench', standards: 'بناء الكلمات المقطعية.', concept: 'بناء الكلمة مقطعاً مقطعاً لتجنب التهجي.', treatment: 'التهجي المبعثر البطيء.' },
+                st5: { name: 'عِيَادَةُ التَّزَامُن', icon: 'Ear', standards: 'التآزر السمعي البصري.', concept: 'مطابقة الجملة المسموعة مع الشكل المكتوب.', treatment: 'التهجي البطيء والتردد.' },
+                st6: { name: 'تَحَدِّي الطَّلَاقَة', icon: 'Zap', standards: 'السرعة والتدفق (WPM).', concept: 'ماراثون القراءة الموقوت.', treatment: 'البطء وضعف الثقة.' }
+            };
+            const info = STATIONS_INFO[id];
+            let stTheme = theme;
+            if(id === 'st2') stTheme = { iconColor: 'text-blue-600', btn: 'bg-blue-500 hover:bg-blue-400 text-white border-blue-700', lightBg: 'bg-blue-100' };
+            else if(id === 'st3') stTheme = { iconColor: 'text-rose-600', btn: 'bg-rose-500 hover:bg-rose-400 text-white border-rose-700', lightBg: 'bg-rose-100' };
+            else if(id === 'st4') stTheme = { iconColor: 'text-sky-600', btn: 'bg-sky-500 hover:bg-sky-400 text-white border-sky-700', lightBg: 'bg-sky-100' };
+            else if(id === 'st5') stTheme = { iconColor: 'text-amber-600', btn: 'bg-amber-500 hover:bg-amber-400 text-white border-amber-700', lightBg: 'bg-amber-100' };
+            else if(id === 'st6') stTheme = { iconColor: 'text-emerald-600', btn: 'bg-emerald-500 hover:bg-emerald-400 text-white border-emerald-700', lightBg: 'bg-emerald-100' };
+
+            return (
+                <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="card-royal p-10 w-full max-w-4xl text-center shadow-2xl mx-auto border-4 border-slate-100">
+                    <div className={`w-24 h-24 mx-auto rounded-[2rem] flex items-center justify-center mb-8 ${stTheme.lightBg} ${stTheme.iconColor}`}><AppIcon name={info.icon} size={48} /></div>
+                    <h2 className={`text-4xl font-black mb-8 ${stTheme.iconColor}`}>{info.name}</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 text-right">
+                        <div className="bg-emerald-50 p-6 rounded-3xl border border-emerald-100 shadow-sm"><h3 className="font-black text-emerald-700 mb-2 flex items-center gap-2"><AppIcon name="Check" size={20}/> المعايير</h3><p className="text-slate-600 font-bold">{info.standards}</p></div>
+                        <div className="bg-amber-50 p-6 rounded-3xl border border-amber-100 shadow-sm"><h3 className="font-black text-amber-700 mb-2 flex items-center gap-2"><AppIcon name="Lightbulb" size={20}/> الفكرة</h3><p className="text-slate-600 font-bold">{info.concept}</p></div>
+                        <div className="bg-rose-50 p-6 rounded-3xl border border-rose-100 shadow-sm"><h3 className="font-black text-rose-700 mb-2 flex items-center gap-2"><AppIcon name="Wrench" size={20}/> العلاج</h3><p className="text-slate-600 font-bold">{info.treatment}</p></div>
+                    </div>
+                    <button onClick={() => setStage(id)} className={`px-16 py-6 rounded-full text-2xl font-black btn-3d mx-auto flex items-center justify-center gap-4 ${stTheme.btn} text-white`}>
+                        دُخُولُ الْمَحَطَّةِ <AppIcon name="Play" size={32} />
+                    </button>
+                </motion.div>
+            );
+        };
+
+        const St1MeaningLab = ({ data, theme, onComplete, triggerError, shake }) => {
+            const [skin, setSkin] = useState(null);
+            const [readingStep, setReadingStep] = useState(0);
+            const [showQuestions, setShowQuestions] = useState(false);
+            const [qIdx, setQIdx] = useState(0);
+            const [shuffledOptions, setShuffledOptions] = useState([]);
+            const [orderSelection, setOrderSelection] = useState([]);
+            const [shuffledOrderItems, setShuffledOrderItems] = useState([]);
+
+            const chunks = STORY_PAGES;
+            const currentQ = data.st1Questions[qIdx];
+
+            const skinsData = [
+                { id: 'classic', name: 'الْكِتَابُ الْكِلَاسِيكِي 📖', icon: 'BookOpen', btnClass: 'bg-white border-slate-200 hover:border-slate-400', iconClass: 'text-slate-600', textClass: 'text-slate-800', descClass: 'text-slate-500', desc: 'قِرَاءَةٌ هَادِئَةٌ وَمُرِيحَةٌ.' },
+                { id: 'scroll', name: 'الْمَخْطُوطَةُ الْقَدِيمَة 📜', icon: 'BookOpen', btnClass: 'bg-amber-50 border-amber-200 hover:border-amber-400', iconClass: 'text-amber-700', textClass: 'text-amber-900', descClass: 'text-amber-700/70', desc: 'تَجْرِبَةُ الْقِرَاءَةِ التَّارِيخِيَّة.' },
+                { id: 'tablet', name: 'الشَّاشَةُ الذَّكِيَّة 💻', icon: 'Gamepad2', btnClass: 'bg-slate-900 border-slate-700 hover:border-sky-500', iconClass: 'text-sky-400', textClass: 'text-sky-300', descClass: 'text-slate-400', desc: 'قِرَاءَةٌ رَقْمِيَّةٌ حَدِيثَة.' }
+            ];
+
+            useEffect(() => {
+                if (showQuestions && currentQ) {
+                    if (currentQ.type === 'mcq') setShuffledOptions(shuffleArray([...currentQ.options]));
+                    else if (currentQ.type === 'order') {
+                        const mappedItems = currentQ.items.map((text, i) => ({ text, originalIdx: i }));
+                        setShuffledOrderItems(shuffleArray(mappedItems));
+                        setOrderSelection([]); 
+                    }
+                }
+            }, [showQuestions, qIdx, currentQ]);
+
+            const handleNextReading = () => { if (readingStep < chunks.length - 1) setReadingStep(p => p + 1); else setShowQuestions(true); };
+            const processCorrectAnswer = () => { if (qIdx < data.st1Questions.length - 1) setQIdx(p => p + 1); else onComplete(); };
+            const handleMCQAnswer = (isCorrect) => { if (isCorrect) processCorrectAnswer(); else triggerError(); };
+
+            const handleOrderClick = (originalIdx) => {
+                if (orderSelection.includes(originalIdx)) setOrderSelection(orderSelection.filter(i => i !== originalIdx));
+                else {
+                    const newSelection = [...orderSelection, originalIdx];
+                    setOrderSelection(newSelection);
+                    if (newSelection.length === currentQ.items.length) {
+                        const isCorrect = newSelection.every((val, index) => val === currentQ.correctOrder[index]);
+                        setTimeout(() => { if (isCorrect) processCorrectAnswer(); else { triggerError(); setOrderSelection([]); } }, 500);
+                    }
+                }
+            };
+
+            if (!skin) return <SkinSelector title="مُخْتَبَرُ الْمَعْنَى 📚" desc="سَنَقْرَأُ الْقِصَّةَ مُصَوَّرَةً صَفْحَةً صَفْحَةً.. فَكَيْفَ تُحِبُّ إِطَارَ الْقِرَاءَةِ؟" skins={skinsData} onSelect={setSkin} theme={theme}/>;
+
+            let skinClasses = "bg-white border-white";
+            let boxClasses = "bg-slate-50 border-slate-200 text-slate-800";
+            if (skin === 'scroll') { skinClasses = "bg-amber-50 border-amber-200"; boxClasses = "bg-transparent border-transparent text-amber-900"; }
+            if (skin === 'tablet') { skinClasses = "bg-slate-900 border-slate-700"; boxClasses = "bg-slate-800 border-slate-600 text-sky-100"; }
+
+            return (
+                <div className={`card-royal p-8 md:p-12 w-full max-w-4xl text-center mx-auto shadow-2xl border-4 ${skinClasses} ${shake ? 'animate-shake border-red-500' : ''}`}>
+                    {!showQuestions ? (
+                        <motion.div initial={{opacity:0}} animate={{opacity:1}} key="story">
+                            <h2 className={`text-4xl font-black mb-2 flex items-center justify-center gap-4 ${skin === 'tablet' ? 'text-sky-400' : skin === 'scroll' ? 'text-amber-800' : theme.iconColor}`}>
+                                <AppIcon name="BookOpen" size={40}/> الْقِصَّةُ الْمُصَوَّرَةُ
+                            </h2>
+                            <p className={`font-bold text-lg mb-6 ${skin === 'tablet' ? 'text-slate-400' : 'text-slate-500'}`}>
+                                شَاهِدِ الصُّورَةَ.. ثُمَّ اقْرَأِ السَّطْرَ بِصَوْتٍ وَاضِحٍ قَبْلَ الِانْتِقَالِ.
+                            </p>
+
+                            <div className="flex justify-center items-center gap-2 mb-6 flex-wrap">
+                                {chunks.map((_, i) => (
+                                    <button key={i} onClick={() => setReadingStep(i)}
+                                        className={`transition-all rounded-full font-black text-sm flex items-center justify-center ${i === readingStep ? 'w-11 h-11 bg-amber-400 text-white shadow-md scale-110' : i < readingStep ? 'w-8 h-8 bg-emerald-400 text-white' : (skin === 'tablet' ? 'w-8 h-8 bg-slate-700 text-slate-400' : 'w-8 h-8 bg-slate-200 text-slate-500')}`}>
+                                        {i + 1}
+                                    </button>
+                                ))}
+                            </div>
+
+                            <motion.div key={readingStep} initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.35 }}
+                                className={`rounded-[2.5rem] overflow-hidden border-4 shadow-xl mb-8 ${skin === 'tablet' ? 'border-slate-700 bg-slate-800' : skin === 'scroll' ? 'border-amber-300 bg-amber-100/60' : 'border-slate-200 bg-slate-50'}`}>
+                                <img src={chunks[readingStep].img} alt={chunks[readingStep].title} className="w-full block" />
+                                <div className={`px-6 py-3 text-sm font-black tracking-widest ${skin === 'tablet' ? 'bg-slate-900 text-sky-400' : skin === 'scroll' ? 'bg-amber-200/70 text-amber-900' : 'bg-slate-100 text-slate-500'}`}>
+                                    صَفْحَة {readingStep + 1} مِنْ {chunks.length} — {chunks[readingStep].title}
+                                </div>
+                                <div className={`p-6 md:p-10 text-center font-content text-3xl md:text-4xl leading-[2.4] font-bold ${boxClasses}`}>
+                                    {chunks[readingStep].text}
+                                </div>
+                            </motion.div>
+
+                            <div className="flex gap-4 justify-center items-stretch flex-wrap">
+                                <button onClick={() => setReadingStep(p => Math.max(0, p - 1))} disabled={readingStep === 0}
+                                    className={`px-8 py-6 rounded-full btn-3d text-2xl font-black flex items-center gap-2 ${readingStep === 0 ? 'opacity-30 cursor-not-allowed bg-slate-300 border-slate-400 text-white' : (skin === 'tablet' ? 'bg-slate-700 border-slate-900 text-sky-200' : 'bg-slate-200 border-slate-400 text-slate-700')}`}>
+                                    ⬅ السَّابِقَة
+                                </button>
+                                <button onClick={handleNextReading}
+                                    className={`flex-1 min-w-[260px] max-w-md py-6 rounded-full btn-3d text-3xl font-black flex justify-center items-center gap-3 text-white ${readingStep < chunks.length - 1 ? (skin === 'tablet' ? 'bg-teal-500 border-teal-700' : theme.btn) : 'bg-emerald-500 border-emerald-700'}`}>
+                                    {readingStep < chunks.length - 1 ? <>الصَّفْحَةُ التَّالِيَة <AppIcon name="Play" size={32}/></> : <>أَنْهَيْتُ الْقِرَاءَةَ <AppIcon name="CheckCircle2" size={32}/></>}
+                                </button>
+                            </div>
+
+                            {readingStep === chunks.length - 1 && (
+                                <button onClick={() => setReadingStep(0)} className={`mt-6 text-lg font-black underline ${skin === 'tablet' ? 'text-slate-400' : 'text-slate-500'}`}>
+                                    🔁 إِعَادَةُ الْقِصَّةِ مِنَ الْبِدَايَةِ
+                                </button>
+                            )}
+                        </motion.div>
+                    ) : (
+                        <motion.div initial={{opacity:0, y: 20}} animate={{opacity:1, y: 0}}>
+                            <div className="flex justify-between items-center mb-10 border-b-2 pb-6" style={{ borderColor: 'currentColor', opacity: 0.8 }}>
+                                <h2 className={`text-3xl md:text-4xl font-black flex items-center gap-4 ${skin === 'tablet' ? 'text-sky-400' : skin === 'scroll' ? 'text-amber-800' : theme.iconColor}`}>
+                                    <AppIcon name="Target" size={40}/> {currentQ.type === 'mcq' ? 'اسْتِخْرَاجُ الْعِبْرَةِ' : 'تَلْخِيصُ الْأَحْدَاثِ'}
+                                </h2>
+                                <span className={`font-bold px-5 py-2 rounded-full text-xl ${skin === 'tablet' ? 'bg-slate-800 text-sky-300' : 'bg-slate-100 text-slate-500'}`}>سُؤَال {qIdx + 1} / {data.st1Questions.length}</span>
+                            </div>
+                            <p className={`text-2xl md:text-3xl font-black font-content mb-10 leading-[2.6] p-8 rounded-3xl shadow-sm text-right border-r-8 ${skin === 'tablet' ? 'bg-slate-800 border-slate-700 text-sky-100 border-r-sky-500' : 'bg-slate-50 border-slate-200 text-slate-800 border-r-amber-400'}`}>{currentQ.q}</p>
+                            
+                            {currentQ.type === 'mcq' && (
+                                <div className="flex flex-col gap-5">
+                                    {shuffledOptions.map((opt, i) => (
+                                        <button key={i} onClick={() => handleMCQAnswer(opt === currentQ.options[currentQ.correct])} className={`p-6 rounded-3xl btn-3d border-4 text-2xl md:text-3xl font-bold font-content transition-all text-right leading-[2.4] flex items-center gap-5 shadow-sm group ${skin === 'tablet' ? 'bg-slate-800 border-slate-700 text-sky-200 hover:border-sky-500 hover:bg-slate-700' : 'bg-white border-slate-200 text-slate-700 hover:border-slate-400 hover:bg-slate-50'}`}>
+                                            <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 border-4 font-black text-2xl ${skin === 'tablet' ? 'border-slate-600 bg-slate-900 text-sky-400 group-hover:border-sky-400' : `border-slate-200 ${theme.lightBg} ${theme.iconColor} group-hover:border-purple-400`}`}>{i + 1}</div>{opt}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+
+                            {currentQ.type === 'order' && (
+                                <div className="flex flex-col gap-6">
+                                    <div className={`min-h-[140px] rounded-[2rem] border-4 border-dashed p-6 flex flex-col gap-3 justify-center items-center shadow-inner w-full ${skin === 'tablet' ? 'bg-slate-800 border-slate-600' : 'bg-slate-50 border-slate-300'}`}>
+                                        {orderSelection.length === 0 && <span className={`text-2xl font-bold mt-4 ${skin === 'tablet' ? 'text-slate-500' : 'text-slate-400'}`}>اِضْغَطْ عَلَى الْأَحْدَاثِ بِالتَّرْتِيبِ لِتَبْنِيَ الْخُلَاصَةَ هُنَا</span>}
+                                        {orderSelection.map((originalIdx, i) => (
+                                            <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} key={i} onClick={() => handleOrderClick(originalIdx)} className={`w-full px-6 py-4 text-white rounded-2xl font-bold font-content text-2xl md:text-3xl cursor-pointer shadow-md text-center ${skin === 'tablet' ? 'bg-sky-700 hover:bg-sky-600' : 'bg-teal-500 hover:bg-teal-600'}`}>{currentQ.items[originalIdx]}</motion.div>
+                                        ))}
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                                        {shuffledOrderItems.map((itemObj) => {
+                                            if (orderSelection.includes(itemObj.originalIdx)) return null;
+                                            return <button key={itemObj.originalIdx} onClick={() => handleOrderClick(itemObj.originalIdx)} className={`p-6 rounded-3xl border-4 text-2xl md:text-3xl font-bold font-content transition-all btn-3d shadow-sm text-center ${skin === 'tablet' ? 'bg-slate-800 border-slate-700 text-sky-200 hover:border-sky-500 hover:bg-slate-700' : 'bg-white border-slate-200 text-slate-700 hover:border-teal-400 hover:bg-teal-50'}`}>{itemObj.text}</button>
+                                        })}
+                                    </div>
+                                </div>
+                            )}
+                        </motion.div>
+                    )}
+                </div>
+            );
+        };
+
+        const St2ComprehensionGames = ({ data, theme, onComplete, triggerError, shake }) => {
+            const [skin, setSkin] = useState(null); 
+            const [qIdx, setQIdx] = useState(0);
+            const [shuffledOpts, setShuffledOpts] = useState([]);
+            const [orderSelection, setOrderSelection] = useState([]);
+            const [shuffledOrderItems, setShuffledOrderItems] = useState([]);
+            const currentQ = data.varGame[qIdx];
+
+            const skinsData = [
+                { id: 'var', name: 'شَاشَةُ الْـ VAR 📺', icon: 'Tv', btnClass: 'bg-slate-900 border-slate-700 hover:border-sky-500 hover:bg-slate-800', iconClass: 'text-sky-400', textClass: 'text-white', descClass: 'text-slate-400', desc: 'حَلِّلِ الْمَوْقِفَ تِقَنِيّاً كَالْحَكَم.' },
+                { id: 'det', name: 'غُرْفَةُ التَّحْقِيق 🕵️‍♂️', icon: 'Search', btnClass: 'bg-amber-50 border-amber-200 hover:border-amber-500 hover:bg-amber-100', iconClass: 'text-amber-600', textClass: 'text-amber-800', descClass: 'text-amber-700/70', desc: 'اكْتَشِفْ دَوَافِعَ الْأَبْطَالِ بِدِقَّة.' },
+                { id: 'scale', name: 'الْمِيزَانُ الذَّهَبِيّ ⚖️', icon: 'Scale', btnClass: 'bg-emerald-50 border-emerald-200 hover:border-emerald-500 hover:bg-emerald-100', iconClass: 'text-emerald-600', textClass: 'text-emerald-800', descClass: 'text-emerald-700/70', desc: 'زِنِ الْأَفْعَالَ وَعَوَاقِبَهَا بِهُدُوء.' }
+            ];
+
+            useEffect(() => {
+                if (skin && currentQ) {
+                    if (currentQ.type === 'mcq' || currentQ.type === 'fill' || currentQ.type === 'insight') {
+                        const mapped = currentQ.options.map((text, i) => ({ text, isCorrect: i === currentQ.correct }));
+                        setShuffledOpts(shuffleArray(mapped));
+                    } else if (currentQ.type === 'order') {
+                        const mapped = currentQ.items.map((text, i) => ({ text, originalIdx: i }));
+                        setShuffledOrderItems(shuffleArray(mapped));
+                        setOrderSelection([]); 
+                    }
+                }
+            }, [qIdx, currentQ, skin]);
+
+            const processCorrectAnswer = () => { if (qIdx < data.varGame.length - 1) setQIdx(p => p + 1); else onComplete(); };
+            const handleAnsClick = (isCorrect) => { if (isCorrect) processCorrectAnswer(); else triggerError(); };
+
+            const handleOrderClick = (originalIdx) => {
+                if (orderSelection.includes(originalIdx)) setOrderSelection(orderSelection.filter(i => i !== originalIdx));
+                else {
+                    const newSelection = [...orderSelection, originalIdx];
+                    setOrderSelection(newSelection);
+                    if (newSelection.length === currentQ.items.length) {
+                        const isCorrect = newSelection.every((val, index) => val === currentQ.correctOrder[index]);
+                        setTimeout(() => { if (isCorrect) processCorrectAnswer(); else { triggerError(); setOrderSelection([]); } }, 500);
+                    }
+                }
+            };
+
+            if (!skin) return <SkinSelector title="عَقْلُ الْمُفَكِّرِ 🧠" desc="تَحْلِيلُ السِّيرَةِ الذَّاتِيَّةِ! كَيْفَ تُحِبُّ أَنْ تُحَلِّلَ الْقِصَّةَ الْيَوْمَ؟" skins={skinsData} onSelect={setSkin} theme={theme}/>;
+
+            const skinClass = skin === 'var' ? 'theme-var' : skin === 'det' ? 'theme-det' : 'theme-scale';
+            const iconName = skin === 'var' ? 'Tv' : skin === 'det' ? 'Search' : 'Scale';
+            const skinTitle = skin === 'var' ? 'شَاشَةُ الْـ VAR' : skin === 'det' ? 'مِلَفُّ التَّحْقِيق' : 'مِيزَانُ الْحِكْمَة';
+
+            return (
+                <div className={`card-royal p-8 md:p-12 w-full max-w-4xl text-center mx-auto border-4 ${skinClass} ${shake ? 'animate-shake border-red-500' : ''}`}>
+                    <div className="flex justify-between items-center mb-10 pb-6" style={{ borderBottom: '2px solid currentColor', opacity: 0.8 }}>
+                        <h2 className="text-3xl md:text-4xl font-black flex items-center gap-4"><AppIcon name={iconName} size={40}/> {skinTitle}</h2>
+                        <span className="font-bold px-5 py-2 rounded-full text-xl" style={{ backgroundColor: 'currentColor', filter: 'opacity(0.15)' }}><span style={{ color: 'inherit', filter: 'brightness(0.5)' }}>السؤال {qIdx + 1} / {data.varGame.length}</span></span>
+                    </div>
+                    
+                    <div className="q-box p-8 md:p-10 mb-10 z-10 transition-all rounded-3xl border-4">
+                        <p className="text-2xl md:text-3xl font-black font-content leading-loose relative z-10">{currentQ.q}</p>
+                    </div>
+                    
+                    {currentQ.type === 'tf' && (
+                        <div className="flex flex-col md:flex-row gap-6">
+                            <button onClick={() => handleAnsClick(currentQ.correct === true)} className="ans-btn flex-1 p-8 btn-3d font-black text-3xl font-content border-b-8 border-2 bg-transparent transition-all">صَحِيح ✅</button>
+                            <button onClick={() => handleAnsClick(currentQ.correct === false)} className="ans-btn flex-1 p-8 btn-3d font-black text-3xl font-content border-b-8 border-2 bg-transparent transition-all">خَاطِئ ❌</button>
+                        </div>
+                    )}
+                    {(currentQ.type === 'mcq' || currentQ.type === 'insight') && (
+                        <div className="flex flex-col gap-5">
+                            {shuffledOpts.map((opt, i) => (
+                                <button key={i} onClick={() => handleAnsClick(opt.isCorrect)} className="ans-btn p-6 btn-3d font-bold text-2xl md:text-3xl font-content text-right leading-[2.6] border-b-8 border-2 bg-transparent transition-all">{opt.text}</button>
+                            ))}
+                        </div>
+                    )}
+                    {currentQ.type === 'fill' && (
+                        <div className="flex flex-col items-center gap-8">
+                            <div className="q-box p-6 w-full text-center opacity-80 border-dashed rounded-3xl border-4">
+                                <span className="text-2xl font-content font-bold">{currentQ.parts[0]} <span className="inline-block min-w-[100px] border-b-4 border-current mx-3">.....</span> {currentQ.parts[1]}</span>
+                            </div>
+                            <div className="flex flex-wrap justify-center gap-4 w-full">
+                                {shuffledOpts.map((opt, i) => (
+                                    <button key={i} onClick={() => handleAnsClick(opt.isCorrect)} className="ans-btn px-8 py-5 btn-3d font-bold text-2xl font-content border-b-6 border-2 bg-transparent transition-all">{opt.text}</button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    {currentQ.type === 'order' && (
+                        <div className="flex flex-col gap-6">
+                            <div className="q-box min-h-[140px] p-6 flex flex-col md:flex-row flex-wrap gap-3 justify-center items-center opacity-90 border-dashed rounded-3xl border-4">
+                                {orderSelection.length === 0 && <span className="text-xl font-bold opacity-60">رَتِّبِ الْأَحْدَاثَ هُنَا بِالضَّغْطِ عَلَيْهَا</span>}
+                                {orderSelection.map((originalIdx, i) => (
+                                    <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} key={i} onClick={() => handleOrderClick(originalIdx)} className="ans-btn w-full md:w-auto px-6 py-3 font-bold font-content text-xl cursor-pointer shadow-md flex items-center gap-3 border-2 bg-transparent transition-all">
+                                        <span className="w-8 h-8 rounded-full bg-current opacity-20 flex items-center justify-center font-main text-sm text-inherit">{i + 1}</span>{currentQ.items[originalIdx]}
+                                    </motion.div>
+                                ))}
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                                {shuffledOrderItems.map((itemObj) => {
+                                    if (orderSelection.includes(itemObj.originalIdx)) return null;
+                                    return <button key={itemObj.originalIdx} onClick={() => handleOrderClick(itemObj.originalIdx)} className="ans-btn p-5 btn-3d font-bold font-content text-xl text-center border-b-6 border-2 bg-transparent transition-all">{itemObj.text}</button>
+                                })}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const St3AccuracyClinic = ({ data, theme, setCoins, onComplete, triggerError, shake }) => {
+            const [skin, setSkin] = useState(null); 
+            const [accuracyFound, setAccuracyFound] = useState([]);
+            const trapsCount = data.accuracyClinic.trapCount;
+
+            const skinsData = [
+                { id: 'hacker', name: 'مُضَادُّ الْفَيْرُوسَات 💻', icon: 'Bug', btnClass: 'bg-slate-900 border-slate-700 hover:border-emerald-500 hover:bg-slate-800', iconClass: 'text-emerald-400', textClass: 'text-emerald-400', descClass: 'text-emerald-700', desc: 'اكْتَشِفِ الْكَلِمَاتِ الْمُخْتَرَقَة.' },
+                { id: 'detective', name: 'عَدَسَةُ الْمُحَقِّق 🔍', icon: 'Search', btnClass: 'bg-amber-50 border-amber-200 hover:border-amber-500 hover:bg-amber-100', iconClass: 'text-amber-600', textClass: 'text-amber-800', descClass: 'text-amber-700/70', desc: 'ابْحَثْ عَنِ الْأَدِلَّةِ الْمُزَيَّفَة.' },
+                { id: 'doctor', name: 'طَبِيبُ الْكَلِمَات 🩺', icon: 'Stethoscope', btnClass: 'bg-sky-50 border-sky-200 hover:border-sky-500 hover:bg-sky-100', iconClass: 'text-sky-600', textClass: 'text-sky-800', descClass: 'text-sky-700/70', desc: 'عَالِجِ الْكَلِمَاتِ الْمَرِيضَة.' }
+            ];
+
+            if (!skin) return <SkinSelector title="عِيَادَةُ الدِّقَّةِ الْبَصَرِيَّة 🎯" desc="الْهَدَفُ هُوَ صَيْدُ الْكَلِمَاتِ الزَّائِفَة.. لَكِنْ مَا هُوَ شَكْلُ الْعِيَادَةِ الَّذِي تُفَضِّلُه؟" skins={skinsData} onSelect={setSkin} theme={theme}/>;
+
+            const skinClass = `skin-${skin}`;
+            const iconName = skin === 'hacker' ? 'Bug' : skin === 'detective' ? 'Search' : 'Stethoscope';
+            const skinTitle = skin === 'hacker' ? 'مُضَادُّ الْفَيْرُوسَات' : skin === 'detective' ? 'عَدَسَةُ الْمُحَقِّق' : 'طَبِيبُ الْكَلِمَات';
+            const trapName = skin === 'hacker' ? 'فَيْرُوسَات' : skin === 'detective' ? 'أَدِلَّة مُزَيَّفَة' : 'كَلِمَات مَرِيضَة';
+
+            return (
+                <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className={`card-royal p-12 w-full max-w-5xl text-center mx-auto border-4 ${skinClass} ${shake ? 'animate-shake border-red-500' : ''}`}>
+                    <div className="flex justify-between items-center mb-8 border-b-2 pb-4" style={{ borderColor: 'currentColor', opacity: 0.8 }}>
+                        <h2 className="text-3xl font-black flex items-center gap-3"><AppIcon name={iconName} size={40}/> {skinTitle}</h2>
+                        <span className="font-bold px-4 py-2 rounded-full text-lg border-2" style={{ borderColor: 'currentColor' }}>اكْتَشَفْتَ: {accuracyFound.length} / {trapsCount}</span>
+                    </div>
+                    <p className="text-xl font-bold mb-8 text-right p-6 rounded-2xl border-r-8 content-box" style={{ opacity: 0.9 }}>
+                        لَا تَكُنْ (خَمَّاناً)! هُنَاكَ كَلِمَاتٌ تَغَيَّرَتْ نُقْطَتُهَا أَو حَرَكَتُهَا.. ابْحَثْ عَنِ الـ ({trapName}) وَاضْغَطْ عَلَيْهَا!
+                    </p>
+                    <div className="content-box p-10 md:p-12 leading-[3] text-center transition-all rounded-[3rem] border-4">
+                        {data.accuracyClinic.textBlocks.map((b, i) => {
+                            const isFound = accuracyFound.includes(i);
+                            return (
+                                <span 
+                                    key={i} 
+                                    onClick={() => {
+                                        if(b.isTrap) {
+                                            if(!isFound) {
+                                                const newF = [...accuracyFound, i];
+                                                setAccuracyFound(newF);
+                                                setCoins(c => c + 15);
+                                                if(newF.length === trapsCount) setTimeout(() => onComplete(), 1500);
+                                            }
+                                        } else triggerError();
+                                    }} 
+                                    className={`word-item inline-block mx-1 md:mx-2 px-3 py-1 rounded-2xl cursor-pointer text-3xl md:text-4xl font-content transition-all border-2 border-transparent ${isFound ? 'scale-110 shadow-md' : ''}`}
+                                    style={isFound ? { backgroundColor: 'currentColor', color: skin === 'hacker' ? '#020617' : 'white', borderColor: 'currentColor', fontWeight: '900' } : {}}
+                                >
+                                    {b.word}
+                                </span>
+                            );
+                        })}
+                    </div>
+                </motion.div>
+            );
+        };
+
+        const St4WordBuilder = ({ data, theme, onComplete, triggerError, shake, setCoins }) => {
+            const [skin, setSkin] = useState(null); 
+            const [wIdx, setWIdx] = useState(0);
+            const [step, setStep] = useState(0);
+            const [playList, setPlayList] = useState(data.hardWords);
+            const [isTeacherMode, setIsTeacherMode] = useState(false);
+            const [customInput, setCustomInput] = useState("");
+            const [customChunks, setCustomChunks] = useState([]);
+
+            const currentW = playList[wIdx];
+
+            const skinsData = [
+                { id: 'factory', name: 'آلَةُ التَّجْمِيع ⚙️', icon: 'Wrench', btnClass: 'bg-slate-100 border-slate-300 hover:border-slate-500 hover:bg-slate-200', iconClass: 'text-slate-600', textClass: 'text-slate-800', descClass: 'text-slate-500', desc: 'رَكِّبِ التُّرُوسَ الْمَقْطَعِيَّة.' },
+                { id: 'kitchen', name: 'خَلْطَةُ الطَّبَّاخ 🍲', icon: 'ChefHat', btnClass: 'bg-orange-50 border-orange-200 hover:border-orange-500 hover:bg-orange-100', iconClass: 'text-orange-600', textClass: 'text-orange-800', descClass: 'text-orange-700/70', desc: 'أَضِفِ الْمُكَوِّنَاتِ فِي الْقِدْر.' },
+                { id: 'builder', name: 'رَافِعَةُ الْبِنَاء 🏗️', icon: 'HardHat', btnClass: 'bg-yellow-50 border-yellow-200 hover:border-yellow-500 hover:bg-yellow-100', iconClass: 'text-yellow-600', textClass: 'text-yellow-800', descClass: 'text-yellow-700/70', desc: 'ابْنِ الْكَلِمَةَ طُوبَةً طُوبَة.' }
+            ];
+
+            const autoSyllabify = (text) => {
+                if(!text) return [];
+                const units = text.match(/[\s\S][\u064B-\u065F]*/g) || [];
+                let chunks = [];
+                let curr = "";
+
+                for (let i = 0; i < units.length; i++) {
+                    const unit = units[i];
+                    const hasSukoon = /\u0652/.test(unit);
+                    const isMadLetter = /[اويى]/.test(unit) && !/[\u064B-\u0652]/.test(unit);
+                    
+                    if (curr === "") {
+                        curr = unit;
+                    } else if (hasSukoon || isMadLetter) {
+                        curr += unit;
+                        chunks.push(curr);
+                        curr = "";
+                    } else {
+                        chunks.push(curr);
+                        curr = unit;
+                    }
+                }
+                if (curr !== "") chunks.push(curr);
+                
+                let finalChunks = [];
+                for (let i = 0; i < chunks.length; i++) {
+                    if ((chunks[i] === 'ا' || chunks[i] === 'أ' || chunks[i] === 'إ') && chunks[i+1] && chunks[i+1].startsWith('ل')) {
+                        finalChunks.push(chunks[i] + chunks[i+1]);
+                        i++;
+                    } else {
+                        finalChunks.push(chunks[i]);
+                    }
+                }
+
+                return finalChunks.map(c => c.trim()).filter(c => c.length > 0);
+            };
+
+            const handleCustomInputChange = (e) => {
+                const val = e.target.value;
+                setCustomInput(val);
+                setCustomChunks(autoSyllabify(val));
+            };
+
+            const handleAddWord = () => {
+                if(customChunks.length > 0) {
+                    setPlayList([...playList, { full: customInput, chunks: customChunks }]);
+                    setCustomInput("");
+                    setCustomChunks([]);
+                }
+            };
+
+            const handleRemoveWord = (index) => {
+                const newList = playList.filter((_, i) => i !== index);
+                setPlayList(newList);
+                if (wIdx >= newList.length && newList.length > 0) {
+                    setWIdx(newList.length - 1);
+                    setStep(0);
+                } else if (newList.length === 0) {
+                    setWIdx(0); setStep(0);
+                }
+            };
+
+            const handleNext = () => {
+                if (!currentW) { onComplete(); return; }
+                if (step < currentW.chunks.length) {
+                    setStep(step + 1); setCoins(c => c + 5);
+                } else {
+                    if (wIdx < playList.length - 1) { setWIdx(wIdx + 1); setStep(0); } 
+                    else onComplete();
+                }
+            };
+
+            if (!skin) return <SkinSelector title="مَصْنَعُ الْكَلِمَاتِ (لِيجُو الْمَقَاطِع) 🧱" desc="الْكَلِمَاتُ الصَّعْبَةُ نُفَكِّكُهَا كَاللِّيجُو.. لَكِنْ أَيَّ مَصْنَعٍ تَخْتَار؟" skins={skinsData} onSelect={setSkin} theme={theme}/>;
+
+            const skinClass = skin === 'factory' ? 'skin-factory bg-slate-200 border-slate-400 text-slate-800' : skin === 'kitchen' ? 'skin-kitchen' : 'skin-builder';
+            const iconName = skin === 'factory' ? 'Wrench' : skin === 'kitchen' ? 'ChefHat' : 'HardHat';
+            const skinTitle = skin === 'factory' ? 'آلَةُ التَّجْمِيع' : skin === 'kitchen' ? 'قِدْرُ الطَّبَّاخ' : 'رَافِعَةُ الْبِنَاء';
+
+            if (isTeacherMode) {
+                return (
+                    <div className={`card-royal p-8 md:p-12 w-full max-w-4xl text-center mx-auto border-4 ${skinClass}`}>
+                        <div className="flex justify-between items-center mb-8 border-b-2 pb-4" style={{ borderColor: 'currentColor', opacity: 0.7 }}>
+                            <h2 className="text-3xl font-black flex items-center gap-3">⚙️ لَوْحَةُ إِعْدَادَاتِ الْمُعَلِّمِ</h2>
+                            <button onClick={() => setIsTeacherMode(false)} className="font-bold px-5 py-2 rounded-full text-lg border-2 hover:bg-black/5 transition-colors" style={{ borderColor: 'currentColor' }}>إِغْلَاق وَعَوْدَة ❌</button>
+                        </div>
+                        
+                        <div className="bg-white/90 p-8 rounded-3xl mb-8 shadow-inner border-2" style={{ borderColor: 'currentColor' }}>
+                            <p className="text-xl font-bold mb-4 text-right text-slate-800">أَدْخِلِ الْكَلِمَةَ كَامِلَةً (مَضْبُوطَةً بِالشَّكْل):</p>
+                            <input type="text" value={customInput} onChange={handleCustomInputChange} placeholder="مِثَال: يَعْلَمُ (سَيَقُومُ النِّظَامُ بِتَقْطِيعِهَا آلِيّاً لِمَقَاطِع)" className="w-full p-4 rounded-2xl border-4 border-slate-300 text-3xl font-content mb-6 text-right focus:outline-none focus:border-blue-500 text-slate-800" dir="rtl" />
+                            
+                            <div className="min-h-[80px] p-4 bg-slate-100 rounded-2xl flex flex-wrap justify-center gap-2 mb-6 border-2 border-slate-200 shadow-inner" dir="ltr">
+                                {customChunks.length === 0 && <span className="text-slate-400 font-bold">سَيَظْهَرُ شَكْلُ التَّقْطِيعِ هُنَا مُبَاشَرَةً...</span>}
+                                {customChunks.map((c, i) => <span key={i} className="px-4 py-2 bg-white border-2 border-slate-300 rounded-xl text-3xl font-bold font-content shadow-sm text-slate-800">{c}</span>)}
+                            </div>
+                            
+                            <button onClick={handleAddWord} disabled={customChunks.length === 0} className={`px-10 py-4 rounded-full btn-3d text-xl font-black text-white ${customChunks.length > 0 ? 'bg-blue-600 hover:bg-blue-500 border-blue-800' : 'bg-slate-400 border-slate-500 cursor-not-allowed'}`}>إِضَافَةُ الْكَلِمَةِ لِلْمَصْنَعِ ➕</button>
+                        </div>
+
+                        <div className="text-right bg-white/50 p-6 rounded-3xl">
+                            <h3 className="text-2xl font-black mb-4 opacity-80" style={{ color: 'currentColor' }}>قَائِمَةُ الْكَلِمَاتِ الْحَالِيَّة:</h3>
+                            <div className="flex flex-wrap gap-4">
+                                {playList.map((pw, i) => (
+                                    <div key={i} className="bg-white px-5 py-3 rounded-2xl border-2 flex items-center gap-4 shadow-sm" style={{ borderColor: 'currentColor', color: 'currentColor' }}>
+                                        <span className="text-2xl font-bold font-content text-slate-800">{pw.full}</span>
+                                        <button onClick={() => handleRemoveWord(i)} className="w-8 h-8 rounded-full bg-rose-100 text-rose-600 hover:bg-rose-500 hover:text-white flex items-center justify-center transition-colors font-bold">X</button>
+                                    </div>
+                                ))}
+                                {playList.length === 0 && <p className="text-slate-600 font-bold">لَا تُوجَدُ كَلِمَات. قُمْ بِإِضَافَةِ كَلِمَةٍ لِلْبَدْء.</p>}
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className={`card-royal p-10 md:p-14 w-full max-w-4xl text-center mx-auto border-4 ${skinClass} ${shake ? 'animate-shake border-red-500' : ''}`}>
+                    <div className="flex justify-between items-center mb-8 border-b-2 pb-4 relative" style={{ borderColor: 'currentColor', opacity: 0.6 }}>
+                        <button onClick={() => setIsTeacherMode(true)} className="absolute -top-6 -left-6 w-14 h-14 bg-white rounded-full border-4 flex items-center justify-center hover:scale-110 transition-transform shadow-lg z-10 text-2xl" style={{ borderColor: 'currentColor' }} title="إعدادات المعلم">⚙️</button>
+                        <h2 className="text-3xl font-black flex items-center gap-3 pr-8"><AppIcon name={iconName} size={40}/> {skinTitle}</h2>
+                        <span className="font-bold px-4 py-2 rounded-full text-lg border-2" style={{ borderColor: 'currentColor' }}>الكلمة {playList.length > 0 ? wIdx+1 : 0} / {playList.length}</span>
+                    </div>
+                    
+                    {!currentW ? (
+                        <div className="p-10 text-2xl font-bold opacity-70" style={{ color: 'currentColor' }}>لَا تُوجَدُ كَلِمَاتٌ لِبِنَائِهَا. اِطْلُبْ مِنَ الْمُعَلِّمِ إِضَافَةَ كَلِمَاتٍ جَدِيدَة.</div>
+                    ) : (
+                        <>
+                            <div className="content-box p-10 rounded-[3rem] border-4 mb-10 flex justify-center items-center min-h-[250px] shadow-inner transition-all bg-white/50" style={{ borderColor: 'currentColor' }}>
+                                <div className="flex gap-2 flex-row-reverse flex-wrap" dir="ltr">
+                                   {currentW.chunks.map((c, i) => (
+                                       <motion.div key={i} initial={{ opacity: 0, y: -50 }} animate={{ opacity: i <= step ? 1 : 0, y: i <= step ? 0 : -50, scale: i === step && step < currentW.chunks.length ? 1.1 : 1 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                           className={`lego-block text-4xl md:text-5xl font-black font-content p-4 shadow-md transition-colors text-slate-800 ${i === step && step < currentW.chunks.length ? 'border-4 scale-110' : 'border-2 opacity-90'}`}
+                                           style={{ display: i <= step ? 'block' : 'none', borderColor: 'currentColor' }}
+                                       >
+                                           {c}
+                                       </motion.div>
+                                   ))}
+                                </div>
+                            </div>
+                            
+                            <AnimatePresence>
+                                {step === currentW.chunks.length && (
+                                    <motion.div initial={{scale:0, opacity:0}} animate={{scale:1, opacity:1}} className="text-5xl md:text-6xl font-black mb-10 font-content py-6 px-10 rounded-[2rem] border-4 inline-block bg-white shadow-xl" style={{ color: 'currentColor', borderColor: 'currentColor' }}>
+                                        {currentW.full}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                            
+                            <button onClick={handleNext} className={`w-full max-w-sm py-6 rounded-[2rem] btn-3d text-3xl font-black mx-auto flex justify-center items-center gap-3 bg-white border-4 transition-all hover:bg-slate-50`} style={{ color: 'currentColor', borderColor: 'currentColor' }}>
+                                {step < currentW.chunks.length ? 'قَرَأْتُ الْمَقْطَعَ' : 'أَتْمَمْتُ الْكَلِمَةَ'} <AppIcon name={step < currentW.chunks.length ? "Play" : "CheckCircle2"} size={32}/>
+                            </button>
+                        </>
+                    )}
+                </div>
+            );
+        };
+
+        const St5AudioSync = ({ data, theme, onComplete, triggerError, shake, setCoins }) => {
+            const [qIdx, setQIdx] = useState(0);
+            const [phase, setPhase] = useState('read');
+            const [shuffledOpts, setShuffledOpts] = useState([]);
+            const currentQ = data.audioSync.questions[qIdx];
+
+            useEffect(() => {
+                if (currentQ) {
+                    const mapped = currentQ.options.map((opt) => ({ text: opt.text, isCorrect: opt.isCorrect }));
+                    setShuffledOpts(mapped.sort(() => Math.random() - 0.5));
+                }
+            }, [qIdx, currentQ]);
+
+            const handleAns = (isCorrect) => {
+                if(isCorrect) {
+                    setCoins(c => c + 15);
+                    if(qIdx < data.audioSync.questions.length - 1) { 
+                        setQIdx(qIdx+1); 
+                        setPhase('read'); 
+                    }
+                    else onComplete();
+                } else triggerError();
+            };
+
+            return (
+                <div className={`card-royal p-10 w-full max-w-4xl text-center mx-auto shadow-2xl bg-amber-50 border-4 border-amber-200 ${shake ? 'animate-shake border-red-400' : ''}`}>
+                    <div className="flex justify-between items-center mb-8 border-b-2 pb-4 border-amber-200">
+                        <h2 className="text-3xl font-black text-amber-700 flex items-center gap-3"><AppIcon name="Ear" size={40}/> عِيَادَةُ التَّزَامُنِ الصَّوْتِي</h2>
+                        <span className="font-bold text-amber-800 bg-amber-200 px-4 py-2 rounded-full text-xl">جولة {qIdx+1} مِنْ {data.audioSync.questions.length}</span>
+                    </div>
+
+                    {phase === 'read' ? (
+                        <div className="slide-up-fade">
+                            <p className="text-xl font-bold text-amber-800 mb-8">لِيَقْرَأِ الْمُعَلِّمُ الْجُمْلَةَ بِصَوْتٍ وَاضِحٍ، ثُمَّ يَمْسَحَهَا.</p>
+                            <div className="bg-white p-10 rounded-[2.5rem] border-4 border-amber-100 mb-10 shadow-sm">
+                                <p className="text-3xl md:text-4xl font-content font-black text-slate-800 leading-[2.6]">{currentQ.options.find(o => o.isCorrect).text}</p>
+                            </div>
+                            <button onClick={() => setPhase('match')} className="px-12 py-6 rounded-full btn-3d bg-amber-500 text-white hover:bg-amber-400 border-amber-700 text-2xl font-black flex items-center justify-center gap-3 mx-auto">
+                                أَخْفِ الْجُمْلَةَ وَاعْرِضِ الْخِيَارَات <AppIcon name="EyeOff" size={32} />
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="flex flex-col gap-6 slide-up-fade">
+                            <p className="text-2xl font-bold text-slate-700 mb-6">أَيُّ جُمْلَةٍ تُطَابِقُ مَا قَرَأَهُ الْمُعَلِّمُ تَمَاماً؟</p>
+                            {shuffledOpts.map((opt, i) => (
+                                <button key={i} onClick={() => handleAns(opt.isCorrect)} className="p-6 rounded-3xl btn-3d bg-white border-4 border-slate-200 text-2xl md:text-3xl font-bold font-content hover:bg-amber-100 hover:border-amber-400 transition-colors shadow-sm text-right leading-[2.4] text-slate-700">
+                                    {opt.text}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const St6Fluency = ({ data, theme, onComplete, setCoins }) => {
+            const [skin, setSkin] = useState(null); 
+            const [timer, setTimer] = useState(0);
+            const [isTimerRunning, setIsTimerRunning] = useState(false);
+            const [isPaused, setIsPaused] = useState(false); 
+            const [fluencyPhase, setFluencyPhase] = useState('ready'); 
+            const [fluencyRecords, setFluencyRecords] = useState([]); 
+            const timerRef = useRef(null);
+
+            const skinsData = [
+                { id: 'marathon', name: 'سِبَاقُ الْمَارَاثُون 🏃‍♂️', icon: 'Zap', btnClass: 'bg-emerald-50 border-emerald-200 hover:border-emerald-500 hover:bg-emerald-100', iconClass: 'text-emerald-600', textClass: 'text-emerald-800', descClass: 'text-emerald-700/70', desc: 'كَلَاسِيكِيّ: رَكْضٌ سَرِيعٌ مَعَ الْوَقْت.' },
+                { id: 'studio', name: 'نَجْمُ الْإِذَاعَة 🎙️', icon: 'Ear', btnClass: 'bg-purple-50 border-purple-200 hover:border-purple-500 hover:bg-purple-100', iconClass: 'text-purple-600', textClass: 'text-purple-800', descClass: 'text-purple-700/70', desc: 'هَادِئ: سَجِّلْ صَوْتَكَ بِثِقَة.' },
+                { id: 'diver', name: 'غَوَّاصُ الْأَعْمَاق 🤿', icon: 'Target', btnClass: 'bg-sky-50 border-sky-200 hover:border-sky-500 hover:bg-sky-100', iconClass: 'text-sky-600', textClass: 'text-sky-800', descClass: 'text-sky-700/70', desc: 'مُثِير: أَنْهِ الْقِرَاءَةَ قَبْلَ نَفَادِ الْأُكْسُجِين.' }
+            ];
+
+            useEffect(() => {
+                if (isTimerRunning && !isPaused) {
+                    timerRef.current = setInterval(() => setTimer(t => t + 1), 1000);
+                } else {
+                    clearInterval(timerRef.current);
+                }
+                return () => clearInterval(timerRef.current);
+            }, [isTimerRunning, isPaused]);
+
+            const endFluencyAttempt = () => {
+                setIsTimerRunning(false); setIsPaused(false);
+                const newRecords = [...fluencyRecords, timer];
+                setFluencyRecords(newRecords); setCoins(c => c + 20);
+                
+                if (newRecords.length === 3) setTimeout(() => onComplete(), 1500);
+                else setFluencyPhase('decision');
+            };
+
+            if (!skin) return <SkinSelector title="تَحَدِّي الطَّلَاقَةِ 🚀" desc="الْهَدَفُ هُوَ السُّرْعَةُ وَالْإِيقَاع، لَكِنْ بِأَيِّ شَكْلٍ تُفَضِّلُ التَّحَدِّي؟" skins={skinsData} onSelect={setSkin} theme={theme}/>;
+
+            const skinClass = skin === 'marathon' ? 'border-emerald-200 bg-white' : skin === 'studio' ? 'skin-studio border-4' : 'skin-diver border-4';
+            const iconName = skin === 'marathon' ? 'Zap' : skin === 'studio' ? 'Ear' : 'Target';
+            const skinTitle = skin === 'marathon' ? 'سِبَاقُ الْمَارَاثُون' : skin === 'studio' ? 'نَجْمُ الْإِذَاعَةِ (ON AIR)' : 'غَوَّاصُ الْأَعْمَاقِ';
+            const timerColor = skin === 'marathon' ? 'text-emerald-600' : skin === 'studio' ? 'text-purple-600' : 'text-sky-600';
+            const btnBg = skin === 'marathon' ? 'bg-emerald-500 border-emerald-700 hover:bg-emerald-400' : skin === 'studio' ? 'bg-purple-500 border-purple-700 hover:bg-purple-400' : 'bg-sky-500 border-sky-700 hover:bg-sky-400';
+
+            return (
+                <div className={`card-royal p-10 w-full max-w-4xl text-center mx-auto shadow-2xl border-4 ${skinClass}`}>
+                    <h2 className={`text-4xl font-black mb-6 flex items-center justify-center gap-4 ${timerColor}`}><AppIcon name={iconName} size={40}/> {skinTitle}</h2>
+                    {fluencyRecords.length > 0 && (
+                        <div className="flex justify-center gap-4 mb-8">
+                            {fluencyRecords.map((rec, i) => {
+                                const isBest = rec === Math.min(...fluencyRecords);
+                                return (
+                                    <div key={i} className={`px-4 py-2 rounded-xl border-2 font-bold text-lg flex items-center gap-2 ${isBest ? 'bg-amber-100 border-amber-400 text-amber-700 shadow-md transform scale-110' : 'bg-white border-slate-200 text-slate-500 opacity-80'}`}>
+                                        <span>مُحَاوَلَة {i+1}:</span>
+                                        <span className="font-black text-2xl font-main">{rec} ث</span>
+                                        {isBest && <span>👑</span>}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    )}
+                    {fluencyPhase === 'ready' && (
+                        <div className="py-10">
+                            <p className="text-2xl font-bold text-slate-600 mb-8">اقْرَأِ النَّصَّ بِصَوْتٍ عَالٍ 3 مَرَّات. حَاوِلْ كَسْرَ رَقْمِكَ الْقِيَاسِيِّ فِي كُلِّ مَرَّة!</p>
+                            <button onClick={() => { setTimer(0); setIsTimerRunning(true); setIsPaused(false); setFluencyPhase('running'); }} className={`px-16 py-6 rounded-full text-3xl font-black btn-3d shadow-lg transition-all text-white ${btnBg}`}>إِبْدَأِ الْعَدَّادَ ⏱️</button>
+                        </div>
+                    )}
+                    {fluencyPhase === 'running' && (
+                        <div>
+                            <div className={`text-7xl font-black mb-8 ${isPaused ? 'text-amber-500' : timerColor}`}>{timer} {skin === 'diver' ? 'أُكْسُجِين' : 'ثَانِيَة'}</div>
+                            <div className={`bg-white/80 p-10 rounded-[3rem] border-2 border-slate-200 mb-10 transition-all shadow-inner ${isPaused ? 'blur-sm grayscale opacity-50' : 'blur-0'}`}>
+                                <p className="text-3xl md:text-4xl font-content text-slate-800 text-justify leading-loose">{data.fluencyText}</p>
+                            </div>
+                            <div className="flex justify-center gap-6">
+                                <button onClick={() => setIsPaused(!isPaused)} className={`border-b-8 active:border-b-0 active:translate-y-2 text-2xl font-bold py-4 px-8 rounded-full shadow-md flex items-center gap-2 ${isPaused ? 'bg-amber-400 hover:bg-amber-500 text-amber-900 border-amber-600' : 'bg-slate-200 hover:bg-slate-300 text-slate-700 border-slate-400'}`}>
+                                    <AppIcon name={isPaused ? "Play" : "Pause"} size={28} /> {isPaused ? 'اسْتِئْنَاف' : 'إِيقَاف مُؤَقَّت'}
+                                </button>
+                                {!isPaused && (
+                                    <button onClick={endFluencyAttempt} className="bg-rose-500 hover:bg-rose-600 text-white border-b-8 border-rose-700 active:border-b-0 active:translate-y-2 text-2xl font-bold py-4 px-12 rounded-full shadow-md flex items-center gap-2">
+                                        أَنْهَيْتُ الْقِرَاءَةَ <AppIcon name="Check" size={28}/>
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                    {fluencyPhase === 'decision' && (
+                        <div className="py-10">
+                            <div className="text-6xl mb-6">🎉</div>
+                            <h3 className="text-4xl font-black text-slate-800 mb-4">وَقْتُكَ: {timer} ثَانِيَة</h3>
+                            <p className="text-xl text-slate-500 font-bold mb-10">أَحْسَنْتَ! هَلْ تُرِيدُ كَسْرَ رَقْمِكَ فِي الْمُحَاوَلَةِ التَّالِيَة؟</p>
+                            <button onClick={() => { setTimer(0); setIsTimerRunning(true); setIsPaused(false); setFluencyPhase('running'); }} className={`bg-white border-4 text-emerald-600 hover:bg-emerald-50 font-black text-2xl py-4 px-8 rounded-2xl btn-3d flex items-center justify-center gap-2 mx-auto`} style={{ borderColor: 'currentColor'}}>
+                                🔄 أُرِيدُ كَسْرَ رَقْمِي!
+                            </button>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // --- ألعاب البنك (Bonus) ---
+        const BonusMagnet = ({ data, onComplete, triggerError, bonusHints, setBonusHints }) => {
+            const [wordIdx, setWordIdx] = useState(0);
+            const [selected, setSelected] = useState([]);
+            const [shuffledSyllables, setShuffledSyllables] = useState([]);
+            const [isRevealed, setIsRevealed] = useState(false);
+            
+            const currentQ = data.syllables[wordIdx];
+
+            useEffect(() => {
+                if (currentQ) {
+                    const syllablesWithIndex = currentQ.syllables.map((s, i) => ({ text: s, originalIdx: i }));
+                    setShuffledSyllables(shuffleArray(syllablesWithIndex));
+                    setSelected([]);
+                    setIsRevealed(false);
+                }
+            }, [wordIdx, currentQ]);
+
+            const handleSyllableClick = (sylObj) => {
+                const expectedIdx = selected.length;
+                if (sylObj.originalIdx === expectedIdx) {
+                    const newSelected = [...selected, sylObj];
+                    setSelected(newSelected);
+                    if (newSelected.length === currentQ.syllables.length) {
+                        setTimeout(() => {
+                            if (wordIdx < data.syllables.length - 1) {
+                                setWordIdx(w => w + 1);
+                            } else {
+                                onComplete();
+                            }
+                        }, 1000);
+                    }
+                } else {
+                    triggerError();
+                    setSelected([]);
+                }
+            };
+
+            return (
+                <div className={`card-royal p-12 w-full max-w-4xl text-center mx-auto shadow-2xl bg-sky-50 border-4 border-sky-200`}>
+                    <div className="flex justify-between items-center mb-8 border-b-2 pb-6 border-sky-200">
+                        <h2 className="text-4xl font-black text-sky-700 flex items-center gap-4"><AppIcon name="Puzzle" size={40}/> مُفَكِّكُ الْمَقَاطِعِ 🧲</h2>
+                        <span className="font-bold text-sky-900 bg-sky-200 px-5 py-2 rounded-full text-xl">كلمة {wordIdx+1} / {data.syllables.length}</span>
+                    </div>
+                    
+                    <p className="text-xl font-bold text-sky-800 mb-8">اقْرَأِ التَّلْمِيحَ، ثُمَّ اضْغَطْ عَلَى الْمَقَاطِعِ بِالتَّرْتِيبِ لِبِنَاءِ الْكَلِمَةِ!</p>
+                    
+                    <div className="bg-white p-6 sm:p-12 rounded-[3rem] border-2 border-sky-300 shadow-inner mb-10 flex flex-col justify-center items-center relative overflow-hidden">
+                        <div className="mb-8 text-center w-full">
+                            <p className="text-3xl font-black text-slate-700 font-content leading-relaxed">{currentQ.hint}</p>
+                        </div>
+
+                        <div className="flex justify-center items-center gap-1 font-content text-4xl sm:text-5xl font-black text-slate-800 min-h-[80px]" dir="rtl">
+                            {selected.length === 0 && !isRevealed && (
+                                <button onClick={() => {
+                                    if (bonusHints > 0) {
+                                        setBonusHints(h => h - 1);
+                                        setIsRevealed(true);
+                                    } else {
+                                        alert("عذراً، لقد نفدت التلميحات!");
+                                    }
+                                }} className={`text-xl px-8 py-3 rounded-full font-bold transition-colors shadow-sm btn-3d flex items-center gap-2 ${bonusHints > 0 ? 'bg-sky-100 text-sky-700 border-sky-300 hover:bg-sky-200' : 'bg-slate-100 text-slate-400 border-slate-300 cursor-not-allowed'}`}>
+                                    <AppIcon name="Lightbulb" size={24} /> كَشْفُ الْكَلِمَةِ (يَسْتَهْلِكُ تَلْمِيحاً)
+                                </button>
+                            )}
+                            {selected.length === 0 && isRevealed && (
+                                <span className="text-slate-300 blur-sm hover:blur-none transition-all duration-300">{currentQ.word}</span>
+                            )}
+                            <AnimatePresence>
+                                {selected.map((s, i) => (
+                                    <motion.span key={s.originalIdx} initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="syllable-block bg-emerald-100 border-emerald-400 text-emerald-800 mx-1">
+                                        {s.text}
+                                    </motion.span>
+                                ))}
+                            </AnimatePresence>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-wrap justify-center gap-4">
+                        <AnimatePresence>
+                            {shuffledSyllables.map((syl, i) => {
+                                if (selected.find(s => s.originalIdx === syl.originalIdx)) return null;
+                                return (
+                                    <motion.button key={syl.originalIdx} initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} onClick={() => handleSyllableClick(syl)} className="bg-white border-4 border-sky-400 hover:bg-sky-100 text-sky-900 font-bold text-4xl py-4 px-6 rounded-2xl shadow-md transition-transform hover:-translate-y-2 font-content" dir="rtl">
+                                        {syl.text}
+                                    </motion.button>
+                                );
+                            })}
+                        </AnimatePresence>
+                    </div>
+                </div>
+            );
+        };
+
+        const BonusMemory = ({ data, onWin }) => {
+            const [cards, setCards] = useState([]);
+            const [flipped, setFlipped] = useState([]);
+            const [matched, setMatched] = useState([]);
+            const [disabled, setDisabled] = useState(false);
+
+            useEffect(() => {
+                const pairs = [...data.memoryCards, ...data.memoryCards];
+                setCards(shuffleArray(pairs.map((word, idx) => ({ id: idx, word }))));
+            }, [data]);
+
+            const handleCardClick = (index) => {
+                if (disabled || flipped.includes(index) || matched.includes(index)) return;
+
+                const newFlipped = [...flipped, index];
+                setFlipped(newFlipped);
+
+                if (newFlipped.length === 2) {
+                    setDisabled(true);
+                    const firstMatch = cards[newFlipped[0]].word;
+                    const secondMatch = cards[newFlipped[1]].word;
+
+                    if (firstMatch === secondMatch) {
+                        setMatched([...matched, newFlipped[0], newFlipped[1]]);
+                        setFlipped([]);
+                        setDisabled(false);
+                        if (matched.length + 2 === cards.length) {
+                            setTimeout(onWin, 1000);
+                        }
+                    } else {
+                        setTimeout(() => {
+                            setFlipped([]);
+                            setDisabled(false);
+                        }, 1000);
+                    }
+                }
+            };
+
+            return (
+                <div className="flex flex-col items-center w-full max-w-2xl mx-auto">
+                    <p className="text-xl font-bold text-slate-500 mb-6">طَابِقِ الْكَلِمَاتِ لِتَقْوِيَةِ ذَاكِرَتِكَ الْبَصَرِيَّة!</p>
+                    <div className="grid grid-cols-4 gap-4 w-full">
+                        {cards.map((card, i) => {
+                            const isFlipped = flipped.includes(i) || matched.includes(i);
+                            return (
+                                <div key={i} className={`memory-card h-28 md:h-32 ${isFlipped ? 'flipped' : ''}`} onClick={() => handleCardClick(i)}>
+                                    <div className="memory-card-inner">
+                                        <div className="memory-card-front text-white text-4xl">
+                                            <AppIcon name="Brain" size={40} />
+                                        </div>
+                                        <div className={`memory-card-back text-2xl md:text-3xl font-black font-content ${matched.includes(i) ? 'bg-emerald-100 text-emerald-700 border-emerald-400' : 'text-slate-700'}`}>
+                                            {card.word}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+        };
+
+        const BonusSightWords = ({ data, onWin }) => {
+            const [targetWord, setTargetWord] = useState("");
+            const [gridWords, setGridWords] = useState([]);
+            const [foundCount, setFoundCount] = useState(0);
+            const totalTargets = 4;
+
+            useEffect(() => {
+                const target = data.sightWords[Math.floor(Math.random() * data.sightWords.length)];
+                setTargetWord(target);
+
+                const distractors = ["كُلُّ", "مِنْ", "إِلَى", "عَنْ", "قَدْ", "لَمْ", "لَنْ", "بَلْ", "أَوْ"];
+                let words = [];
+                for(let i=0; i<totalTargets; i++) words.push({ text: target, isTarget: true, found: false });
+                for(let i=0; i<8; i++) words.push({ text: distractors[Math.floor(Math.random() * distractors.length)], isTarget: false, found: false });
+                
+                setGridWords(shuffleArray(words));
+            }, [data]);
+
+            const handleWordClick = (idx) => {
+                const newWords = [...gridWords];
+                if (newWords[idx].isTarget && !newWords[idx].found) {
+                    newWords[idx].found = true;
+                    setGridWords(newWords);
+                    setFoundCount(c => c + 1);
+                    if (foundCount + 1 === totalTargets) {
+                        setTimeout(onWin, 800);
+                    }
+                }
+            };
+
+            return (
+                <div className="flex flex-col items-center w-full max-w-2xl mx-auto">
+                    <div className="bg-emerald-100 border-4 border-emerald-300 rounded-[2rem] p-6 mb-8 text-center w-full shadow-inner">
+                        <p className="text-xl font-bold text-emerald-800 mb-2">ابْحَثْ عَنْ هَذِهِ الْكَلِمَةِ وَاصْطَدْهَا ({totalTargets - foundCount} مُتَبَقِّيَة):</p>
+                        <span className="text-5xl font-black font-content text-emerald-600 tracking-wider">{targetWord}</span>
+                    </div>
+                    
+                    <div className="grid grid-cols-3 md:grid-cols-4 gap-4 w-full">
+                        {gridWords.map((item, i) => (
+                            <button 
+                                key={i} 
+                                onClick={() => handleWordClick(i)}
+                                disabled={item.found}
+                                className={`h-20 rounded-2xl font-black font-content text-2xl transition-all border-b-4 
+                                    ${item.found ? 'bg-emerald-500 text-white border-emerald-700 scale-90 opacity-50' : 'bg-white text-slate-700 hover:bg-emerald-50 hover:border-emerald-400 border-slate-200 shadow-sm'}`}
+                            >
+                                {item.text}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+
+        // ==========================================
+        // 🤝 مَحَطَّةُ التَّعَارُفِ وَالتَّحَدِّيَاتِ السَّرِيعَةِ (كَسْرُ الْجَلِيدِ + تَحْدِيدُ الْمُسْتَوَى)
+        // ==========================================
+        const normAr = (s) => (s || "")
+            .replace(/[\u064B-\u0652\u0670\u0640]/g, "")
+            .replace(/[\u0623\u0625\u0622\u0671]/g, "\u0627")
+            .replace(/\u0649/g, "\u064A")
+            .replace(/\u0629/g, "\u0647")
+            .replace(/\s+/g, "")
+            .trim();
+
+        // --- بنوك ألعاب كسر الجليد (تُسحب عشوائياً في كل جلسة) ---
+        const CORE_GAMES = {
+            age: { kind: 'pick', key: 'age', badge: 'تَعَارُف', icon: '🎂',
+                q: 'كَمْ عُمْرُكَ؟', opts: ['٨ - ٩ سَنَوَات', '١٠ - ١١ سَنَة', '١٢ فَأَكْثَر'],
+                reacts: ['عُمْرٌ رَائِعٌ لِلْمُغَامَرَاتِ! 🌟', 'سِنُّ الْأَبْطَالِ بِالضَّبْطِ! ⚡', 'قَارِئٌ كَبِيرٌ إِذَنْ! 🎓'] },
+            mood: { kind: 'emoji', key: 'mood', badge: 'مِزَاجُ الْيَوْمِ', icon: '🌤️',
+                q: 'اخْتَرْ وَجْهاً يَصِفُ شُعُورَكَ الْآنَ:',
+                opts: ['😄 نَشِيط', '🙂 هَادِئ', '😴 نَعْسَان', '🤩 مُتَحَمِّس', '😬 مُتَوَتِّر'],
+                reacts: ['طَاقَتُكَ سَتُعْجِبُنَا! 🔥', 'الْهُدُوءُ سِرُّ التَّرْكِيزِ. 🧘', 'سَنُوقِظُكَ بِتَحَدٍّ لَطِيفٍ! ☕', 'وَأَنَا مِثْلُكَ! لِنَبْدَأْ! 🚀', 'خُذْ نَفَساً عَمِيقاً.. لَا امْتِحَانَ هُنَا. 💙'] },
+            feel: { kind: 'pick', key: 'feel', badge: 'تَعَارُف', icon: '📚',
+                q: 'مَا شُعُورُكَ تُجَاهَ الْقِرَاءَةِ بِصِدْقٍ؟',
+                opts: ['😍 أُحِبُّهَا كَثِيراً', '🙂 عَادِيَّةٌ بِالنِّسْبَةِ لِي', '😅 صَعْبَةٌ عَلَيَّ قَلِيلاً'],
+                reacts: ['إِذَنْ سَنَسْتَمْتِعُ مَعاً! 💖', 'سَنَجْعَلُهَا أَجْمَلَ الْيَوْمَ! ✨', 'شُكْراً لِصِدْقِكَ — سَنَبْدَأُ بِخُطُوَاتٍ صَغِيرَةٍ. 🤝'] },
+            topic: { kind: 'pick', key: 'topic', badge: 'اهْتِمَامَاتُك', icon: '✨',
+                q: 'أَيُّ الْمَوْضُوعَاتِ تُحِبُّ أَنْ تَقْرَأَ عَنْهَا؟',
+                opts: ['🗺️ الْمُغَامَرَات', '🔬 الْعُلُوم', '🐾 الْحَيَوَانَات', '⚽ الرِّيَاضَة'],
+                reacts: ['خَرَائِطُ وَكُنُوزٌ! 🧭', 'عَقْلٌ عَالِمٌ! 🧪', 'صَدِيقُ الْمَخْلُوقَاتِ! 🐘', 'رُوحٌ رِيَاضِيَّةٌ! 🏆'] },
+            coin: { kind: 'pick', key: 'coin', badge: 'قَبْلَ الْقِصَّةِ', icon: '🪙',
+                q: 'لَوْ كَانَ مَعَكَ قِرْشٌ وَاحِدٌ فَقَطْ.. مَاذَا تَفْعَلُ بِهِ؟',
+                opts: ['📕 أَشْتَرِي كِتَاباً قَدِيماً', '🍬 أَشْتَرِي حَلْوَى', '🐷 أَضَعُهُ فِي حَصَّالَتِي'],
+                reacts: ['بَطَلُ قِصَّتِنَا اخْتَارَ مِثْلَكَ تَمَاماً! 📖', 'صَادِقٌ وَلَذِيذٌ! سَنَرَى مَاذَا اخْتَارَ بَطَلُنَا.. 🍭', 'مُدَبِّرٌ ذَكِيٌّ! لَكِنْ بَطَلَنَا لَهُ رَأْيٌ آخَرُ.. 💰'] }
+        };
+
+        const EITHER_POOL = [
+            { kind: 'either', key: 'wr1', badge: 'لَوْ خُيِّرْتَ', icon: '⚖️', q: 'أَيُّهُمَا تَخْتَارُ؟',
+              opts: ['📗 كِتَابٌ وَاحِدٌ تَقْرَؤُهُ أَلْفَ مَرَّةٍ', '📚 أَلْفُ كِتَابٍ تَقْرَأُ كُلَّ وَاحِدٍ مَرَّةً'],
+              reacts: ['الْعُمْقُ! تُحِبُّ أَنْ تَفْهَمَ كُلَّ تَفْصِيلَةٍ. 🔍', 'الِاتِّسَاعُ! فُضُولُكَ لَا يَتَوَقَّفُ. 🌍'] },
+            { kind: 'either', key: 'wr2', badge: 'لَوْ خُيِّرْتَ', icon: '⚖️', q: 'أَيْنَ تُفَضِّلُ أَنْ تَقْرَأَ؟',
+              opts: ['🌳 تَحْتَ شَجَرَةٍ فِي حَدِيقَةٍ', '🕯️ فِي مَكْتَبَةٍ قَدِيمَةٍ دَافِئَةٍ'],
+              reacts: ['الْهَوَاءُ الطَّلْقُ يُنَشِّطُ الْخَيَالَ! 🍃', 'رَائِحَةُ الْوَرَقِ الْقَدِيمِ.. اخْتِيَارُ الْخُبَرَاءِ! 📜'] },
+            { kind: 'either', key: 'wr3', badge: 'لَوْ خُيِّرْتَ', icon: '⚖️', q: 'أَيَّ قُوَّةٍ خَارِقَةٍ تَخْتَارُ؟',
+              opts: ['🦅 أَنْ تَطِيرَ فَوْقَ الْمَدِينَةِ', '⚡ أَنْ تَقْرَأَ كِتَاباً كَامِلاً فِي دَقِيقَةٍ'],
+              reacts: ['الْحُرِّيَّةُ وَالسَّمَاءُ! ✈️', 'بَطَلُ قِصَّتِنَا كَانَ يَتَمَنَّى هَذَا بِالضَّبْطِ! 📖'] },
+            { kind: 'either', key: 'wr4', badge: 'لَوْ خُيِّرْتَ', icon: '⚖️', q: 'إِلَى أَيْنَ تُسَافِرُ بِآلَةِ الزَّمَنِ؟',
+              opts: ['⏪ إِلَى الْمَاضِي لِأَرَى دِمَشْقَ الْقَدِيمَةَ', '⏩ إِلَى الْمُسْتَقْبَلِ لِأَرَى كُتُبَ الْغَدِ'],
+              reacts: ['سَتُقَابِلُ بَطَلَ قِصَّتِنَا هُنَاكَ! 🕰️', 'مُسْتَكْشِفُ الْغَدِ! 🚀'] },
+            { kind: 'either', key: 'wr5', badge: 'لَوْ خُيِّرْتَ', icon: '⚖️', q: 'كَيْفَ تُحِبُّ أَنْ تَقْرَأَ؟',
+              opts: ['🔊 بِصَوْتٍ عَالٍ أَمَامَ الْآخَرِينَ', '🤫 بِصَمْتٍ وَحْدِي فِي رُكْنِي'],
+              reacts: ['ثِقَةٌ عَالِيَةٌ! سَنَسْتَفِيدُ مِنْهَا فِي مَحَطَّةِ الطَّلَاقَةِ. 🎤', 'التَّرْكِيزُ الْهَادِئُ قُوَّةٌ أَيْضاً. 🌙'] },
+            { kind: 'either', key: 'wr6', badge: 'لَوْ خُيِّرْتَ', icon: '⚖️', q: 'أَيُّ صَدِيقٍ تُرِيدُ؟',
+              opts: ['🐉 تِنِّينٌ صَغِيرٌ يَحْرُسُ كُتُبَكَ', '🦉 بُومَةٌ حَكِيمَةٌ تَشْرَحُ لَكَ الْكَلِمَاتِ الصَّعْبَةَ'],
+              reacts: ['حَارِسٌ نَارِيٌّ لِمَكْتَبَتِكَ! 🔥', 'مُعْجَمٌ يَطِيرُ! اخْتِيَارٌ ذَكِيٌّ. 🧠'] },
+            { kind: 'either', key: 'wr7', badge: 'لَوْ خُيِّرْتَ', icon: '⚖️', q: 'أَيُّهُمَا أَصْعَبُ عَلَيْكَ؟',
+              opts: ['🐢 أَنْ تَقْرَأَ بِسُرْعَةٍ', '🧩 أَنْ تَفْهَمَ الْكَلِمَاتِ الصَّعْبَةَ'],
+              reacts: ['فَهِمْتُ! سَنُرَكِّزُ عَلَى مَحَطَّةِ الطَّلَاقَةِ. 🏃', 'وَاضِحٌ! سَنُقَوِّي مُفْرَدَاتِكَ فِي مُخْتَبَرِ الْمَعْنَى. 💡'] }
+        ];
+
+        const WHATIF_POOL = [
+            { kind: 'pick', key: 'wi1', badge: 'مَاذَا لَوْ؟', icon: '🌀',
+              q: 'مَاذَا لَوِ اسْتَيْقَظْتَ غَداً فَوَجَدْتَ كُلَّ صَفَحَاتِ الْكُتُبِ فَارِغَةً؟',
+              opts: ['✍️ سَأَكْتُبُ الْقِصَصَ بِنَفْسِي', '🗣️ سَأَطْلُبُ مِنْ جَدِّي أَنْ يَحْكِيَهَا', '🔎 سَأَبْحَثُ عَنِ السَّاحِرِ الَّذِي سَرَقَهَا'],
+              reacts: ['كَاتِبٌ فِي الطَّرِيقِ! 🖋️', 'الْحِكَايَاتُ الشَّفَوِيَّةُ كَنْزٌ حَقِيقِيٌّ! 👴', 'مُحَقِّقٌ شُجَاعٌ! 🕵️'] },
+            { kind: 'pick', key: 'wi2', badge: 'مَاذَا لَوْ؟', icon: '🎭',
+              q: 'لَوْ دَخَلْتَ دَاخِلَ قِصَّةِ الْيَوْمِ.. مَنْ تَكُونُ؟',
+              opts: ['👦 الطِّفْلُ الْوَاقِفُ خَلْفَ الزُّجَاجِ', '👴 بَائِعُ الْكُتُبِ الْقَدِيمَةِ', '🏪 صَاحِبُ الْمَكْتَبَةِ الْكَبِيرَةِ', '📕 الْكِتَابُ الْمُمَزَّقُ نَفْسُهُ!'],
+              reacts: ['أَنْتَ الْبَطَلُ إِذَنْ! 🌟', 'حَارِسُ الْكُنُوزِ الْوَرَقِيَّةِ! 🗝️', 'صَاحِبُ الْوَاجِهَةِ الْمُضِيئَةِ! 💡', 'إِجَابَةٌ عَبْقَرِيَّةٌ وَطَرِيفَةٌ! 😄'] },
+            { kind: 'pick', key: 'wi3', badge: 'مَاذَا لَوْ؟', icon: '📢',
+              q: 'مَاذَا لَوْ صَارَ لَكَ كِتَابٌ يَتَكَلَّمُ.. مَاذَا تُرِيدُهُ أَنْ يَقُولَ؟',
+              opts: ['😂 نُكْتَةً كُلَّ صَبَاحٍ', '🗺️ سِرَّ كَنْزٍ مَخْفِيٍّ', '💪 كَلِمَةً تُشَجِّعُنِي حِينَ أَحْزَنُ'],
+              reacts: ['كِتَابٌ مَرِحٌ! 🤣', 'مُغَامِرٌ بِالْفِطْرَةِ! 🧭', 'قَلْبٌ كَبِيرٌ.. أَعْجَبَنِي جَوَابُكَ. 💙'] },
+            { kind: 'pick', key: 'wi4', badge: 'مَاذَا لَوْ؟', icon: '🍎',
+              q: 'مَاذَا لَوْ صِرْتَ مُعَلِّماً لِيَوْمٍ وَاحِدٍ.. مَا أَوَّلُ قَرَارٍ تَتَّخِذُهُ؟',
+              opts: ['📖 حِصَّةُ قِرَاءَةٍ فِي الْحَدِيقَةِ', '🎮 نَتَعَلَّمُ بِالْأَلْعَابِ فَقَطْ', '🤫 يَوْمٌ بِلَا وَاجِبَاتٍ!'],
+              reacts: ['مُعَلِّمٌ مُبْدِعٌ! 🌿', 'وَهَذَا مَا نَفْعَلُهُ الْيَوْمَ بِالضَّبْطِ! 🕹️', 'صَرَاحَةٌ مُضْحِكَةٌ! 😄'] },
+            { kind: 'pick', key: 'wi5', badge: 'مَاذَا لَوْ؟', icon: '🪄',
+              q: 'مَاذَا لَوْ وَجَدْتَ كِتَاباً سِحْرِيّاً يُحَقِّقُ أُمْنِيَةً وَاحِدَةً؟',
+              opts: ['🧠 أَنْ أَقْرَأَ أَيَّ كِتَابٍ بِلَا تَعَبٍ', '🕰️ أَنْ أُوقِفَ الزَّمَنَ لِأُنْهِيَ قِصَّتِي', '🎁 أُعْطِي الْأُمْنِيَةَ لِصَدِيقِي'],
+              reacts: ['أُمْنِيَةُ الْقُرَّاءِ الْحَقِيقِيِّينَ! 📚', 'ذَكِيٌّ! الْوَقْتُ أَغْلَى مِنَ الذَّهَبِ. ⏳', 'كَرَمٌ نَادِرٌ.. أَحْسَنْتَ! 🤍'] },
+            { kind: 'pick', key: 'wi6', badge: 'مَاذَا لَوْ؟', icon: '🏝️',
+              q: 'مَاذَا لَوْ عَلِقْتَ فِي جَزِيرَةٍ وَمَعَكَ شَيْءٌ وَاحِدٌ فَقَطْ؟',
+              opts: ['📘 كِتَابٌ ضَخْمٌ', '🪁 لُعْبَةٌ مُفَضَّلَةٌ', '🍫 صُنْدُوقُ حَلْوَى'],
+              reacts: ['لَنْ تَشْعُرَ بِالْوَحْدَةِ أَبَداً! 🌴', 'الْمَرَحُ يَنْتَصِرُ! 🎈', 'قَرَارٌ لَذِيذٌ.. لَكِنَّهُ سَيَنْفَدُ! 😅'] },
+            { kind: 'pick', key: 'wi7', badge: 'مَاذَا لَوْ؟', icon: '🔇',
+              q: 'مَاذَا لَوِ اخْتَفَتْ كَلِمَةٌ وَاحِدَةٌ مِنَ اللُّغَةِ لِلْأَبَدِ.. أَيَّ كَلِمَةٍ تَخْتَارُ؟',
+              opts: ['❌ «لَا أَسْتَطِيعُ»', '😴 «مُمِلٌّ»', '😢 «خَائِفٌ»'],
+              reacts: ['اخْتِيَارُ الْأَبْطَالِ! 💪', 'إِذَنْ سَنَجْعَلُ كُلَّ شَيْءٍ مُمْتِعاً! 🎉', 'الشَّجَاعَةُ تَبْدَأُ مِنْ هُنَا. 🦁'] }
+        ];
+
+        const DARE_POOL = [
+            { kind: 'dare', key: 'dare', badge: 'تَحَدِّي ١٠ ثَوَانٍ', icon: '⏱️',
+              q: 'بِصَوْتٍ عَالٍ: اذْكُرْ ثَلَاثَةَ أَشْيَاءَ تَجِدُهَا دَاخِلَ الْمَكْتَبَةِ!', seconds: 10 },
+            { kind: 'dare', key: 'dare', badge: 'تَحَدِّي ١٠ ثَوَانٍ', icon: '🗣️',
+              q: 'بِصَوْتٍ عَالٍ: قُلْ جُمْلَةً تَبْدَأُ بِـ «لَوْ كُنْتُ...»', seconds: 10 },
+            { kind: 'dare', key: 'dare', badge: 'تَحَدِّي ١٢ ثَانِيَةً', icon: '🔤',
+              q: 'بِصَوْتٍ عَالٍ: اذْكُرْ أَرْبَعَ كَلِمَاتٍ تَبْدَأُ بِحَرْفِ (الْكَافِ)!', seconds: 12 },
+            { kind: 'dare', key: 'dare', badge: 'تَحَدِّي ١٠ ثَوَانٍ', icon: '🎬',
+              q: 'مَثِّلْ بِوَجْهِكَ فَقَطْ: طِفْلٌ يَرَى كِتَاباً جَمِيلاً خَلْفَ الزُّجَاجِ!', seconds: 10 }
+        ];
+
+        // في كل جلسة: 3 من «لَوْ خُيِّرْتَ» + 3 من «مَاذَا لَوْ» + تحدٍّ مرح، ممزوجة مع أسئلة التعارف
+        const buildMeetGames = () => {
+            const e = shuffleArray([...EITHER_POOL]).slice(0, 3);
+            const w = shuffleArray([...WHATIF_POOL]).slice(0, 3);
+            const d = shuffleArray([...DARE_POOL])[0];
+            return [
+                CORE_GAMES.age, CORE_GAMES.mood,
+                e[0], w[0],
+                CORE_GAMES.feel,
+                e[1], w[1],
+                CORE_GAMES.topic,
+                e[2], w[2],
+                CORE_GAMES.coin, d
+            ];
+        };
+
+        const CHALLENGES = [
+            { id: 'c1', type: 'mcq', skill: 'الدِّقَّةُ الْبَصَرِيَّةُ', icon: 'Search', color: 'rose',
+              title: 'عَيْنُ الصَّقْرِ 🦅', time: 20,
+              q: 'أَيُّ كَلِمَةٍ تُطَابِقُ تَمَاماً الْكَلِمَةَ الْمَكْتُوبَةَ فِي الْإِطَارِ؟', target: 'الْمَكْتَبَاتِ',
+              opts: ['الْمَكْتَبَاتِ', 'الْمَكْتَنَاتِ', 'الْمَكْتَبَاثِ', 'الْمَكَتْبَاتِ'], correct: 0,
+              fix: 'التَّدَرُّبُ عَلَى تَمْيِيزِ الْحُرُوفِ الْمُتَشَابِهَةِ (ب/ن/ث) — مَحَطَّةُ عِيَادَةِ الدِّقَّةِ.' },
+            { id: 'c2', type: 'mcq', skill: 'الْوَعْيُ الصَّوْتِيُّ', icon: 'Ear', color: 'amber',
+              title: 'أُذُنٌ ذَهَبِيَّةٌ 👂', time: 20,
+              q: 'أَيُّ كَلِمَةٍ تَبْدَأُ بِصَوْتِ (قِ)؟', target: null,
+              opts: ['قِرْش', 'كِتَاب', 'غِلَاف', 'نَظَر'], correct: 0,
+              fix: 'تَمَارِينُ رَبْطِ الصَّوْتِ بِالْحَرْفِ — مَحَطَّةُ عِيَادَةِ التَّزَامُنِ.' },
+            { id: 'c3', type: 'mcq', skill: 'الْمُفْرَدَاتُ وَالْمَعْنَى', icon: 'Lightbulb', color: 'purple',
+              title: 'صَائِدُ الْمَعَانِي 💡', time: 25,
+              q: 'مَاذَا تَعْنِي عِبَارَةُ «أُطِيلُ النَّظَرَ»؟', target: null,
+              opts: ['أَنْظُرُ إِلَيْهَا وَقْتاً طَوِيلاً', 'أَرْفَعُ رَأْسِي إِلَى الْأَعْلَى', 'أُغْمِضُ عَيْنَيَّ بِسُرْعَةٍ'], correct: 0,
+              fix: 'إِثْرَاءُ الْمُفْرَدَاتِ مِنَ السِّيَاقِ — مَحَطَّةُ مُخْتَبَرِ الْمَعْنَى.' },
+            { id: 'c4', type: 'order', skill: 'بِنَاءُ الْجُمْلَةِ', icon: 'Wrench', color: 'teal',
+              title: 'بَنَّاءُ الْجُمَلِ 🧱', time: 35,
+              q: 'اضْغَطْ عَلَى الْكَلِمَاتِ بِالتَّرْتِيبِ لِتَبْنِيَ جُمْلَةً صَحِيحَةً مِنَ الْقِصَّةِ:', target: null,
+              opts: ['أَسْرَعْتُ', 'إِلَى', 'بَائِعِ', 'الْكُتُبِ', 'الْقَدِيمَةِ'],
+              fix: 'التَّدَرُّبُ عَلَى تَرْتِيبِ الْكَلِمَاتِ وَبِنَاءِ الْجُمْلَةِ الْمُفِيدَةِ.' }
+        ];
+
+        const WRITE_CHALLENGE = {
+            id: 'c5', skill: 'الْكِتَابَةُ وَالذَّاكِرَةُ الْبَصَرِيَّةُ', word: 'الزُّجَاجِيَّةِ', flash: 5,
+            fix: 'تَمَارِينُ الْإِمْلَاءِ الْمَنْظُورِ وَبِنَاءِ الْكَلِمَةِ — مَحَطَّةُ لِيجُو الْمَقَاطِعِ.'
+        };
+
+        const St0Warmup = ({ theme, gender, setCoins, onFinish, onSkip }) => {
+            const [phase, setPhase] = useState('name');      // name | meet | bridge | ch | write | result
+            const [name, setName] = useState('');
+            const [meetGames] = useState(() => buildMeetGames());
+            const [meetIdx, setMeetIdx] = useState(0);
+            const [reaction, setReaction] = useState(null);
+            const [dareLeft, setDareLeft] = useState(0);
+            const [orderSel, setOrderSel] = useState([]);
+            const [answers, setAnswers] = useState({});
+            const [chIdx, setChIdx] = useState(0);
+            const [results, setResults] = useState([]);       // {id, skill, ok, fix}
+            const [feedback, setFeedback] = useState(null);   // 'ok' | 'no'
+            const [timer, setTimer] = useState({ idx: -1, end: 0 });
+            const [now, setNow] = useState(Date.now());
+            const [shuffled, setShuffled] = useState([]);
+            const [flashLeft, setFlashLeft] = useState(WRITE_CHALLENGE.flash);
+            const [typed, setTyped] = useState('');
+
+            const cur = CHALLENGES[chIdx];
+
+            const timeLeft = timer.idx === chIdx ? Math.max(0, Math.ceil((timer.end - now) / 1000)) : (cur ? cur.time : 0);
+
+            useEffect(() => {
+                if (phase === 'ch' && cur) {
+                    setShuffled(shuffleArray(cur.opts.map((t, i) => ({ t, i }))));
+                    setOrderSel([]);
+                    setFeedback(null);
+                    setNow(Date.now());
+                    setTimer({ idx: chIdx, end: Date.now() + cur.time * 1000 });
+                }
+            }, [phase, chIdx]);
+
+            useEffect(() => {
+                if (phase !== 'ch' || feedback) return;
+                const t = setInterval(() => setNow(Date.now()), 250);
+                return () => clearInterval(t);
+            }, [phase, chIdx, feedback]);
+
+            useEffect(() => {
+                if (phase !== 'ch' || feedback) return;
+                if (timer.idx !== chIdx) return;
+                if (now >= timer.end) recordAnswer(false);
+            }, [phase, chIdx, feedback, now, timer]);
+
+            useEffect(() => {
+                const g = meetGames[meetIdx];
+                if (phase !== 'meet' || !g || g.kind !== 'dare') return;
+                setDareLeft(g.seconds);
+            }, [phase, meetIdx]);
+
+            useEffect(() => {
+                if (dareLeft <= 0) return;
+                const t = setTimeout(() => setDareLeft(v => v - 1), 1000);
+                return () => clearTimeout(t);
+            }, [dareLeft]);
+
+            useEffect(() => {
+                if (phase !== 'write') return;
+                if (flashLeft <= 0) return;
+                const t = setTimeout(() => setFlashLeft(v => v - 1), 1000);
+                return () => clearTimeout(t);
+            }, [phase, flashLeft]);
+
+            const recordAnswer = (ok) => {
+                if (feedback) return;
+                setFeedback(ok ? 'ok' : 'no');
+                if (ok) setCoins(c => c + 10);
+                setResults(r => [...r, { id: cur.id, skill: cur.skill, ok, fix: cur.fix }]);
+                setTimeout(() => {
+                    if (chIdx < CHALLENGES.length - 1) setChIdx(i => i + 1);
+                    else setPhase('write');
+                }, 1100);
+            };
+
+            const handleOrderPick = (origIdx) => {
+                if (feedback) return;
+                const sel = [...orderSel, origIdx];
+                setOrderSel(sel);
+                if (sel.length === cur.opts.length) {
+                    const ok = sel.every((v, k) => v === k);
+                    setTimeout(() => { if (!ok) setOrderSel([]); recordAnswer(ok); }, 400);
+                }
+            };
+
+            const submitWrite = () => {
+                const ok = normAr(typed) === normAr(WRITE_CHALLENGE.word);
+                if (ok) setCoins(c => c + 10);
+                setResults(r => [...r, { id: WRITE_CHALLENGE.id, skill: WRITE_CHALLENGE.skill, ok, fix: WRITE_CHALLENGE.fix }]);
+                setPhase('result');
+            };
+
+            const score = results.filter(r => r.ok).length;
+            const level = score >= 5 ? { name: 'بَطَلُ اللُّغَةِ 💎', cls: 'bg-indigo-100 text-indigo-700 border-indigo-300', tip: 'مُسْتَوَاكَ مُتَقَدِّمٌ! ابْدَأْ مُبَاشَرَةً وَارْفَعْ سَقْفَ التَّحَدِّي فِي مَحَطَّةِ الطَّلَاقَةِ.' }
+                        : score >= 3 ? { name: 'قَارِئٌ نَشِيطٌ 🥇', cls: 'bg-amber-100 text-amber-700 border-amber-300', tip: 'مُسْتَوَاكَ جَيِّدٌ جِدّاً! رَكِّزْ عَلَى الْمَحَطَّاتِ الَّتِي تُعَالِجُ نِقَاطَ ضَعْفِكَ أَدْنَاهُ.' }
+                        : { name: 'قَارِئٌ مُبْتَدِئٌ 🌱', cls: 'bg-emerald-100 text-emerald-700 border-emerald-300', tip: 'بِدَايَةٌ جَمِيلَةٌ! سَنَسِيرُ خُطْوَةً خُطْوَةً، وَابْدَأْ بِمُخْتَبَرِ الْمَعْنَى ثُمَّ عِيَادَةِ الدِّقَّةِ.' };
+
+            const weak = results.filter(r => !r.ok);
+
+            const copyReport = () => {
+                const txt = 'تَقْرِيرُ مَحَطَّةِ التَّعَارُفِ (مِداد)\n'
+                    + '\u0627\u0644\u0637\u0627\u0644\u0628: ' + (name || '—') + '\n'
+                    + 'العمر: ' + (answers.age || '—') + ' | المزاج عند البدء: ' + (answers.mood || '—') + '\n'
+                    + 'علاقته بالقراءة: ' + (answers.feel || '—') + ' | الاهتمام: ' + (answers.topic || '—') + '\n'
+                    + 'القرش الواحد: ' + (answers.coin || '—') + '\n'
+                    + 'إجابات كسر الجليد (لو خُيِّرت / ماذا لو):\n'
+                    + meetGames.filter(g => g.key.startsWith('wr') || g.key.startsWith('wi'))
+                        .map(g => '• ' + g.q + '\n   → ' + (answers[g.key] || '—')).join('\n') + '\n'
+                    + 'النتيجة: ' + score + '/5 — المستوى: ' + level.name + '\n'
+                    + 'نقاط تحتاج دعماً:\n'
+                    + (weak.length ? weak.map(w => '• ' + w.skill + ' → ' + w.fix).join('\n') : '• لا توجد — أداء ممتاز في جميع التحديات.');
+                const ta = document.createElement('textarea');
+                ta.value = txt; document.body.appendChild(ta); ta.select();
+                try { document.execCommand('copy'); } catch (e) {}
+                document.body.removeChild(ta);
+            };
+
+            const box = "card-royal p-8 md:p-12 w-full max-w-4xl mx-auto text-center shadow-2xl border-4 border-slate-100 bg-white";
+
+            // ---------- 1. الاسم ----------
+            if (phase === 'name') return (
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className={box}>
+                    <div className="text-7xl mb-4">🤝</div>
+                    <h2 className={`text-4xl md:text-5xl font-black mb-4 ${theme.iconColor}`}>أَهْلاً بِكَ! لِنَتَعَارَفْ أَوَّلاً</h2>
+                    <p className="text-xl text-slate-500 font-bold mb-10 leading-relaxed">أَلْعَابُ تَعَارُفٍ سَرِيعَةٌ: «لَوْ خُيِّرْتَ»، «مَاذَا لَوْ»، وَتَحَدٍّ مَرِحٌ.. لَا خَطَأَ فِيهَا إِطْلَاقاً! ثُمَّ خَمْسَةُ تَحَدِّيَاتٍ قَصِيرَةٍ لِنَعْرِفَ مِنْ أَيْنَ نَبْدَأُ. 🚀</p>
+                    <input value={name} onChange={(e) => setName(e.target.value)} placeholder="اكْتُبِ اسْمَكَ هُنَا..."
+                        className="w-full max-w-lg mx-auto block text-center text-3xl font-black font-content p-6 rounded-3xl border-4 border-slate-200 focus:border-amber-400 outline-none mb-8 bg-slate-50" />
+                    <button onClick={() => setPhase('meet')} disabled={!name.trim()}
+                        className={`px-16 py-6 rounded-full text-2xl font-black btn-3d text-white ${name.trim() ? theme.btn : 'bg-slate-300 border-slate-400 cursor-not-allowed'}`}>
+                        يَلَّا نَبْدَأْ ✨
+                    </button>
+                    <div><button onClick={() => onSkip()} className="mt-8 text-slate-400 font-black underline text-lg">تَخَطِّي وَالذَّهَابُ لِلْخَرِيطَةِ مُبَاشَرَةً ➡</button></div>
+                </motion.div>
+            );
+
+            // ---------- 2. ألعاب التعارف ----------
+            if (phase === 'meet') {
+                const g = meetGames[meetIdx];
+
+                const answerMeet = (val, idx) => {
+                    if (reaction) return;
+                    setAnswers(a => ({ ...a, [g.key]: val }));
+                    setCoins(c => c + 5);
+                    setReaction((g.reacts && g.reacts[idx]) || 'رَائِع! 🌟');
+                    setTimeout(() => {
+                        setReaction(null);
+                        if (meetIdx < meetGames.length - 1) setMeetIdx(x => x + 1); else setPhase('bridge');
+                    }, 1250);
+                };
+
+                const pct = Math.round((meetIdx / meetGames.length) * 100);
+
+                return (
+                    <motion.div key={meetIdx} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className={box}>
+                        <div className="w-full bg-slate-100 h-3 rounded-full overflow-hidden mb-6">
+                            <div className="h-full bg-emerald-400 transition-all duration-500" style={{ width: pct + '%' }}></div>
+                        </div>
+
+                        <span className="inline-block bg-amber-100 text-amber-700 border-2 border-amber-200 font-black px-5 py-2 rounded-full mb-5">
+                            {g.badge} · {meetIdx + 1} / {meetGames.length}
+                        </span>
+                        <div className="text-6xl mb-4">{g.icon}</div>
+                        <h2 className="text-2xl md:text-4xl font-black text-slate-800 font-content leading-[2] mb-10">{g.q}</h2>
+
+                        <AnimatePresence>
+                            {reaction && (
+                                <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+                                    className="mb-8 inline-block bg-emerald-500 text-white text-2xl md:text-3xl font-black px-8 py-5 rounded-[2rem] shadow-lg border-4 border-white">
+                                    {reaction}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        {!reaction && g.kind === 'either' && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch relative">
+                                {g.opts.map((o, i) => (
+                                    <button key={i} onClick={() => answerMeet(o, i)}
+                                        className={`p-10 rounded-[2.5rem] btn-3d border-4 font-black font-content text-2xl md:text-3xl leading-[2] min-h-[200px] flex items-center justify-center transition-all ${i === 0 ? 'bg-sky-50 border-sky-200 text-sky-800 hover:bg-sky-100 hover:border-sky-400' : 'bg-rose-50 border-rose-200 text-rose-800 hover:bg-rose-100 hover:border-rose-400'}`}>
+                                        {o}
+                                    </button>
+                                ))}
+                                <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-slate-800 text-white font-black text-xl items-center justify-center border-4 border-white shadow-lg z-10">أَمْ</div>
+                            </div>
+                        )}
+
+                        {!reaction && g.kind === 'emoji' && (
+                            <div className="flex flex-wrap justify-center gap-4">
+                                {g.opts.map((o, i) => (
+                                    <button key={i} onClick={() => answerMeet(o, i)}
+                                        className="px-8 py-6 rounded-[2rem] btn-3d border-4 border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50 text-2xl md:text-3xl font-black font-content">
+                                        {o}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
+                        {!reaction && g.kind === 'pick' && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                {g.opts.map((o, i) => (
+                                    <button key={i} onClick={() => answerMeet(o, i)}
+                                        className="p-6 rounded-3xl btn-3d border-4 border-slate-200 bg-white text-slate-700 hover:border-amber-400 hover:bg-amber-50 text-xl md:text-2xl font-black font-content leading-[2]">
+                                        {o}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
+                        {!reaction && g.kind === 'dare' && (
+                            <div>
+                                <div className={`text-8xl font-black mb-8 ${dareLeft <= 3 ? 'text-rose-500 animate-pulse' : 'text-emerald-500'}`}>{dareLeft}</div>
+                                <button onClick={() => answerMeet('أَنْجَزَ التَّحَدِّي', 0)}
+                                    className="px-16 py-6 rounded-full text-3xl font-black btn-3d bg-emerald-500 border-emerald-700 text-white">
+                                    فَعَلْتُهَا! ✅
+                                </button>
+                                <p className="text-slate-400 font-bold mt-6">تَحَدٍّ لِلْمُتْعَةِ فَقَطْ — لَا يُحْسَبُ فِي التَّقْيِيمِ 😄</p>
+                            </div>
+                        )}
+
+                        {!reaction && g.kind !== 'dare' && (
+                            <p className="text-slate-400 font-bold mt-8">🌟 لَا تُوجَدُ إِجَابَةٌ خَاطِئَةٌ هُنَا — كُلُّ اخْتِيَارٍ يَمْنَحُكَ 5 عُمْلَاتٍ!</p>
+                        )}
+                    </motion.div>
+                );
+            }
+
+            // ---------- 3. جسر التحديات ----------
+            if (phase === 'bridge') return (
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className={box}>
+                    <div className="text-7xl mb-4">⚡</div>
+                    <h2 className={`text-4xl font-black mb-6 ${theme.iconColor}`}>سُعِدْتُ بِمَعْرِفَتِكَ يَا {name}!</h2>
+                    <p className="text-2xl text-slate-600 font-bold mb-8 leading-relaxed">
+                        الْآنَ خَمْسَةُ تَحَدِّيَاتٍ سَرِيعَةٍ: أَرْبَعَةٌ لِلْقِرَاءَةِ وَوَاحِدٌ لِلْكِتَابَةِ.<br/>
+                        كُلُّ تَحَدٍّ لَهُ مُؤَقِّتٌ قَصِيرٌ.. وَلَا تَقْلَقْ، الْخَطَأُ هُنَا لَا يُنْقِصُ عُمْلَاتِكَ! 😉
+                    </p>
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-10">
+                        {[...CHALLENGES.map(c => c.title), 'كَاتِبٌ سَرِيعٌ ✍️'].map((t, i) => (
+                            <div key={i} className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 font-black text-slate-600 text-sm">{t}</div>
+                        ))}
+                    </div>
+                    <button onClick={() => setPhase('ch')} className={`px-16 py-6 rounded-full text-2xl font-black btn-3d text-white ${theme.btn}`}>ابْدَأِ التَّحَدِّي 🏁</button>
+                </motion.div>
+            );
+
+            // ---------- 4. التحديات ----------
+            if (phase === 'ch') return (
+                <motion.div key={cur.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                    className={`${box} ${feedback === 'no' ? 'animate-shake border-rose-300' : ''}`}>
+                    <div className="flex justify-between items-center mb-8">
+                        <span className="bg-slate-100 text-slate-500 font-black px-5 py-2 rounded-full">تَحَدٍّ {chIdx + 1} / 5</span>
+                        <h3 className="text-2xl md:text-3xl font-black text-slate-800">{cur.title}</h3>
+                        <span className={`font-black text-2xl px-5 py-2 rounded-full ${timeLeft <= 5 ? 'bg-rose-100 text-rose-600 animate-pulse' : 'bg-emerald-100 text-emerald-700'}`}>⏱ {timeLeft}</span>
+                    </div>
+
+                    {cur.target && (
+                        <div className="inline-block mb-6 px-10 py-6 rounded-3xl bg-slate-900 text-amber-300 font-content text-4xl md:text-5xl font-black border-4 border-dashed border-amber-400">
+                            {cur.target}
+                        </div>
+                    )}
+
+                    <p className="text-2xl md:text-3xl font-black font-content leading-[2.2] mb-8 text-slate-700 bg-slate-50 p-6 rounded-3xl border-r-8 border-r-amber-400 text-right">{cur.q}</p>
+
+                    {cur.type === 'order' ? (
+                        <div>
+                            <div className="min-h-[110px] rounded-[2rem] border-4 border-dashed border-slate-300 bg-slate-50 p-5 mb-6 flex flex-wrap gap-3 justify-center items-center">
+                                {orderSel.length === 0
+                                    ? <span className="text-xl font-bold text-slate-400">اِبْنِ الْجُمْلَةَ هُنَا مِنَ الْيَمِينِ إِلَى الْيَسَارِ...</span>
+                                    : orderSel.map((oi, k) => (
+                                        <motion.span key={k} initial={{ scale: 0.7 }} animate={{ scale: 1 }}
+                                            className="px-6 py-3 rounded-2xl bg-teal-500 text-white font-black font-content text-2xl md:text-3xl shadow-md">
+                                            {cur.opts[oi]}
+                                        </motion.span>
+                                    ))}
+                            </div>
+                            <div className="flex flex-wrap gap-3 justify-center">
+                                {shuffled.filter(o => !orderSel.includes(o.i)).map(o => (
+                                    <button key={o.i} disabled={!!feedback} onClick={() => handleOrderPick(o.i)}
+                                        className="px-7 py-5 rounded-2xl btn-3d border-4 border-slate-200 bg-white text-slate-700 hover:border-teal-400 hover:bg-teal-50 text-2xl md:text-3xl font-black font-content disabled:opacity-60">
+                                        {o.t}
+                                    </button>
+                                ))}
+                            </div>
+                            {orderSel.length > 0 && !feedback && (
+                                <button onClick={() => setOrderSel([])} className="mt-6 text-slate-400 font-black underline text-lg">↺ مَسْحُ الْجُمْلَةِ وَالْبَدْءُ مِنْ جَدِيدٍ</button>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {shuffled.map(o => (
+                                <button key={o.i} disabled={!!feedback} onClick={() => recordAnswer(o.i === cur.correct)}
+                                    className="p-6 rounded-3xl btn-3d border-4 border-slate-200 bg-white text-slate-700 hover:border-sky-400 hover:bg-sky-50 text-2xl md:text-3xl font-black font-content disabled:opacity-60">
+                                    {o.t}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+
+                    {feedback && (
+                        <p className={`mt-8 text-3xl font-black ${feedback === 'ok' ? 'text-emerald-600' : 'text-rose-500'}`}>
+                            {feedback === 'ok' ? 'أَحْسَنْتَ! +10 عُمْلَات 🎉' : 'لَا بَأْسَ.. سَنَتَدَرَّبُ عَلَيْهَا مَعاً 💪'}
+                        </p>
+                    )}
+                </motion.div>
+            );
+
+            // ---------- 5. تحدي الكتابة ----------
+            if (phase === 'write') return (
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className={box}>
+                    <div className="flex justify-between items-center mb-8">
+                        <span className="bg-slate-100 text-slate-500 font-black px-5 py-2 rounded-full">تَحَدٍّ 5 / 5</span>
+                        <h3 className="text-2xl md:text-3xl font-black text-slate-800">كَاتِبٌ سَرِيعٌ ✍️</h3>
+                        <span className="w-24"></span>
+                    </div>
+
+                    {flashLeft > 0 ? (
+                        <div>
+                            <p className="text-xl font-black text-slate-500 mb-6">تَأَمَّلِ الْكَلِمَةَ جَيِّداً.. سَتَخْتَفِي بَعْدَ <span className="text-rose-500 text-3xl">{flashLeft}</span> ثَوَانٍ!</p>
+                            <div className="px-10 py-12 rounded-[2.5rem] bg-gradient-to-b from-sky-50 to-white border-4 border-sky-200 font-content text-6xl md:text-7xl font-black text-sky-800">
+                                {WRITE_CHALLENGE.word}
+                            </div>
+                        </div>
+                    ) : (
+                        <div>
+                            <p className="text-2xl font-black text-slate-700 mb-8 leading-relaxed">اُكْتُبِ الْكَلِمَةَ الَّتِي رَأَيْتَهَا (التَّشْكِيلُ غَيْرُ مَطْلُوبٍ):</p>
+                            <input value={typed} onChange={e => setTyped(e.target.value)} autoFocus placeholder="اكْتُبْ هُنَا..."
+                                className="w-full max-w-lg mx-auto block text-center text-4xl font-black font-content p-6 rounded-3xl border-4 border-slate-200 focus:border-sky-400 outline-none mb-8 bg-slate-50" />
+                            <button onClick={submitWrite} disabled={!typed.trim()}
+                                className={`px-16 py-6 rounded-full text-2xl font-black btn-3d text-white ${typed.trim() ? 'bg-sky-500 border-sky-700' : 'bg-slate-300 border-slate-400 cursor-not-allowed'}`}>
+                                تَسْلِيمُ الْإِجَابَةِ ✔
+                            </button>
+                        </div>
+                    )}
+                </motion.div>
+            );
+
+            // ---------- 6. النتيجة ----------
+            return (
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className={box}>
+                    <div className="text-7xl mb-4">🏁</div>
+                    <h2 className={`text-4xl font-black mb-2 ${theme.iconColor}`}>بِطَاقَةُ {name}</h2>
+                    <p className="text-xl text-slate-500 font-bold mb-8">نَتِيجَةُ التَّحَدِّيَاتِ السَّرِيعَةِ</p>
+
+                    <div className="flex flex-wrap justify-center gap-6 mb-10">
+                        <div className="bg-slate-50 border-2 border-slate-200 rounded-3xl px-10 py-6">
+                            <div className="text-sm font-black text-slate-400 mb-1">النَّتِيجَة</div>
+                            <div className="text-5xl font-black text-slate-800">{score}<span className="text-2xl text-slate-400">/5</span></div>
+                        </div>
+                        <div className={`border-4 rounded-3xl px-10 py-6 ${level.cls}`}>
+                            <div className="text-sm font-black opacity-70 mb-1">الْمُسْتَوَى</div>
+                            <div className="text-3xl font-black">{level.name}</div>
+                        </div>
+                    </div>
+
+                    <p className="text-2xl font-bold text-slate-600 font-content leading-[2.2] mb-8 bg-amber-50 border border-amber-200 rounded-3xl p-6">{level.tip}</p>
+
+                    <div className="text-right mb-10">
+                        <h3 className="text-2xl font-black text-slate-700 mb-4">تَفْصِيلُ الْمَهَارَاتِ:</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {results.map((r, i) => (
+                                <div key={i} className={`p-5 rounded-2xl border-2 flex items-start gap-3 ${r.ok ? 'bg-emerald-50 border-emerald-200' : 'bg-rose-50 border-rose-200'}`}>
+                                    <span className="text-2xl">{r.ok ? '✅' : '🔧'}</span>
+                                    <div>
+                                        <div className={`font-black text-lg ${r.ok ? 'text-emerald-700' : 'text-rose-700'}`}>{r.skill}</div>
+                                        {!r.ok && <div className="text-slate-600 font-bold text-sm mt-1 leading-relaxed">{r.fix}</div>}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-4 justify-center">
+                        <button onClick={copyReport} className="px-8 py-5 rounded-full text-xl font-black btn-3d bg-slate-700 border-slate-900 text-white">📋 نَسْخُ تَقْرِيرِ الْمُعَلِّمِ</button>
+                        <button onClick={() => onFinish({ name, level: level.name, score, answers, weak: weak.map(w => w.skill) })}
+                            className={`px-12 py-5 rounded-full text-2xl font-black btn-3d text-white ${theme.btn}`}>
+                            إِلَى الْقِصَّةِ الْمُصَوَّرَةِ 📖
+                        </button>
+                    </div>
+                </motion.div>
+            );
+        };
+
+        const App = () => {
+            const [mode, setMode] = useState('map');
+            const [gender, setGender] = useState((new URLSearchParams(location.search).get('h')==='girl')?'girl':'boy');
+            const [coins, setCoins] = useState(50);
+            const [progress, setProgress] = useState(0);
+            const [completed, setCompleted] = useState([]);
+            const [targetSt, setTargetSt] = useState(null);
+            const [shake, setShake] = useState(false);
+            
+            const [bonusHints, setBonusHints] = useState(0);
+            const [bonusShields, setBonusShields] = useState(0);
+            const [shieldActive, setShieldActive] = useState(false);
+            const [perksCalculated, setPerksCalculated] = useState(false);
+            const [copySuccess, setCopySuccess] = useState(false);
+            const [studentProfile, setStudentProfile] = useState(null);
+
+            const heroData = gender ? LESSON_CONTENT[gender] : null;
+            const theme = gender ? THEMES[gender] : null;
+
+            useEffect(() => {
+                if (mode === 'reward' && !perksCalculated) {
+                    if (coins >= 500) { setBonusHints(3); setBonusShields(2); }
+                    else if (coins >= 400) { setBonusHints(2); setBonusShields(1); }
+                    else if (coins >= 250) { setBonusHints(1); setBonusShields(0); }
+                    else { setBonusHints(0); setBonusShields(0); }
+                    setPerksCalculated(true);
+                }
+            }, [mode, coins, perksCalculated]);
+
+            const triggerError = () => {
+                if (mode.startsWith('bonus_') && bonusShields > 0) {
+                    setBonusShields(prev => prev - 1);
+                    setShieldActive(true);
+                    setTimeout(() => setShieldActive(false), 600);
+                    return; 
+                }
+                setShake(true); 
+                setCoins(prev => Math.max(0, prev - 2));
+                setTimeout(() => setShake(false), 500);
+            };
+
+            const completeStation = (currentId) => {
+                if (!completed.includes(currentId)) {
+                    const newComp = [...completed, currentId];
+                    setCompleted(newComp);
+                    // 6 محطات
+                    setProgress(Math.round((newComp.length / 6) * 100));
+                }
+                setMode('map');
+            };
+
+            const handleCopyHomework = () => {
+                const textToCopy = `المهمة المنزلية:\n${heroData.homework}\n\nنص القصة للتدرب:\n${heroData.fluencyText}`;
+                const textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try { 
+                    document.execCommand('copy'); 
+                    setCopySuccess(true);
+                    setTimeout(() => setCopySuccess(false), 3000);
+                } 
+                catch (err) { console.error('Copy failed', err); }
+                document.body.removeChild(textArea);
+            };
+
+            const TopBar = () => (
+                <header className="sticky top-0 z-50 p-4 flex justify-center w-full">
+                    <div className="w-full max-w-5xl bg-white/90 backdrop-blur-md rounded-full p-4 flex justify-between items-center shadow-lg border border-white">
+                        <button onClick={() => setMode('map')} className={`p-3 hover:bg-slate-100 rounded-full transition-colors ${theme.iconColor}`}><AppIcon name="Home" /></button>
+                        <div className="hidden md:flex flex-1 max-w-sm mx-8 bg-slate-100 h-3 rounded-full overflow-hidden border border-slate-200">
+                            <div className="h-full bg-emerald-500 transition-all duration-1000" style={{ width: `${progress}%` }}></div>
+                        </div>
+                        <div className="flex items-center gap-6">
+                            {studentProfile && <div className="hidden lg:flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-full border border-slate-200"><span className="font-black text-lg text-slate-700">{studentProfile.name}</span><span className="text-sm font-bold text-slate-400">{studentProfile.level}</span></div>}
+                            <div className="flex items-center gap-2 bg-amber-50 px-4 py-2 rounded-full border border-amber-200"><AppIcon name="Coins" className="text-amber-500" size={20} /><span className="font-black text-2xl text-amber-700">{coins}</span></div>
+                            <div className="text-5xl cursor-pointer hover:scale-110 transition-transform" onClick={() => (location.href='index.html')}>{heroData.hero}</div>
+                        </div>
+                    </div>
+                </header>
+            );
+
+            return (
+                <div className={`min-h-screen ${theme ? theme.bg : 'bg-slate-100'} font-main pb-20 transition-colors duration-500`} dir="rtl">
+                    
+                    {/* إشعار النسخ الناجح */}
+                    <AnimatePresence>
+                        {copySuccess && (
+                            <motion.div 
+                                initial={{ opacity: 0, y: -50 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -50 }}
+                                className="fixed top-24 left-1/2 -translate-x-1/2 z-[100] bg-emerald-500 text-white px-8 py-4 rounded-full font-black text-2xl shadow-2xl flex items-center gap-3 border-4 border-white"
+                            >
+                                <AppIcon name="CheckCircle2" size={32} /> تَمَّ نَسْخُ الْمُهِمَّةِ بِنَجَاح! 📋
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* 🌟 Intro Screen (With Preamble Audio text) */}
+                    {mode === 'selection' && (
+                        <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center">
+                            <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="card-royal p-12 max-w-3xl w-full bg-white shadow-2xl border-4 border-slate-100">
+                                <h1 className="text-5xl font-black mb-10 text-slate-800 tracking-tight">مَرْحَباً بِكَ فِي مِداد 👋</h1>
+                                <p className="text-2xl text-slate-500 font-bold mb-8 uppercase tracking-widest">اخْتَرْ بَطَلَكَ لِنَبْدَأَ رِحْلَةَ (عِشْقُ الْقِرَاءَةِ)!</p>
+                                
+                                {/* التمهيد الصوتي في شاشة البداية */}
+                                <div className="bg-amber-50 p-6 rounded-3xl border border-amber-200 mb-10 text-right">
+                                    <h3 className="text-xl font-black text-amber-600 mb-3 flex items-center gap-2">
+                                        <AppIcon name="Ear" size={24}/> التَّمْهِيدُ الصَّوْتِيُّ (مَسْرَحُ الظِّلِّ):
+                                    </h3>
+                                    <p className="text-lg font-bold text-slate-700 leading-relaxed indent-4">
+                                        تَخَيَّلْ أَنَّكَ تُسَافِرُ عَبْرَ آَلَةِ الزَّمَنِ لِتَقِفَ فِي زُقَاقٍ ضَيِّقٍ مِنْ أَزِقَّةِ دِمَشْقَ الْقَدِيمَةِ قَبْلَ مِائَةِ عَامٍ.. الطَّقْسُ بَارِدٌ، وَالْمَطَرُ يَهْطِلُ بِخِفَّةٍ. يَقِفُ طِفْلٌ صَغِيرٌ فِي مِثْلِ عُمْرِكَ، يَلْصَقُ وَجْهَهُ بِزُجَاجِ مَكْتَبَةٍ قَدِيمَةٍ، يَبْحَثُ فِي جَيْبِهِ فَلا يَجِدُ إِلاَّ قِرْشاً وَاحِداً لا يَكْفِي لِشِرَاءِ أَيِّ كِتَابٍ! تَعَالَ نَسْتَمِعْ إِلَيْهِ وَهُوَ يَحْكِي لَنَا كَيْفَ صَنَعَ مِنْ هَذَا القِرْشِ العَجَبَ!
+                                    </p>
+                                </div>
+
+                                <div className="flex gap-10 justify-center">
+                                    <button onClick={() => {setGender('boy'); setMode('st0');}} className="flex flex-col items-center gap-4 group">
+                                        <div className="w-40 h-40 bg-purple-50 rounded-[3.5rem] flex items-center justify-center border-4 border-transparent group-hover:border-purple-500 group-hover:scale-105 transition-all shadow-md"><span className="text-7xl">👦</span></div>
+                                        <span className="text-2xl font-black text-purple-600">أَنَا بَطَل</span>
+                                    </button>
+                                    <button onClick={() => {setGender('girl'); setMode('st0');}} className="flex flex-col items-center gap-4 group">
+                                        <div className="w-40 h-40 bg-pink-50 rounded-[3.5rem] flex items-center justify-center border-4 border-transparent group-hover:border-pink-500 group-hover:scale-105 transition-all shadow-md"><span className="text-7xl">👧</span></div>
+                                        <span className="text-2xl font-black text-pink-600">أَنَا بَطَلَة</span>
+                                    </button>
+                                </div>
+                            </motion.div>
+                        </div>
+                    )}
+
+                    {mode !== 'selection' && <TopBar />}
+
+                    {mode !== 'selection' && (
+                        <main className="flex-1 w-full p-4 flex flex-col items-center mt-6">
+                            <AnimatePresence mode="wait">
+                                {mode === 'map' && (
+                                    <motion.div key="map" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full max-w-5xl">
+                                        <div className="text-center mb-16">
+                                            <h1 className={`text-6xl font-black mb-4 ${theme.iconColor}`}>{heroData.title}</h1>
+                                            <p className="text-2xl font-bold text-slate-500 uppercase tracking-widest">{heroData.subtitle}</p>
+                                        </div>
+                                        
+                                        {/* محطة التعارف والتحديات السريعة */}
+                                        <div className="mb-10">
+                                            <h3 className="text-xl font-black text-slate-400 mb-4 bg-slate-200 inline-block px-6 py-2 rounded-full">مَحَطَّةُ الْبِدَايَةِ (تَعَارُفٌ وَتَحْدِيدُ مُسْتَوًى)</h3>
+                                            <div onClick={() => setMode('st0')} className="card-royal p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 cursor-pointer transition-transform hover:scale-[1.01] bg-gradient-to-l from-teal-500 to-emerald-500 border-4 border-emerald-200 shadow-xl text-right">
+                                                <div className="text-6xl">🤝</div>
+                                                <div className="flex-1">
+                                                    <h3 className="font-black text-3xl text-white drop-shadow-sm mb-1">مَحَطَّةُ التَّعَارُفِ وَالتَّحَدِّيَاتِ السَّرِيعَةِ</h3>
+                                                    <p className="font-bold text-emerald-50 text-lg">دَقِيقَتَانِ: أَسْئِلَةٌ وُدِّيَّةٌ لِكَسْرِ الْجَلِيدِ + 5 تَحَدِّيَاتٍ (قِرَاءَةٌ وَكِتَابَةٌ) لِتَحْدِيدِ نُقْطَةِ الْبِدَايَةِ.</p>
+                                                </div>
+                                                {studentProfile
+                                                    ? <div className="bg-white/95 rounded-2xl px-6 py-4 text-center shrink-0">
+                                                        <div className="text-sm font-black text-slate-400">النَّتِيجَة</div>
+                                                        <div className="text-2xl font-black text-emerald-700">{studentProfile.score}/5</div>
+                                                        <div className="text-sm font-black text-slate-600">{studentProfile.level}</div>
+                                                      </div>
+                                                    : <div className="bg-white/95 rounded-full px-8 py-4 font-black text-emerald-700 text-xl shrink-0">ابْدَأْ هُنَا ➡</div>}
+                                            </div>
+                                            {studentProfile && studentProfile.weak.length > 0 && (
+                                                <div className="mt-4 bg-rose-50 border-2 border-rose-200 rounded-3xl p-5 text-right">
+                                                    <span className="font-black text-rose-700">مَهَارَاتٌ تَحْتَاجُ دَعْماً: </span>
+                                                    <span className="font-bold text-slate-600">{studentProfile.weak.join(' • ')}</span>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* المسار الأساسي (6 محطات) */}
+                                        <div className="mb-10">
+                                            <h3 className="text-xl font-black text-slate-400 mb-4 bg-slate-200 inline-block px-6 py-2 rounded-full">المسار الأساسي الإلزامي</h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                                                {[
+                                                    {id: 'st1', name: 'مُخْتَبَرُ الْمَعْنَى', icon: 'BookOpen', c: theme.iconColor, b: theme.lightBg},
+                                                    {id: 'st2', name: 'عَقْلُ الْمُفَكِّرِ', icon: 'Gamepad2', c: 'text-blue-600', b: 'bg-blue-100'},
+                                                    {id: 'st3', name: 'عِيَادَةُ الدِّقَّة', icon: 'Target', c: 'text-rose-600', b: 'bg-rose-100'},
+                                                    {id: 'st4', name: 'لِيجُو الْمَقَاطِع', icon: 'Wrench', c: 'text-sky-600', b: 'bg-sky-100'},
+                                                    {id: 'st5', name: 'عِيَادَةُ التَّزَامُن', icon: 'Ear', c: 'text-amber-600', b: 'bg-amber-100'},
+                                                    {id: 'st6', name: 'تَحَدِّي الطَّلَاقَة', icon: 'Zap', c: 'text-emerald-600', b: 'bg-emerald-100'}
+                                                ].map((st) => (
+                                                    <div key={st.id} onClick={() => {
+                                                        setTargetSt(st.id); 
+                                                        setMode('intro_st');
+                                                    }} className="card-royal p-4 flex flex-col items-center text-center cursor-pointer hover:-translate-y-2 transition-transform bg-white border-2 border-white shadow-lg relative overflow-hidden">
+                                                        <div className={`w-16 h-16 rounded-3xl flex items-center justify-center mb-4 ${st.b} ${st.c}`}><AppIcon name={st.icon} size={32}/></div>
+                                                        <h3 className="font-black text-base mb-2">{st.name}</h3>
+                                                        {completed.includes(st.id) && <div className="absolute top-0 right-0 w-full h-full bg-white/80 flex items-center justify-center backdrop-blur-sm z-10"><AppIcon name="CheckCircle2" size={40} className="text-emerald-500" /></div>}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* بنك الألعاب الإضافي */}
+                                        <div className="mt-8 border-t-4 border-dashed border-slate-300 pt-8 pb-8">
+                                            <h3 className="text-xl font-black text-amber-600 mb-4 bg-amber-100 inline-block px-6 py-2 rounded-full border border-amber-300">بَنْكُ الْأَلْعَابِ الْمُذْهِل 🕹️ (وَقْتٌ إِضَافِيّ)</h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                                <div onClick={() => setMode('bonus_hub')} className="md:col-span-4 card-royal p-6 flex items-center justify-center cursor-pointer transition-transform hover:scale-[1.02] bg-gradient-to-r from-amber-400 to-orange-500 border-4 border-amber-200 shadow-xl">
+                                                    <h3 className="font-black text-3xl text-white flex items-center gap-4 drop-shadow-md">
+                                                        <AppIcon name="Trophy" size={40}/> دُخُولُ بَنْكِ الْأَلْعَابِ 
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* زر النهاية */}
+                                        {completed.length === 6 && (
+                                            <div className="flex justify-center mt-4">
+                                                <button onClick={() => setMode('reward')} className={`px-16 py-6 rounded-full text-3xl font-black btn-3d text-white shadow-2xl ${theme.btn} animate-bounce`}>
+                                                    خَتْمُ الدَّرْسِ 🏅
+                                                </button>
+                                            </div>
+                                        )}
+                                    </motion.div>
+                                )}
+
+                                {mode === 'intro_st' && <StationIntro key="intro" id={targetSt} theme={theme} setStage={setMode} />}
+
+                                {/* --- المحطات الأساسية --- */}
+                                {mode === 'st0' && <St0Warmup key="st0" theme={theme} gender={gender} setCoins={setCoins}
+                                    onFinish={(p) => { setStudentProfile(p); setMode('map'); }} onSkip={() => setMode('map')} />}
+                                {mode === 'st1' && <St1MeaningLab key="st1" data={heroData} theme={theme} onComplete={() => completeStation('st1')} triggerError={triggerError} shake={shake} />}
+                                {mode === 'st2' && <St2ComprehensionGames key="st2" data={heroData} theme={theme} onComplete={() => completeStation('st2')} triggerError={triggerError} shake={shake} />}
+                                {mode === 'st3' && <St3AccuracyClinic key="st3" data={heroData} theme={theme} setCoins={setCoins} onComplete={() => completeStation('st3')} triggerError={triggerError} shake={shake} />}
+                                {mode === 'st4' && <St4WordBuilder key="st4" data={heroData} theme={theme} setCoins={setCoins} onComplete={() => completeStation('st4')} triggerError={triggerError} shake={shake} />}
+                                {mode === 'st5' && <St5AudioSync key="st5" data={heroData} theme={theme} setCoins={setCoins} onComplete={() => completeStation('st5')} triggerError={triggerError} shake={shake} />}
+                                {mode === 'st6' && <St6Fluency key="st6" data={heroData} theme={theme} setCoins={setCoins} onComplete={() => completeStation('st6')} />}
+
+                                {/* --- بنك الألعاب --- */}
+                                {mode === 'bonus_hub' && (
+                                    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-4xl" key="bonus_hub">
+                                        <div className="flex justify-between items-center mb-6">
+                                            <button onClick={() => setMode('map')} className="text-slate-500 hover:text-slate-800 font-bold bg-white px-6 py-3 rounded-full shadow-sm text-lg">الْعَوْدَة لِلْخَرِيطَة ➡️</button>
+                                            <h2 className="text-5xl font-black text-amber-600 drop-shadow-sm">بَنْكُ الْأَلْعَابِ 🕹️</h2>
+                                        </div>
+                                        
+                                        {/* شريط الامتيازات النشطة */}
+                                        <div className="bg-slate-800 text-white p-4 rounded-2xl mb-8 flex items-center justify-center gap-8 shadow-inner border-2 border-slate-700">
+                                            <span className="font-bold text-slate-400">امْتِيَازَاتُكَ النَّشِطَة:</span>
+                                            <div className="flex items-center gap-2 bg-slate-900 px-4 py-2 rounded-xl border border-slate-600">
+                                                <AppIcon name="Lightbulb" className="text-yellow-400" />
+                                                <span className="font-black text-xl text-yellow-400">{bonusHints} تَلْمِيحَات</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 bg-slate-900 px-4 py-2 rounded-xl border border-slate-600">
+                                                <AppIcon name="Shield" className="text-sky-400" />
+                                                <span className="font-black text-xl text-sky-400">{bonusShields} دُرُوع حِمَايَة</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                            <button onClick={() => { setMode('bonus_magnet'); }} className="card-royal p-8 text-center flex flex-col items-center hover:bg-sky-50 border-4 border-transparent hover:border-sky-300 transition-all btn-3d">
+                                                <div className="w-24 h-24 bg-sky-100 rounded-3xl flex items-center justify-center mb-4 text-sky-600"><AppIcon name="Puzzle" size={48}/></div>
+                                                <h3 className="text-2xl font-black text-slate-800 mb-2">مُفَكِّكُ الْمَقَاطِعِ</h3>
+                                                <p className="text-slate-500 font-bold text-sm">تَدَرَّبْ عَلَى قِرَاءَةِ الْكَلِمَاتِ الطَّوِيلَةِ.</p>
+                                            </button>
+                                            <button onClick={() => setMode('bonus_memory')} className="card-royal p-8 text-center flex flex-col items-center hover:bg-purple-50 border-4 border-transparent hover:border-purple-300 transition-all btn-3d">
+                                                <div className="w-24 h-24 bg-purple-100 rounded-3xl flex items-center justify-center mb-4 text-purple-600"><AppIcon name="Brain" size={48}/></div>
+                                                <h3 className="text-2xl font-black text-slate-800 mb-2">ذَاكِرَةُ الْأَبْطَالِ</h3>
+                                                <p className="text-slate-500 font-bold text-sm">طَابِقِ الْكَلِمَاتِ لِتَقْوِيَةِ الذَّاكِرَةِ الْبَصَرِيَّة.</p>
+                                            </button>
+                                            <button onClick={() => setMode('bonus_sight')} className="card-royal p-8 text-center flex flex-col items-center hover:bg-emerald-50 border-4 border-transparent hover:border-emerald-300 transition-all btn-3d">
+                                                <div className="w-24 h-24 bg-emerald-100 rounded-3xl flex items-center justify-center mb-4 text-emerald-600"><AppIcon name="Target" size={48}/></div>
+                                                <h3 className="text-2xl font-black text-slate-800 mb-2">صَيَّادُ الْبَصَرِ</h3>
+                                                <p className="text-slate-500 font-bold text-sm">اِصْطَادِ الْكَلِمَاتِ الْبَصَرِيَّةَ بِسُرْعَةٍ.</p>
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                )}
+
+                                {mode === 'bonus_magnet' && (
+                                    <div className={`w-full relative ${shieldActive ? 'animate-shield' : ''}`}>
+                                        <button onClick={() => setMode('bonus_hub')} className="absolute top-6 right-6 text-sky-700 font-bold bg-white px-4 py-2 rounded-full shadow-sm hover:bg-sky-100 z-10">الْعَوْدَة</button>
+                                        <BonusMagnet data={heroData} triggerError={triggerError} bonusHints={bonusHints} setBonusHints={setBonusHints} onComplete={() => { setCoins(c=>c+30); setMode('bonus_hub'); }} />
+                                    </div>
+                                )}
+                                {mode === 'bonus_memory' && (
+                                    <div className={`card-royal p-10 w-full bg-slate-50 border-4 border-purple-200 shadow-2xl relative ${shieldActive ? 'animate-shield' : ''}`}>
+                                        <button onClick={() => setMode('bonus_hub')} className="absolute top-6 right-6 text-purple-700 font-bold bg-white px-4 py-2 rounded-full shadow-sm hover:bg-purple-100 z-10">الْعَوْدَة</button>
+                                        <div className="text-center mb-8">
+                                            <h2 className="text-4xl font-black text-purple-700 flex justify-center items-center gap-3"><AppIcon name="Brain" size={40}/> ذَاكِرَةُ الْأَبْطَالِ</h2>
+                                        </div>
+                                        <BonusMemory data={heroData} onWin={() => { setCoins(c=>c+30); setMode('bonus_hub'); }} />
+                                    </div>
+                                )}
+                                {mode === 'bonus_sight' && (
+                                    <div className={`card-royal p-10 w-full bg-emerald-50 border-4 border-emerald-200 shadow-2xl relative ${shake ? 'animate-shake border-red-400' : ''} ${shieldActive ? 'animate-shield' : ''}`}>
+                                        <button onClick={() => setMode('bonus_hub')} className="absolute top-6 right-6 text-emerald-700 font-bold bg-white px-4 py-2 rounded-full shadow-sm hover:bg-emerald-100 z-10">الْعَوْدَة</button>
+                                        <div className="text-center mb-8 mt-4">
+                                            <h2 className="text-4xl font-black text-emerald-700 flex justify-center items-center gap-3"><AppIcon name="Target" size={40}/> صَيَّادُ الْبَصَرِ 🎯</h2>
+                                        </div>
+                                        <BonusSightWords data={heroData} onWin={() => { setCoins(c=>c+30); setMode('bonus_hub'); }} />
+                                    </div>
+                                )}
+
+                                {/* --- شاشة النهاية (مع حساب الامتيازات) --- */}
+                                {mode === 'reward' && (
+                                    <motion.div key="reward" initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="text-center flex flex-col items-center card-royal p-16 bg-gradient-to-b from-white to-emerald-50 w-full max-w-3xl mx-auto">
+                                        <div className={`w-48 h-48 rounded-[3rem] flex items-center justify-center mx-auto mb-6 shadow-inner ${coins >= 500 ? 'bg-indigo-100' : coins >= 400 ? 'bg-amber-100' : coins >= 250 ? 'bg-slate-200' : 'bg-orange-100'}`}>
+                                            <AppIcon name="Trophy" size={100} className={coins >= 500 ? 'text-indigo-500' : coins >= 400 ? 'text-amber-500' : coins >= 250 ? 'text-slate-400' : 'text-orange-500'} />
+                                        </div>
+                                        
+                                        <h1 className={`text-6xl font-black mb-4 ${theme.iconColor}`}>أَحْسَنْتَ يَا {studentProfile ? studentProfile.name : 'بَطَل'}!</h1>
+                                        {studentProfile && (
+                                            <p className="text-xl font-bold text-slate-500 mb-4 bg-slate-100 px-6 py-2 rounded-full">
+                                                بَدَأْتَ الْيَوْمَ بِمُسْتَوَى: <span className="text-slate-800 font-black">{studentProfile.level}</span> ({studentProfile.score}/5)
+                                            </p>
+                                        )}
+                                        <p className="text-3xl text-slate-700 font-bold mb-4">جَمَعْتَ <span className="text-amber-500 font-black text-4xl">{coins}</span> عُمْلَةً ذَهَبِيَّة.</p>
+                                        
+                                        {/* صندوق عرض الرتبة والامتيازات */}
+                                        <div className="bg-white p-8 rounded-3xl border-4 border-emerald-100 shadow-lg w-full mb-10">
+                                            <h3 className="text-2xl font-black text-emerald-600 mb-6 border-b-2 border-emerald-50 pb-4">تَقْيِيمُ الْأَدَاءِ وَالْمُكَافَآت:</h3>
+                                            
+                                            <div className="flex justify-around items-center mb-6">
+                                                <div className="flex flex-col items-center gap-2">
+                                                    <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">الرُّتْبَة</span>
+                                                    <span className={`text-2xl font-black px-4 py-1 rounded-lg ${coins >= 500 ? 'bg-indigo-100 text-indigo-700' : coins >= 400 ? 'bg-amber-100 text-amber-700' : coins >= 250 ? 'bg-slate-200 text-slate-700' : 'bg-orange-100 text-orange-700'}`}>
+                                                        {coins >= 500 ? 'مَاسِيَّة 💎' : coins >= 400 ? 'ذَهَبِيَّة 🥇' : coins >= 250 ? 'فِضِّيَّة 🥈' : 'بُرُونْزِيَّة 🥉'}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex justify-center gap-6">
+                                                <div className="bg-slate-50 p-4 rounded-2xl flex-1 flex flex-col items-center justify-center border border-slate-200">
+                                                    <AppIcon name="Lightbulb" size={32} className={bonusHints > 0 ? "text-yellow-400 mb-2" : "text-slate-300 mb-2"} />
+                                                    <span className="font-bold text-slate-600 text-sm">تَلْمِيحَاتٌ (مُسَاعَدَة)</span>
+                                                    <span className="text-3xl font-black text-slate-800">+{bonusHints}</span>
+                                                </div>
+                                                <div className="bg-slate-50 p-4 rounded-2xl flex-1 flex flex-col items-center justify-center border border-slate-200">
+                                                    <AppIcon name="Shield" size={32} className={bonusShields > 0 ? "text-sky-400 mb-2" : "text-slate-300 mb-2"} />
+                                                    <span className="font-bold text-slate-600 text-sm">دُرُوعُ حِمَايَةٍ (فُرَص)</span>
+                                                    <span className="text-3xl font-black text-slate-800">+{bonusShields}</span>
+                                                </div>
+                                            </div>
+                                            
+                                            {coins < 250 && <p className="text-rose-500 font-bold mt-6 text-sm">اجْمَعْ أَكْثَرَ مِنْ 250 عُمْلَةً لِتَحْصُلَ عَلَى امْتِيَازَاتٍ تُسَاعِدُكَ فِي بَنْكِ الْأَلْعَاب!</p>}
+                                        </div>
+
+                                        {/* المحاكاة الوظيفية - بطاقة قارئ المستقبل */}
+                                        <div className="bg-slate-700 border-4 border-amber-500 p-8 rounded-[2.5rem] mb-10 text-right relative overflow-hidden w-full max-w-3xl mx-auto">
+                                            <div className="absolute -left-10 -top-10 text-9xl opacity-10">📜</div>
+                                            <h3 className="text-2xl font-black text-amber-400 mb-4 flex items-center gap-3"><AppIcon name="BookOpen" size={32}/> الْمُحَاكَاةُ الْوَظِيفِيَّةُ (تَأَمُّلُ الذَّاتِ)</h3>
+                                            
+                                            <div className="bg-slate-800 p-6 rounded-2xl border border-slate-600 mb-6 shadow-inner relative z-10">
+                                                <p className="text-2xl font-bold text-amber-50 leading-[2.2] font-content mb-4 pb-4 border-b border-slate-600">
+                                                    {heroData.homework}
+                                                </p>
+                                                <p className="text-lg font-bold text-slate-400 mb-3 font-main">نَصُّ الْمُذَكَّرَاتِ لِلْقِرَاءَةِ أَمَامَ الْعَائِلَةِ:</p>
+                                                <p className="text-2xl font-bold text-slate-200 leading-[2.8] font-content bg-slate-900 p-4 rounded-xl border border-slate-700">
+                                                    {heroData.fluencyText}
+                                                </p>
+                                            </div>
+                                            
+                                            <button onClick={handleCopyHomework} className="bg-amber-500 hover:bg-amber-400 text-white font-black text-xl py-4 px-8 rounded-xl flex items-center justify-center gap-3 w-full transition-colors relative z-10 btn-3d border-amber-700">
+                                                نَسْخُ الْمُهِمَّةِ مَعَ النَّصِّ لِلْمُشَارَكَةِ <span className="text-2xl">📋</span>
+                                            </button>
+                                        </div>
+
+                                        <div className="flex gap-4 w-full justify-center">
+                                            <button onClick={() => setMode('bonus_hub')} className="px-8 py-5 rounded-[2rem] text-2xl font-black btn-3d bg-amber-500 hover:bg-amber-400 text-white border-amber-700 flex items-center gap-2">
+                                                <AppIcon name="Gamepad2" /> دُخُول بَنْك الْأَلْعَاب
+                                            </button>
+                                            <button onClick={() => window.location.reload()} className={`px-8 py-5 rounded-[2rem] text-xl font-black btn-3d text-white ${theme.btn}`}>
+                                                خُرُوج لِلرَّئِيسِيَّة
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                )}
+
+                            </AnimatePresence>
+                        </main>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
