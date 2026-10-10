@@ -77,6 +77,18 @@
 
   <div id="lessons" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
 
+  <!-- ===== الوحدة الثانية ===== -->
+  <div class="flex items-center gap-4 mb-7 mt-14 slide-up-fade" style="animation-delay:.5s">
+    <div class="w-20 h-20 rounded-[1.75rem] bg-sky-50 flex items-center justify-center text-4xl shrink-0">🌙</div>
+    <div>
+      <div class="text-xs font-black text-sky-700 mb-1">الْوَحْدَةُ الثَّانِيَة</div>
+      <h2 class="text-3xl md:text-4xl font-black text-slate-800">أَحَادِيثُ نَبَوِيَّة</h2>
+      <p class="text-slate-400 font-bold text-sm mt-1">أَحَادِيثُ صَحِيحَةٌ بِنَصِّهَا، فِي إِطَارٍ قَصَصِيٍّ مِنْ حَيَاتِنَا</p>
+    </div>
+  </div>
+
+  <div id="lessons2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+
   <p class="text-center text-xs font-bold text-slate-400 mt-12">
     كُلُّ دَرْسٍ يَمُرُّ بِمَحَطَّاتٍ لِلْفَهْمِ وَالنَّبْرَةِ وَالدِّقَّةِ وَالطَّلَاقَةِ وَالْكِتَابَة.
   </p>
@@ -110,6 +122,13 @@
       href:'lesson2.html?s=wafa', color:'#047857', btn:'btn-teal',
       cover:'gradient:#047857,#34d399', ic:'🤝' }
   ];
+  var LESSONS2=[
+    { n:1, title:'حَدِيثُ السَّفِينَة', emoji:'🚢',
+      author:'صَحِيحُ الْبُخَارِيّ — حَدِيثُ النُّعْمَانِ بْنِ بَشِير',
+      value:'الْأَمْرُ بِالْمَعْرُوفِ وَالنَّهْيُ عَنِ الْمُنْكَر',
+      href:'lesson2.html?s=ship', color:'#0369a1', btn:'btn-teal',
+      cover:'gradient:#0c4a6e,#0ea5e9', ic:'🚢' }
+  ];
 
   function readHero(){ try{ return localStorage.getItem('midad4-hero')||'boy'; }catch(e){ return 'boy'; } }
   function saveHero(v){ try{ localStorage.setItem('midad4-hero',v); }catch(e){} }
@@ -126,7 +145,11 @@
   }
 
   function render(){
-    document.getElementById('lessons').innerHTML = LESSONS.map(function(l,i){
+    document.getElementById('lessons').innerHTML = cards(LESSONS);
+    document.getElementById('lessons2').innerHTML = cards(LESSONS2);
+  }
+  function cards(list){
+    return list.map(function(l,i){
       var g=l.cover.replace('gradient:','').split(',');
       return '<a href="'+l.href+(l.href.indexOf('?')>-1?'&':'?')+'h='+hero+'" '+
         'class="card-royal lesson-card overflow-hidden border-4 border-slate-100 block slide-up-fade" '+
