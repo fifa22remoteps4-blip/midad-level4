@@ -104,29 +104,29 @@
     { n:1, title:'عِشْقُ الْقِرَاءَةِ', emoji:'📚',
       author:'ذِكْرَيَاتُ عَلِيّ الطَّنْطَاوِيّ',
       value:'الشَّغَفُ بِالْعِلْمِ رَغْمَ الْفَقْر',
-      href:'lesson1.html', color:'#5624d0', btn:'btn-purple',
+      href:'lesson1.html', w:'writing.html?s=qiraa', color:'#5624d0', btn:'btn-purple',
       cover:'gradient:#5624d0,#8b5cf6', ic:'📖' },
     { n:2, title:'بَيْنَ السَّابِعَةِ وَالْخَامِسَة', emoji:'🌅',
       author:'رَقَائِقُ الْقُرْآن — إِبْرَاهِيم السَّكْرَان',
       value:'تَرْتِيبُ الْأَوْلَوِيَّاتِ وَتَقْدِيمُ الْأَهَمّ',
-      href:'lesson2.html?s=dawn', color:'#0f8194', btn:'btn-teal',
+      href:'lesson2.html?s=dawn', w:'writing.html?s=dawn', color:'#0f8194', btn:'btn-teal',
       cover:'gradient:#0f8194,#38bdf8', ic:'🌅' },
     { n:3, title:'الْبَعُوضَةُ وَالْفِيل', emoji:'🐘',
       author:'الْبِدَايَةُ وَالنِّهَايَة — ابْنُ كَثِير',
       value:'كَظْمُ الْغَيْظِ وَالْحِلْمُ عِنْدَ الْإِسَاءَة',
-      href:'lesson2.html?s=elephant', color:'#d97706', btn:'btn-teal',
+      href:'lesson2.html?s=elephant', w:'writing.html?s=elephant', color:'#d97706', btn:'btn-teal',
       cover:'gradient:#d97706,#fbbf24', ic:'🐘' },
     { n:4, title:'أَبَرُّ الْبِرّ', emoji:'🤝',
       author:'صَحِيحُ مُسْلِم — حَدِيثُ ابْنِ عُمَر',
       value:'الْوَفَاءُ لِأَصْدِقَاءِ الْوَالِدَيْن',
-      href:'lesson2.html?s=wafa', color:'#047857', btn:'btn-teal',
+      href:'lesson2.html?s=wafa', w:'writing.html?s=wafa', color:'#047857', btn:'btn-teal',
       cover:'gradient:#047857,#34d399', ic:'🤝' }
   ];
   var LESSONS2=[
     { n:1, title:'حَدِيثُ السَّفِينَة', emoji:'🚢',
       author:'صَحِيحُ الْبُخَارِيّ — حَدِيثُ النُّعْمَانِ بْنِ بَشِير',
       value:'الْأَمْرُ بِالْمَعْرُوفِ وَالنَّهْيُ عَنِ الْمُنْكَر',
-      href:'lesson2.html?s=ship', color:'#0369a1', btn:'btn-teal',
+      href:'lesson2.html?s=ship', w:'writing.html?s=ship', color:'#0369a1', btn:'btn-teal',
       cover:'gradient:#0c4a6e,#0ea5e9', ic:'🚢' }
   ];
 
@@ -151,7 +151,8 @@
   function cards(list){
     return list.map(function(l,i){
       var g=l.cover.replace('gradient:','').split(',');
-      return '<a href="'+l.href+(l.href.indexOf('?')>-1?'&':'?')+'h='+hero+'" '+
+      var q=function(u){return u+(u.indexOf('?')>-1?'&':'?')+'h='+hero};
+      return '<div '+
         'class="card-royal lesson-card overflow-hidden border-4 border-slate-100 block slide-up-fade" '+
         'style="animation-delay:'+(0.24+i*0.09)+'s">'+
         '<div class="cover flex items-center justify-center" '+
@@ -163,8 +164,9 @@
           '<p class="text-xs font-bold text-slate-400 font-content mb-4" style="line-height:1.9">'+l.author+'</p>'+
           '<div class="inline-block text-[11px] font-black px-3 py-1.5 rounded-full" '+
             'style="background:'+l.color+'18;color:'+l.color+'">'+l.value+'</div>'+
-          '<div class="btn-3d '+l.btn+' rounded-2xl py-3 mt-5 text-center font-black text-lg">ابْدَأِ الدَّرْسَ ▶</div>'+
-        '</div></a>';
+          '<a href="'+q(l.href)+'" class="btn-3d '+l.btn+' rounded-2xl py-3 mt-5 text-center font-black text-lg block">📖 الْقِرَاءَة ▶</a>'+
+          (l.w?'<a href="'+q(l.w)+'" class="rounded-2xl py-3 mt-3 text-center font-black text-lg block" style="background:#fef3c7;color:#b45309;border-bottom:6px solid #fcd34d">✍️ الْكِتَابَة ▶</a>':'')+
+        '</div></div>';
     }).join('');
   }
 

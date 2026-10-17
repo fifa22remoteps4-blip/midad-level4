@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مِداد — الكتابة</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+
+  :root{--accent:#5624d0;--accent-dark:#3b1796;--accent-soft:#f3efff;--ink:#1e293b}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Baloo Bhaijaan 2',cursive;color:var(--ink);min-height:100vh;background:#f8fafc;
+    background-image:radial-gradient(at 0% 0%,rgba(86,36,208,.08) 0px,transparent 50%),
+                     radial-gradient(at 100% 0%,rgba(15,129,148,.08) 0px,transparent 50%),
+                     radial-gradient(at 100% 100%,rgba(245,158,11,.05) 0px,transparent 50%);
+    background-attachment:fixed}
+  .nx{font-family:'Noto Naskh Arabic',serif}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+  .card{background:#fff;border-radius:2.2rem;border:4px solid #f1f5f9;
+    box-shadow:0 25px 50px -12px rgba(86,36,208,.12);padding:26px}
+  @media(max-width:560px){.card{padding:18px;border-radius:1.6rem}}
+
+  .btn-3d{transition:all .2s cubic-bezier(.175,.885,.32,1.275);border:0;border-bottom-width:8px;
+    border-bottom-style:solid;border-radius:999px;cursor:pointer;font-family:inherit;font-weight:800;
+    padding:15px 22px;font-size:1.15rem;display:inline-flex;align-items:center;justify-content:center;gap:.4em;width:100%}
+  .btn-3d:active{transform:translateY(6px);border-bottom-width:2px;margin-top:6px}
+  .btn-accent{background:var(--accent);border-bottom-color:var(--accent-dark);color:#fff}
+  .btn-ghost{background:#f1f5f9;border-bottom-color:#cbd5e1;color:#64748b;font-size:.95rem;padding:11px}
+  .btn-3d:disabled{opacity:.45;cursor:not-allowed}
+
+  .opt{display:block;width:100%;background:#fff;border:3px solid #e2e8f0;border-bottom:7px solid #cbd5e1;
+    border-radius:1.1rem;padding:14px 18px;margin-bottom:11px;font-family:'Noto Naskh Arabic',serif;
+    font-size:1.18rem;font-weight:700;color:var(--ink);text-align:right;cursor:pointer;transition:.15s;line-height:2}
+  .opt:hover:not(:disabled){border-color:var(--accent);transform:translateY(-3px)}
+  .opt:disabled{cursor:default}
+  .opt.ok{background:#dcfce7;border-color:#16a34a;border-bottom-color:#15803d}
+  .opt.bad{background:#fee2e2;border-color:#ef4444;border-bottom-color:#b91c1c}
+  .opt.dim{opacity:.45}
+
+  #hud{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);
+    border-bottom:2px solid rgba(86,36,208,.12);display:none}
+  #hud.on{display:block}
+  #hud .in{max-width:1000px;margin:0 auto;padding:11px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .chip{display:flex;align-items:center;gap:6px;font-weight:800;font-size:1.02rem}
+  #st-name{font-weight:800;color:#64748b;font-size:.92rem;text-align:center;flex:1}
+  .icon-btn{background:none;border:0;cursor:pointer;font-size:1.3rem;font-family:inherit}
+
+  .map-head{text-align:center;margin:26px 0 30px}
+  .map-head h1{font-size:2.4rem;font-weight:800;color:var(--accent);margin-bottom:6px;line-height:1.6}
+  .map-head p{font-size:1.02rem;font-weight:700;color:#94a3b8}
+  .tracks{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .pill{background:#fff;border:2px solid #e2e8f0;border-radius:999px;padding:6px 16px;font-weight:800;font-size:.86rem;color:#475569}
+  .group-label{font-size:1.02rem;font-weight:800;display:inline-block;padding:8px 24px;border-radius:999px;margin-bottom:6px}
+  .group-label.tech{color:#0f8194;background:#cffafe;border:1px solid #a5f3fc}
+  .group-label.create{color:#b45309;background:#fef3c7;border:1px solid #fde68a}
+  .group-sub{font-family:'Noto Naskh Arabic',serif;font-weight:700;color:#64748b;margin:6px 4px 16px;line-height:2}
+  .st-grid{display:grid;gap:16px;grid-template-columns:repeat(2,1fr);margin-bottom:34px}
+  @media(min-width:720px){.st-grid{grid-template-columns:repeat(4,1fr)}}
+  .st-card{background:#fff;border-radius:2rem;border:2px solid #fff;box-shadow:0 10px 26px -14px rgba(0,0,0,.28);
+    padding:18px 12px;text-align:center;cursor:pointer;position:relative;overflow:hidden;
+    transition:transform .25s cubic-bezier(.175,.885,.32,1.275),box-shadow .25s}
+  .st-card:hover{transform:translateY(-7px);box-shadow:0 22px 38px -16px rgba(86,36,208,.35)}
+  .st-card .ico{width:62px;height:62px;border-radius:1.5rem;display:flex;align-items:center;
+    justify-content:center;font-size:1.9rem;margin:0 auto 12px}
+  .st-card h3{font-weight:800;font-size:.96rem;line-height:1.7}
+  .st-card .stp{position:absolute;top:10px;right:12px;font-size:.72rem;font-weight:800;color:#cbd5e1}
+  .st-card .done{position:absolute;inset:0;background:rgba(255,255,255,.86);backdrop-filter:blur(3px);
+    display:flex;align-items:center;justify-content:center;font-size:2.6rem;z-index:5}
+  .finish-wrap{text-align:center;margin:10px auto 18px;max-width:420px}
+
+  .st-intro{text-align:center}
+  .st-intro .big{width:110px;height:110px;border-radius:2.4rem;display:flex;align-items:center;
+    justify-content:center;font-size:3.4rem;margin:0 auto 22px}
+  .st-intro h2{font-size:1.9rem;font-weight:800;margin-bottom:22px}
+  .infobox{text-align:right;background:#f8fafc;border-radius:1.4rem;padding:18px;margin-bottom:12px;border:2px solid #e2e8f0}
+  .infobox .lb{font-size:.78rem;font-weight:800;color:#94a3b8;margin-bottom:4px}
+  .infobox .vl{font-family:'Noto Naskh Arabic',serif;font-weight:700;line-height:2;color:#475569;font-size:1.02rem}
+  .infobox.treat{background:#fff1f2;border-color:#fecdd3}
+  .infobox.treat .lb{color:#fb7185}.infobox.treat .vl{color:#9f1239}
+
+  .kicker{font-size:.8rem;font-weight:800;color:#94a3b8;text-align:center;margin-bottom:6px}
+  h2.title{font-size:1.55rem;font-weight:800;text-align:center;color:var(--accent);margin-bottom:6px;line-height:1.7}
+  .sub{font-size:.94rem;font-weight:700;color:#94a3b8;text-align:center;margin-bottom:18px;line-height:1.9}
+  .lv{display:inline-block;font-size:.76rem;font-weight:800;padding:3px 14px;border-radius:999px;margin-bottom:10px}
+  .q{font-family:'Noto Naskh Arabic',serif;font-size:1.3rem;font-weight:700;line-height:2.2;margin-bottom:16px;text-align:center}
+  .why{background:#f0fdf4;border:2px solid #86efac;border-radius:1.2rem;padding:14px 16px;margin:6px 0 14px;
+    font-family:'Noto Naskh Arabic',serif;font-weight:600;color:#14532d;line-height:2.1}
+  .why.no{background:#fff7ed;border-color:#fdba74;color:#9a3412}
+  .why b{font-family:'Baloo Bhaijaan 2',cursive}
+  .nudge{background:#fff7ed;color:#c2410c;border:2px solid #fdba74;border-radius:1.2rem;padding:12px;
+    text-align:center;font-weight:800;margin-top:14px}
+  .info{background:var(--accent-soft);color:var(--accent-dark);border-radius:1.2rem;padding:14px;
+    font-family:'Noto Naskh Arabic',serif;font-weight:700;text-align:center;line-height:2;margin-top:14px}
+  .bar-m{height:12px;border-radius:999px;background:#e2e8f0;overflow:hidden;margin-top:4px}
+  .bar-m>i{display:block;height:100%;border-radius:999px;transition:width .9s cubic-bezier(.4,0,.2,1)}
+  .prog{height:8px;border-radius:999px;background:#e2e8f0;overflow:hidden;margin:0 0 18px}
+  .prog>i{display:block;height:100%;background:var(--accent);transition:width .4s}
+
+  /* sort */
+  .sortword{min-height:96px;display:flex;align-items:center;justify-content:center;text-align:center;
+    background:#0f172a;color:#fff;border-radius:1.4rem;font-family:'Noto Naskh Arabic',serif;
+    font-size:1.75rem;font-weight:700;padding:16px;margin-bottom:16px;line-height:2}
+  .sortword.small{font-size:1.25rem}
+  .sortword .say{display:block;font-size:.95rem;color:#94a3b8;font-weight:600}
+  .bins{display:grid;gap:10px;grid-template-columns:repeat(2,1fr)}
+  .bins.b3{grid-template-columns:repeat(3,1fr)}
+  .bins.b4{grid-template-columns:repeat(2,1fr)}
+  @media(min-width:640px){.bins.b4{grid-template-columns:repeat(4,1fr)}}
+  .bins.b5{grid-template-columns:repeat(3,1fr)}
+  @media(min-width:640px){.bins.b5{grid-template-columns:repeat(5,1fr)}}
+  .bin{background:#fff;border:3px solid #e2e8f0;border-bottom:7px solid #cbd5e1;border-radius:1.2rem;
+    padding:12px 8px;cursor:pointer;font-family:inherit;font-weight:800;font-size:.98rem;color:var(--ink);
+    line-height:1.6;transition:.15s;display:flex;flex-direction:column;align-items:center;gap:2px}
+  .bin .bi{font-size:1.6rem}
+  .bin:hover{border-color:var(--accent);transform:translateY(-3px)}
+  .bin.ok{background:#dcfce7;border-color:#16a34a}.bin.bad{background:#fee2e2;border-color:#ef4444}
+  .basket{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;justify-content:center}
+  .basket span{font-family:'Noto Naskh Arabic',serif;font-size:.85rem;background:#f1f5f9;border-radius:8px;padding:0 8px}
+  .timer{display:flex;justify-content:space-between;font-weight:800;margin-bottom:10px;color:#475569}
+  .timer b{color:var(--accent)}
+
+  /* clue */
+  .clue{background:linear-gradient(135deg,#ecfeff,#f0fdfa);border:3px solid #67e8f9;border-radius:1.6rem;padding:22px}
+  .clue h3{font-size:1.35rem;font-weight:800;color:#0e7490;text-align:center;margin-bottom:6px}
+  .clue .idea{font-family:'Noto Naskh Arabic',serif;font-weight:700;color:#155e75;text-align:center;line-height:2.1;margin-bottom:14px}
+  .step{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:1.1rem;padding:12px 14px;margin-bottom:10px;
+    border:2px solid #cffafe;font-family:'Noto Naskh Arabic',serif;font-weight:600;line-height:2.1}
+  .step .n{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:#0891b2;color:#fff;display:flex;
+    align-items:center;justify-content:center;font-family:'Baloo Bhaijaan 2';font-weight:800}
+  .worked{background:#fffbeb;border:2px dashed #fbbf24;border-radius:1.2rem;padding:14px;margin-top:12px;
+    font-family:'Noto Naskh Arabic',serif;line-height:2.2;font-weight:600;color:#78350f}
+  .worked .wl{font-family:'Baloo Bhaijaan 2';font-weight:800;color:#b45309;font-size:.85rem}
+  .deeper{background:#f5f3ff;border:2px solid #ddd6fe;border-radius:1.2rem;padding:14px;margin-top:12px;
+    font-family:'Noto Naskh Arabic',serif;line-height:2.2;font-weight:600;color:#3b1796}
+  .deeper .wl{font-family:'Baloo Bhaijaan 2';font-weight:800;color:#5624d0;font-size:.85rem}
+
+  /* build */
+  .bword{font-family:'Noto Naskh Arabic',serif;font-size:2rem;font-weight:700;text-align:center;line-height:2.4;
+    background:#f8fafc;border-radius:1.4rem;padding:18px;margin-bottom:6px}
+  .bword .hole{display:inline-block;min-width:1.3em;border-bottom:4px solid var(--accent);color:var(--accent);padding:0 4px}
+  .bword .hole.ok{color:#16a34a;border-color:#16a34a}
+  .bctx{text-align:center;font-family:'Noto Naskh Arabic',serif;color:#64748b;font-weight:600;margin-bottom:16px;line-height:2}
+  .keys{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:8px}
+  .key{background:#fff;border:3px solid #cbd5e1;border-bottom-width:7px;border-radius:1.1rem;min-width:70px;
+    padding:8px 16px;font-family:'Noto Naskh Arabic',serif;font-size:1.7rem;font-weight:800;cursor:pointer;color:var(--ink);transition:.15s}
+  .key:hover:not(:disabled){border-color:var(--accent);transform:translateY(-3px)}
+  .key.ok{background:#dcfce7;border-color:#16a34a}.key.bad{background:#fee2e2;border-color:#ef4444}
+
+  /* fix */
+  .hunt{background:#f8fafc;border-radius:1.6rem;padding:20px;font-family:'Noto Naskh Arabic',serif;font-size:1.4rem;line-height:2.8;text-align:justify}
+  .w{cursor:pointer;padding:1px 5px;border-radius:8px;transition:.15s;display:inline-block}
+  .w:hover{background:#fef3c7}
+  .w.hit{background:#16a34a;color:#fff;font-weight:800}
+  .w.miss{background:#fde68a}
+  .shake{animation:shk .4s}
+  @keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+  .count{text-align:center;font-weight:800;color:#64748b;margin:12px 0}
+  .count b{color:var(--accent)}
+
+  /* dict */
+  .dsent{font-family:'Noto Naskh Arabic',serif;font-size:1.5rem;font-weight:700;line-height:2.5;text-align:center;
+    background:#fffdf7;border:3px solid #e7d9b5;border-radius:1.4rem;padding:20px;min-height:120px}
+  .dsent.hidden{color:transparent;text-shadow:0 0 16px rgba(0,0,0,.25);user-select:none}
+  .ring{font-weight:800;text-align:center;color:var(--accent);margin:10px 0;font-size:1.1rem}
+  textarea,input.fld{width:100%;border:4px dashed #cbd5e1;border-radius:1.4rem;padding:14px;
+    font-family:'Noto Naskh Arabic',serif;font-size:1.15rem;line-height:2.2;outline:none;color:var(--ink);background:#fff}
+  textarea{min-height:110px;resize:vertical}
+  textarea:focus,input.fld:focus{border-color:var(--accent);background:var(--accent-soft)}
+  .diff{font-family:'Noto Naskh Arabic',serif;font-size:1.3rem;line-height:2.6;background:#f8fafc;border-radius:1.2rem;padding:14px;margin-top:12px}
+  .diff .good{color:#15803d}.diff .bad{background:#fee2e2;color:#b91c1c;border-radius:6px;padding:0 4px}
+  .diff .gone{background:#fef3c7;color:#92400e;border-radius:6px;padding:0 4px;text-decoration:underline dotted}
+
+  /* model */
+  .model{background:#fffdf7;border:3px solid #e7d9b5;border-radius:1.6rem;padding:22px;box-shadow:0 12px 26px -16px rgba(120,90,20,.45)}
+  .model h4{text-align:center;font-weight:800;color:#92400e;font-size:1.25rem;margin-bottom:12px;padding-bottom:10px;border-bottom:2px dashed #e7d9b5}
+  .mpart{font-family:'Noto Naskh Arabic',serif;font-size:1.18rem;line-height:2.4;padding:4px 6px;border-radius:10px;transition:.25s}
+  .model.show .mpart{background:var(--pc);margin-bottom:8px;padding:10px 12px}
+  .mlab{display:none;font-family:'Baloo Bhaijaan 2';font-size:.78rem;font-weight:800;color:#fff;background:var(--pl);
+    border-radius:999px;padding:1px 12px;margin-left:6px}
+  .model.show .mlab{display:inline-block}
+  .authored{font-size:.76rem;font-weight:800;color:#a98a58;text-align:center;margin-top:10px}
+  .tips{margin-top:16px;display:grid;gap:10px}
+  .tip{background:#fff;border:2px solid #fde68a;border-radius:1.1rem;padding:12px 14px;font-family:'Noto Naskh Arabic',serif;
+    font-weight:600;line-height:2.1;color:#57534e}
+  .tip b{color:#b45309}
+
+  /* order */
+  .ordbox{min-height:60px;border:4px dashed #cbd5e1;border-radius:1.4rem;padding:10px;margin-bottom:14px;background:#f8fafc}
+  .ordbox .placed{font-family:'Noto Naskh Arabic',serif;background:#dcfce7;border-radius:1rem;padding:10px 12px;margin-bottom:8px;line-height:2.1;font-weight:600}
+  .ordbox .placed b{font-family:'Baloo Bhaijaan 2';font-size:.78rem;color:#fff;background:#16a34a;border-radius:999px;padding:1px 10px;margin-left:6px}
+  .ordpick{font-family:'Noto Naskh Arabic',serif;background:#fff;border:3px solid #e2e8f0;border-bottom-width:6px;border-radius:1.1rem;
+    padding:10px 14px;margin-bottom:10px;line-height:2.1;cursor:pointer;font-weight:600;transition:.15s;text-align:right;width:100%;font-size:1.05rem;color:var(--ink)}
+  .ordpick:hover{border-color:var(--accent)}
+
+  /* compose */
+  .cpart{background:#fff;border:3px solid #e2e8f0;border-radius:1.4rem;padding:14px;margin-bottom:12px}
+  .cpart .cl{font-weight:800;color:var(--accent);margin-bottom:2px}
+  .cpart .cg{font-family:'Noto Naskh Arabic',serif;font-size:.95rem;color:#64748b;font-weight:600;margin-bottom:8px;line-height:1.9}
+  .cpart textarea{min-height:80px}
+  .wc{display:flex;justify-content:space-between;font-weight:800;color:#64748b;margin:6px 4px 14px}
+  .wc b{color:var(--accent)}
+  .checks{background:#f8fafc;border-radius:1.4rem;padding:16px;margin-top:6px}
+  .ck{display:flex;gap:10px;align-items:flex-start;font-family:'Noto Naskh Arabic',serif;font-weight:600;line-height:2;padding:4px 0;color:#334155}
+  .ck i{font-style:normal;flex-shrink:0}
+  .ck input{width:20px;height:20px;margin-top:8px;accent-color:var(--accent)}
+  .ck.auto.pass i::before{content:'✅'}.ck.auto.fail i::before{content:'⬜'}
+  .hl{font-family:'Noto Naskh Arabic',serif;font-size:1.15rem;line-height:2.5;background:#fff;border:2px solid #e2e8f0;border-radius:1.2rem;padding:14px;margin-top:10px}
+  .hl mark{background:#fde68a;border-radius:6px;padding:0 3px}
+  .hl mark.err{background:#fecaca}
+  .doc{background:#fffdf7;border:3px solid #e7d9b5;border-radius:1.4rem;padding:24px;margin-top:16px;
+    font-family:'Noto Naskh Arabic',serif;line-height:2.4;color:#4a3a18;box-shadow:0 12px 26px -16px rgba(120,90,20,.45);white-space:pre-wrap}
+  .doc h4{font-family:'Baloo Bhaijaan 2',cursive;font-weight:800;color:#92400e;font-size:1.22rem;
+    text-align:center;margin-bottom:14px;padding-bottom:10px;border-bottom:2px dashed #e7d9b5;white-space:normal}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+
+  .st-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:20px;
+    padding-top:18px;border-top:2px dashed #e2e8f0}
+  .navb{background:#f1f5f9;border:0;border-bottom:5px solid #cbd5e1;border-radius:999px;cursor:pointer;
+    font-family:inherit;font-weight:800;color:#475569;padding:11px 16px;font-size:.88rem;
+    transition:all .18s cubic-bezier(.175,.885,.32,1.275);max-width:42%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .navb:hover{background:var(--accent-soft);color:var(--accent);border-bottom-color:var(--accent)}
+  .navb.mid{flex-shrink:0;font-size:1.15rem;padding:11px 18px}
+  .doneCard{text-align:center}
+  .doneCard .big{font-size:4rem;margin-bottom:10px}
+  .doneCard h2{font-size:1.6rem;font-weight:800;color:#16a34a;margin-bottom:8px}
+  .doneCard p{font-weight:700;color:#94a3b8;margin-bottom:22px}
+  #toast{position:fixed;left:0;right:0;bottom:0;padding:16px;text-align:center;font-size:1.2rem;
+    font-weight:800;color:#fff;z-index:60;transform:translateY(120%);transition:.3s}
+  #toast.on{transform:translateY(0)}
+  .fade{animation:fade .45s ease-out both}
+  @keyframes fade{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  @media print{#hud,.noprint,.st-nav{display:none!important}body{background:#fff}.card{box-shadow:none;border:0}}
+</style>
+</head>
+<body>
+
+<div id="hud">
+  <div class="in">
+    <button class="icon-btn" data-map="1" title="الخريطة">🗺️</button>
+    <div class="chip">🪙 <span id="tok" style="color:var(--accent)">٠</span></div>
+    <div id="st-name">مِداد</div>
+    <div class="chip" style="color:#e07b1a">🔥 <span id="stk">٠</span></div>
+  </div>
+</div>
+
+<div id="app" class="wrap" style="padding-top:8px;padding-bottom:60px"></div>
+<div id="toast"></div>
+
+<script>
+var WLESSONS=[{"id": "qiraa", "title": "عِشْقُ الْقِرَاءَة", "emoji": "📚", "author": "ذِكْرَيَاتُ عَلِيٍّ الطَّنْطَاوِيّ", "readHref": "lesson1.html", "tech": {"name": "هَمْزَةُ الْقَطْعِ وَهَمْزَةُ الْوَصْل", "discover": {"title": "هَلْ تَثْبُتُ الْهَمْزَةُ أَمْ تَسْقُط؟", "prompt": "ضَعْ «وَ» قَبْلَ كُلِّ كَلِمَةٍ مِنْ نَصِّ الطَّنْطَاوِيِّ، وَاقْرَأْ سَطْرَ النُّطْقِ تَحْتَهَا: هَلْ بَقِيَ صَوْتُ الْهَمْزَةِ أَمْ سَقَط؟", "bins": [{"k": "q", "ic": "🧱", "n": "تَثْبُتُ فِي النُّطْق"}, {"k": "w", "ic": "💨", "n": "تَسْقُطُ فِي النُّطْق"}], "items": [["أَطُوفُ", "q", "", "وَ + أَطُوفُ ← وَ-أَطُوفُ"], ["الْكُتُبِ", "w", "", "وَ + الْكُتُبِ ← وَلْكُتُبِ"], ["أَسْرَعْتُ", "q", "", "وَ + أَسْرَعْتُ ← وَ-أَسْرَعْتُ"], ["فَاشْتَرَيْتُ", "w", "", "فَ + اشْتَرَيْتُ ← فَشْتَرَيْتُ"], ["أُطِيلُ", "q", "", "وَ + أُطِيلُ ← وَ-أُطِيلُ"], ["الْقِرَاءَةِ", "w", "", "وَ + الْقِرَاءَةِ ← وَلْقِرَاءَةِ"], ["إِلَى", "q", "", "وَ + إِلَى ← وَ-إِلَى"], ["الْمَكْتَبَاتِ", "w", "", "وَ + الْمَكْتَبَاتِ ← وَلْمَكْتَبَاتِ"], ["أَمْلِكُ", "q", "", "وَ + أَمْلِكُ ← وَ-أَمْلِكُ"], ["لِأَشْتَرِيَهَا", "q", "", "لِ + أَشْتَرِيَهَا ← لِ-أَشْتَرِيَهَا"]], "reveal": "الْهَمْزَةُ الَّتِي <b>تَثْبُتُ<\/b> فِي النُّطْقِ بَعْدَ الْوَاوِ أَوِ الْفَاءِ اسْمُهَا <b>هَمْزَةُ قَطْعٍ<\/b>، وَنَكْتُبُهَا (أ / إ).<br>وَالَّتِي <b>تَسْقُطُ<\/b> اسْمُهَا <b>هَمْزَةُ وَصْلٍ<\/b>، وَنَكْتُبُهَا أَلِفًا بِلَا رَأْس (ا).<br>انْتَبِهْ: (فَاشْتَرَيْتُ) وَصْلٌ، لَكِنَّ (لِأَشْتَرِيَهَا) قَطْعٌ… مَعَ أَنَّهُمَا مِنْ فِعْلٍ وَاحِد! سَنَعْرِفُ السِّرَّ فِي الْقَرِينَة."}, "clue": {"title": "🔗 قَرِينَةُ الْوَاو", "idea": "لَا تَسْأَلْ: كَيْفَ أَنْطِقُهَا وَحْدَهَا؟ بَلْ: مَاذَا يَحْدُثُ لَهَا إِذَا وَصَلْتُهَا بِمَا قَبْلَهَا؟", "steps": ["ضَعْ «وَ» أَوْ «فَ» قَبْلَ الْكَلِمَةِ، وَانْطِقْهَا مَوْصُولَةً دُونَ وَقْفَة.", "ثَبَتَ صَوْتُ الْهَمْزَةِ (وَأَسْرَعْتُ) ← <b>هَمْزَةُ قَطْع<\/b>: نَكْتُبُ (أَ / أُ) فَوْقَ الْأَلِفِ، وَ(إِ) تَحْتَهَا.", "سَقَطَ صَوْتُهَا (فَشْتَرَيْتُ) ← <b>هَمْزَةُ وَصْل<\/b>: نَكْتُبُ أَلِفًا مُجَرَّدَةً (ا).", "إِذَا تَرَدَّدَتْ أُذُنُكَ فَاسْتَعْمِلِ الْقَرِينَةَ الصَّرْفِيَّةَ فِي الْأَسْفَل؛ فَهِيَ لَا تُخْطِئُ."], "worked": "فِي النَّصِّ: «<b>فَاشْتَرَيْتُ<\/b> مِنْهُ كِتَابًا» ← نَنْطِقُهَا (فَشْتَرَيْتُ) فَهِيَ وَصْل.<br>وَفِي النَّصِّ: «<b>لِأَشْتَرِيَهَا<\/b>» ← نَنْطِقُهَا (لِ-أَشْتَرِيَهَا) فَهِيَ قَطْع؛ لِأَنَّهَا هَمْزَةُ الْمُتَكَلِّمِ (أَنَا أَشْتَرِي)، وَهَمْزَةُ الْمُضَارِعِ قَطْعٌ دَائِمًا.", "deeper": "<b>الْقَرِينَةُ الصَّرْفِيَّة:<\/b> هَمَزَاتُ الْوَصْلِ مَعْدُودَةٌ، وَمَا سِوَاهَا قَطْع:<br>١. (ال) التَّعْرِيف: الْكُتُب، الْقِرَاءَة.<br>٢. مَاضِي الْفِعْلِ الْخُمَاسِيِّ وَالسُّدَاسِيِّ، وَأَمْرُهُمَا، وَمَصْدَرُهُمَا: اشْتَرَى، اسْتَبْدَلَ، انْطَلِقْ، اسْتِغْفَار.<br>٣. أَمْرُ الْفِعْلِ الثُّلَاثِيّ: اكْتُبْ، اقْرَأْ.<br>٤. أَسْمَاءٌ نَحْفَظُهَا: ابْن، ابْنَة، اسْم، امْرُؤ، امْرَأَة، اثْنَان، اثْنَتَان.<br>أَمَّا الرُّبَاعِيُّ فَهَمْزَتُهُ قَطْعٌ فِي مَاضِيهِ وَأَمْرِهِ وَمَصْدَرِهِ: أَسْرَعَ، أَسْرِعْ، إِسْرَاع."}, "ladder": [{"lv": "تَعَرُّف", "q": "أَيُّ كَلِمَاتِ النَّصِّ هَمْزَتُهَا هَمْزَةُ وَصْل؟", "opts": [["الْقِرَاءَةِ", 1], ["أَسْرَعْتُ", 0], ["إِلَى", 0]], "why": "نَقُولُ: (وَلْقِرَاءَةِ) فَتَسْقُطُ الْهَمْزَة، وَهِيَ هَمْزَةُ (ال) التَّعْرِيف."}, {"lv": "تَعْلِيل", "q": "لِمَاذَا كُتِبَتْ (أَسْرَعْتُ) بِهَمْزَةِ قَطْع؟", "opts": [["لِأَنَّنَا نَقُولُ (وَأَسْرَعْتُ) فَيَثْبُتُ صَوْتُ الْهَمْزَة", 1], ["لِأَنَّهَا فِي أَوَّلِ الْجُمْلَة", 0], ["لِأَنَّ كُلَّ فِعْلٍ مَاضٍ هَمْزَتُهُ قَطْع", 0]], "why": "الْمَوْقِعُ لَا يَحْسِمُ، وَلَيْسَ كُلُّ مَاضٍ قَطْعًا: (اشْتَرَى) مَاضٍ وَهَمْزَتُهُ وَصْل. (أَسْرَعَ) رُبَاعِيٌّ، وَهَمْزَةُ الرُّبَاعِيِّ قَطْع."}, {"lv": "اسْتِثْنَاء", "q": "فِي النَّصِّ: (فَاشْتَرَيْتُ) بِلَا هَمْزَة، وَ(لِأَشْتَرِيَهَا) بِهَمْزَة. لِمَاذَا؟", "opts": [["(أَشْتَرِي) مُضَارِعٌ لِلْمُتَكَلِّم، وَهَمْزَةُ الْمُضَارِعِ قَطْعٌ دَائِمًا", 1], ["خَطَأٌ فِي الطِّبَاعَة", 0], ["لِأَنَّ اللَّامَ قَبْلَهَا تَجْعَلُهَا هَمْزَة", 0]], "why": "الْهَمْزَةُ فِي (اشْتَرَى) مِنْ بِنَاءِ الْفِعْل، فَهِيَ وَصْل. أَمَّا فِي (أَشْتَرِي) فَهِيَ حَرْفُ الْمُضَارَعَةِ الدَّالُّ عَلَى (أَنَا)، فَهِيَ قَطْع."}, {"lv": "تَعْلِيل", "q": "(لِأَسْتَبْدِلَ) فِي آخِرِ النَّصّ: هَمْزَتُهَا…", "opts": [["قَطْع؛ لِأَنَّهَا هَمْزَةُ الْمُتَكَلِّمِ فِي الْمُضَارِع", 1], ["وَصْل؛ لِأَنَّ مَاضِيَهَا (اسْتَبْدَلَ) وَصْل", 0], ["لَا هَمْزَةَ فِيهَا", 0]], "why": "نَقُولُ: (لِ-أَسْتَبْدِلَ) فَيَثْبُتُ صَوْتُهَا. الْمَاضِي (اسْتَبْدَلَ) وَصْلٌ، أَمَّا الْمُضَارِعُ (أَسْتَبْدِلُ) فَقَطْع."}, {"lv": "اسْتِثْنَاء", "q": "أَيُّ هَذِهِ الْأَسْمَاءِ هَمْزَتُهُ هَمْزَةُ وَصْل؟", "opts": [["اسْم", 1], ["أَب", 0], ["أُمّ", 0]], "why": "(اسْم) مِنَ الْأَسْمَاءِ الْمَحْفُوظَةِ ذَاتِ هَمْزَةِ الْوَصْل: نَقُولُ (وَسْمُكَ)."}, {"lv": "نَقْل", "q": "«____ الْقِطَارُ فِي مَوْعِدِهِ» — كَيْفَ نَكْتُبُ الْفِعْلَ؟", "opts": [["انْطَلَقَ", 1], ["أَنْطَلَقَ", 0], ["إِنْطَلَقَ", 0]], "why": "(انْطَلَقَ) مَاضٍ خُمَاسِيٌّ، وَنَقُولُ (وَنْطَلَقَ)، فَهَمْزَتُهُ وَصْل."}, {"lv": "نَقْل", "q": "فِعْلُ الْأَمْرِ مِنْ (كَتَبَ):", "opts": [["اكْتُبْ", 1], ["أُكْتُبْ", 0], ["إِكْتُبْ", 0]], "why": "أَمْرُ الثُّلَاثِيِّ هَمْزَتُهُ وَصْل: (وَكْتُبْ). وَنَنْطِقُهَا مَضْمُومَةً فِي أَوَّلِ الْكَلَامِ، لَكِنْ لَا نَرْسُمُ عَلَيْهَا هَمْزَة."}, {"lv": "اسْتِثْنَاء", "q": "فِعْلُ الْأَمْرِ مِنْ (أَكْرَمَ):", "opts": [["أَكْرِمْ", 1], ["اكْرِمْ", 0], ["إِكْرِمْ", 0]], "why": "(أَكْرَمَ) رُبَاعِيّ، وَهَمْزَةُ أَمْرِ الرُّبَاعِيِّ قَطْع: (وَأَكْرِمْ ضَيْفَكَ)."}, {"lv": "نَقْل", "q": "مَصْدَرُ (اسْتَغْفَرَ):", "opts": [["اسْتِغْفَار", 1], ["إِسْتِغْفَار", 0], ["أَسْتِغْفَار", 0]], "why": "مَصْدَرُ السُّدَاسِيِّ هَمْزَتُهُ وَصْل: (وَسْتِغْفَار)."}, {"lv": "نَقْل", "q": "مَصْدَرُ (أَسْرَعَ):", "opts": [["إِسْرَاع", 1], ["اسْرَاع", 0], ["أَسْرَاع", 0]], "why": "مَصْدَرُ الرُّبَاعِيِّ هَمْزَتُهُ قَطْع: (وَإِسْرَاع)، وَهِيَ مَكْسُورَةٌ فَتُكْتَبُ تَحْتَ الْأَلِف."}], "build": {"title": "أَكْمِلِ الْهَمْزَةَ فِي أَوَّلِ الْكَلِمَة", "keys": ["ا", "أ", "إ"], "items": [{"w": "□سْتَمَعَ", "ans": "ا", "full": "اسْتَمَعَ", "ctx": "مَاضٍ خُمَاسِيّ", "why": "نَقُولُ (وَسْتَمَعَ): وَصْل."}, {"w": "□خْبَرَ", "ans": "أ", "full": "أَخْبَرَ", "ctx": "مَاضٍ رُبَاعِيّ", "why": "نَقُولُ (وَأَخْبَرَ): قَطْع."}, {"w": "□خْبَار", "ans": "إ", "full": "إِخْبَار", "ctx": "مَصْدَرُ (أَخْبَرَ) — تُنْطَقُ مَكْسُورَة", "why": "مَصْدَرُ الرُّبَاعِيِّ قَطْع، وَالْكَسْرَةُ تَحْتَ الْأَلِف."}, {"w": "□جْتِمَاع", "ans": "ا", "full": "اجْتِمَاع", "ctx": "مَصْدَرُ (اجْتَمَعَ)", "why": "مَصْدَرُ الْخُمَاسِيِّ وَصْل: (وَجْتِمَاع)."}, {"w": "□نْسَان", "ans": "إ", "full": "إِنْسَان", "ctx": "تُنْطَقُ مَكْسُورَة", "why": "لَيْسَ مِنْ هَمَزَاتِ الْوَصْلِ الْمَعْدُودَة: (وَإِنْسَان)."}, {"w": "□مْرَأَة", "ans": "ا", "full": "امْرَأَة", "ctx": "اسْمٌ مِنَ الْأَسْمَاءِ الْمَحْفُوظَة", "why": "(امْرَأَة) مِنْ أَسْمَاءِ الْوَصْل: (وَمْرَأَة)."}, {"w": "□سْتَغْفِرُ رَبِّي", "ans": "أ", "full": "أَسْتَغْفِرُ", "ctx": "أَنَا … (مُضَارِع)", "why": "هَمْزَةُ الْمُضَارِعِ لِلْمُتَكَلِّمِ قَطْعٌ دَائِمًا."}, {"w": "□ثْنَانِ", "ans": "ا", "full": "اثْنَانِ", "ctx": "عَدَد", "why": "(اثْنَان) مِنْ أَسْمَاءِ الْوَصْل: (وَثْنَانِ)."}, {"w": "□قْرَأْ كِتَابَكَ", "ans": "ا", "full": "اقْرَأْ", "ctx": "أَمْرُ الثُّلَاثِيّ (قَرَأَ)", "why": "أَمْرُ الثُّلَاثِيِّ وَصْل: (وَقْرَأْ)."}, {"w": "□قْرَأُ كُلَّ يَوْم", "ans": "أ", "full": "أَقْرَأُ", "ctx": "أَنَا … (مُضَارِع)", "why": "هَمْزَةُ الْمُتَكَلِّمِ قَطْع — كَمَا فِي النَّصّ: «أَقْرَأُ عَنَاوِينَهَا»."}]}, "fix": {"title": "فِي الْمَكْتَبَةِ الْعَامَّة", "tokens": [["إِسْتَمَعْتُ", 1, "اسْتَمَعْتُ", "مَاضٍ خُمَاسِيٌّ: وَصْل."], ["إِلَى", 0], ["نَصِيحَةِ", 0], ["أُمِّي،", 0], ["ثُمَّ", 0], ["أَخَذْتُ", 0], ["حَقِيبَتِي", 0], ["وَإِنْطَلَقْتُ", 1, "وَانْطَلَقْتُ", "نَقُولُ (وَنْطَلَقْتُ): وَصْل."], ["إِلَى", 0], ["الْمَكْتَبَةِ", 0], ["لِأَسْتَعِيرَ", 0], ["قِصَّةً،", 0], ["فَأَعْطَانِي", 0], ["الْمُوَظَّفُ", 0], ["إِسْتِمَارَةً،", 1, "اسْتِمَارَةً", "مَصْدَرٌ سُدَاسِيٌّ: وَصْل."], ["وَقَالَ:", 0], ["أُكْتُبْ", 1, "اكْتُبْ", "أَمْرُ الثُّلَاثِيِّ: وَصْل."], ["إِسْمَكَ", 1, "اسْمَكَ", "(اسْم) مِنْ أَسْمَاءِ الْوَصْل."], ["هُنَا.", 0]]}, "game": {"title": "قَطْعٌ أَمْ وَصْل؟", "prompt": "اقْرَأِ الْكَلِمَةَ بَعْدَ (وَ) فِي ذِهْنِكَ، ثُمَّ اخْتَرْ بِسُرْعَة.", "bins": [{"k": "q", "ic": "🧱", "n": "قَطْع (أ / إ)"}, {"k": "w", "ic": "💨", "n": "وَصْل (ا)"}], "items": [["□سْتَخْرَجَ", "w", "اسْتَخْرَجَ"], ["□خْرَجَ", "q", "أَخْرَجَ"], ["□نْكَسَرَ", "w", "انْكَسَرَ"], ["□كَلَ", "q", "أَكَلَ"], ["□سْم", "w", "اسْم"], ["□خْت", "q", "أُخْت"], ["□بْن", "w", "ابْن"], ["□يمَان", "q", "إِيمَان"], ["□لْقَمَر", "w", "الْقَمَر"], ["□سْرَعَ", "q", "أَسْرَعَ"], ["□قْرَأْ (أَمْر)", "w", "اقْرَأْ"], ["□قْرَأُ (أَنَا)", "q", "أَقْرَأُ"], ["□نْتِصَار", "w", "انْتِصَار"], ["□كْرَام", "q", "إِكْرَام"], ["□ثْنَان", "w", "اثْنَان"], ["□مِير", "q", "أَمِير"], ["□حْتِرَام", "w", "احْتِرَام"], ["□بْتَسَمَ", "w", "ابْتَسَمَ"], ["□عْطَاء", "q", "إِعْطَاء"]]}, "dict": {"s": "وَكُنْتُ إِذَا حَصَلْتُ عَلَى قِرْشٍ أَوْ قِرْشَيْنِ، أَسْرَعْتُ إِلَى بَائِعِ الْكُتُبِ الْقَدِيمَةِ، فَاشْتَرَيْتُ مِنْهُ كِتَابًا.", "src": "ذِكْرَيَاتُ الطَّنْطَاوِيّ", "focus": "هَمَزَاتِ الْقَطْعِ (إِذَا، أَوْ، أَسْرَعْتُ، إِلَى) وَهَمَزَاتِ الْوَصْلِ (الْكُتُب، فَاشْتَرَيْتُ)", "sec": 12}, "review": [{"lv": "مُرَاجَعَة", "tag": "مِنَ الْمُسْتَوَى الثَّالِث", "q": "«أَنْتِ صَدِيقَتِي» — أَيُّهُمَا الصَّوَاب؟", "opts": [["أَنْتِ", 1], ["أَنْتِي", 0]], "why": "مِيزَانُ الْعَدْل: (أَنْتَ) لِلْوَلَدِ بِحَرَكَةٍ قَصِيرَة، فَـ(أَنْتِ) لِلْبِنْتِ بِحَرَكَةٍ قَصِيرَةٍ كَذَلِكَ."}, {"lv": "مُرَاجَعَة", "tag": "مِنَ الْمُسْتَوَى الثَّالِث", "q": "فِي النَّصِّ: (الْقَدِيمَةِ). لِمَاذَا خُتِمَتْ بِتَاءٍ مَرْبُوطَة؟", "opts": [["لِأَنَّنَا نَقِفُ عَلَيْهَا هَاءً (قَدِيمَهْ) وَنَصِلُهَا تَاءً (قَدِيمَةٌ)", 1], ["لِأَنَّهَا تُنْطَقُ هَاءً دَائِمًا", 0]], "why": "التَّاءُ الْمَرْبُوطَةُ تَتَغَيَّرُ: هَاءٌ فِي الْوَقْفِ، وَتَاءٌ فِي الْوَصْل."}, {"lv": "مُرَاجَعَة", "tag": "مِنَ الْمُسْتَوَى الثَّالِث", "q": "فِي النَّصِّ: (الصَّفَحَاتِ) — لَامُ (ال) هُنَا:", "opts": [["شَمْسِيَّةٌ لَا تُنْطَق", 1], ["قَمَرِيَّةٌ تُنْطَق", 0]], "why": "نَقُولُ (اَصَّفَحَات): اللَّامُ لَا تُنْطَقُ، وَالصَّادُ بَعْدَهَا مُشَدَّدَة."}, {"lv": "مُرَاجَعَة", "tag": "مِنَ الْمُسْتَوَى الثَّالِث", "q": "«فَاشْتَرَيْتُ مِنْهُ ____ مُمَزَّقَ الْغِلَافِ»", "opts": [["كِتَابًا", 1], ["كِتَابَنْ", 0]], "why": "النُّونُ الَّتِي نَسْمَعُهَا فِي آخِرِ (كِتَابًا) تَنْوِين، فَلَا نَكْتُبُهَا حَرْفًا."}]}, "create": {"genre": "الْمُذَكِّرَات", "model": {"title": "📔 مَكْتَبَةُ الْحَدِيقَة", "intro": "الطَّنْطَاوِيُّ كَتَبَ <b>ذِكْرَيَاتِهِ<\/b> فَخَلَّدَ طُفُولَتَهُ. هَذَا نَمُوذَجٌ عَلَى طَرِيقَتِه: صَفْحَةٌ مِنْ مُذَكِّرَاتِ طِفْل.", "parts": [{"lab": "الزَّمَانُ وَالْمَكَان", "c": "#0891b2", "t": "كُنْتُ فِي التَّاسِعَةِ مِنْ عُمُرِي، وَكَانَ بَيْتُنَا قَرِيبًا مِنْ حَدِيقَةٍ عَامَّةٍ، فِي طَرَفِهَا مَكْتَبَةٌ صَغِيرَةٌ مِنْ خَشَب."}, {"lab": "الْعَادَة: كُنْتُ أَفْعَلُ", "c": "#7c3aed", "t": "وَكُنْتُ كُلَّمَا عُدْتُ مِنَ الْمَدْرَسَةِ أَسْرَعْتُ إِلَيْهَا، فَأَفْتَحُ بَابَهَا الصَّغِيرَ، وَأَخْتَارُ كِتَابًا، ثُمَّ أَجْلِسُ تَحْتَ الشَّجَرَةِ أَقْرَؤُهُ حَتَّى يُنَادِيَنِي أَبِي."}, {"lab": "التَّفَاصِيلُ الْحِسِّيَّة", "c": "#16a34a", "t": "مَا زِلْتُ أَذْكُرُ رَائِحَةَ الْوَرَقِ الْقَدِيمِ، وَصَوْتَ الْعَصَافِيرِ فَوْقَ رَأْسِي، وَخُشُونَةَ الْغِلَافِ تَحْتَ أَصَابِعِي."}, {"lab": "الْمَوْقِفُ الْمُمَيَّز", "c": "#e11d48", "t": "وَذَاتَ يَوْمٍ مَاطِرٍ وَجَدْتُ الْمَكْتَبَةَ فَارِغَةً، فَحَزِنْتُ حُزْنًا شَدِيدًا، ثُمَّ رَأَيْتُ وَرَقَةً مُعَلَّقَةً عَلَى بَابِهَا: «ضَعْ كِتَابًا، وَخُذْ كِتَابًا». فَعُدْتُ إِلَى الْبَيْتِ، وَحَمَلْتُ قِصَّتَيْنِ مِنْ قِصَصِي، وَوَضَعْتُهُمَا فِيهَا."}, {"lab": "الْأَثَرُ الْيَوْم", "c": "#d97706", "t": "وَمُنْذُ ذَلِكَ الْيَوْمِ عَرَفْتُ أَنَّ الْكِتَابَ يَفْرَحُ إِذَا انْتَقَلَ مِنْ يَدٍ إِلَى يَدٍ، وَمَا زِلْتُ إِلَى الْيَوْمِ أُهْدِي كُلَّ كِتَابٍ أَنْتَهِي مِنْه."}], "tips": ["<b>ضَمِيرُ الْمُتَكَلِّم:<\/b> الْمُذَكِّرَاتُ تُرْوَى بِـ(أَنَا): كُنْتُ، عُدْتُ، أَذْكُرُ.", "<b>«كُنْتُ + مُضَارِع» لِلْعَادَة:<\/b> (كُنْتُ أَطُوفُ)، (كُنْتُ أَخْتَارُ) — هَكَذَا بَدَأَ الطَّنْطَاوِيُّ: «كُنْتُ… أَطُوفُ عَلَى الْمَكْتَبَات».", "<b>رَوَابِطُ الزَّمَن:<\/b> كُلَّمَا، ذَاتَ يَوْمٍ، ثُمَّ، وَمُنْذُ ذَلِكَ الْيَوْم.", "<b>الْحَوَاسّ:<\/b> الذِّكْرَى تَحْيَا بِالرَّائِحَةِ وَالصَّوْتِ وَاللَّمْسِ، لَا بِكَلِمَةِ (كَانَ جَمِيلًا).", "<b>الْأَثَر:<\/b> اخْتِمْ بِمَا بَقِيَ مِنَ الذِّكْرَى فِيكَ إِلَى الْيَوْم."]}, "anatomyHint": "الْمُذَكِّرَةُ تَسِيرُ مَعَ الزَّمَن: مِنَ الْمَكَانِ إِلَى الْعَادَةِ إِلَى الْحَدَثِ إِلَى الْأَثَر.", "skills": [{"lv": "مَهَارَة", "tag": "كُنْتُ + مُضَارِع", "q": "أَيُّ الْجُمَلِ تَحْكِي <b>عَادَةً<\/b> تَكَرَّرَتْ فِي الْمَاضِي؟", "opts": [["كُنْتُ أَزُورُ جَدِّي كُلَّ جُمُعَة", 1], ["زُرْتُ جَدِّي يَوْمَ الْجُمُعَة", 0], ["سَأَزُورُ جَدِّي يَوْمَ الْجُمُعَة", 0]], "why": "(كُنْتُ + أَزُورُ) تَدُلُّ عَلَى فِعْلٍ تَكَرَّرَ فِي الْمَاضِي. أَمَّا (زُرْتُ) فَمَرَّةٌ وَاحِدَة."}, {"lv": "مَهَارَة", "tag": "كُنْتُ + مُضَارِع", "q": "حَوِّلْ إِلَى عَادَة: «لَعِبْتُ الْكُرَةَ فِي الشَّارِع»", "opts": [["كُنْتُ أَلْعَبُ الْكُرَةَ فِي الشَّارِعِ كُلَّ مَسَاء", 1], ["أَلْعَبُ الْكُرَةَ فِي الشَّارِعِ الْآن", 0], ["لَعِبْتُ الْكُرَةَ مَرَّةً فِي الشَّارِع", 0]], "why": "أَضَفْنَا (كُنْتُ) وَحَوَّلْنَا الْفِعْلَ إِلَى مُضَارِع، وَكَلِمَةُ (كُلَّ مَسَاء) تُؤَكِّدُ التَّكْرَار."}, {"lv": "مَهَارَة", "tag": "الْحَوَاسّ", "q": "«رَائِحَةُ الْخُبْزِ الدَّافِئِ تَمْلَأُ مَطْبَخَ جَدَّتِي» — أَيُّ حَاسَّةٍ هُنَا؟", "opts": [["الشَّمّ 👃", 1], ["السَّمْع 👂", 0], ["الذَّوْق 👅", 0]], "why": "الرَّائِحَةُ تُدْرَكُ بِالشَّمّ. لَاحِظْ: جُمْلَةٌ وَاحِدَةٌ نَقَلَتْكَ إِلَى الْمَطْبَخ!"}, {"lv": "مَهَارَة", "tag": "الْوَصْفُ الْحَيّ", "q": "أَيُّ الْجُمْلَتَيْنِ أَجْمَلُ فِي الْمُذَكِّرَات؟", "opts": [["كَانَتِ الشَّمْسُ تُدَفِّئُ وَجْهِي، وَالنَّسِيمُ يُحَرِّكُ أَوْرَاقَ الدَّفْتَر", 1], ["كَانَ الْيَوْمُ جَمِيلًا جِدًّا جِدًّا", 0]], "why": "الْأُولَى تُرِيكَ الْيَوْمَ بِالْحَوَاسّ، وَالثَّانِيَةُ تُخْبِرُكَ فَقَطْ أَنَّهُ جَمِيل."}, {"lv": "مَهَارَة", "tag": "رَوَابِطُ الزَّمَن", "q": "«____ عُدْتُ مِنَ الْمَدْرَسَةِ أَسْرَعْتُ إِلَى الْمَكْتَبَة»", "opts": [["كُلَّمَا", 1], ["لَكِنْ", 0], ["لِأَنَّ", 0]], "why": "(كُلَّمَا) تَرْبِطُ بَيْنَ حَدَثَيْنِ يَتَكَرَّرَانِ مَعًا — وَتُشْبِهُ قَوْلَ الطَّنْطَاوِيِّ: «وَكُنْتُ إِذَا حَصَلْتُ… أَسْرَعْتُ»."}], "game": {"title": "صَيَّادُ الْحَوَاسّ", "prompt": "أَيُّ حَاسَّةٍ تَعْمَلُ فِي الْجُمْلَة؟", "bins": [{"k": "e", "ic": "👀", "n": "الْبَصَر"}, {"k": "s", "ic": "👂", "n": "السَّمْع"}, {"k": "n", "ic": "👃", "n": "الشَّمّ"}, {"k": "t", "ic": "✋", "n": "اللَّمْس"}, {"k": "d", "ic": "👅", "n": "الذَّوْق"}], "items": [["صَوْتُ الْمَطَرِ عَلَى النَّافِذَة", "s"], ["رَائِحَةُ الْوَرَقِ الْقَدِيم", "n"], ["خُشُونَةُ الْغِلَافِ تَحْتَ أَصَابِعِي", "t"], ["حَلَاوَةُ التَّمْرِ فِي فَمِي", "d"], ["أَلْوَانُ الْكُتُبِ عَلَى الرُّفُوف", "e"], ["زَقْزَقَةُ الْعَصَافِيرِ فَوْقَ الشَّجَرَة", "s"], ["بُرُودَةُ الْمَاءِ عَلَى وَجْهِي", "t"], ["عِطْرُ الْيَاسَمِينِ فِي الْحَدِيقَة", "n"], ["ضَوْءُ الْقَمَرِ عَلَى السَّطْح", "e"], ["مُلُوحَةُ مَاءِ الْبَحْر", "d"], ["نُعُومَةُ الْقِطَّةِ الصَّغِيرَة", "t"], ["أَذَانُ الْفَجْرِ مِنْ بَعِيد", "s"], ["الدُّخَانُ الْأَسْوَدُ فَوْقَ الْمَصْنَع", "e"], ["رَائِحَةُ الْقَهْوَةِ فِي الصَّبَاح", "n"]]}, "compose": {"title": "صَفْحَةٌ مِنْ ذِكْرَيَاتِي", "task": "اكْتُبْ ذِكْرَى حَقِيقِيَّةً مِنْ طُفُولَتِكَ: مَكَانٌ أَحْبَبْتَهُ، أَوْ عَادَةٌ كُنْتَ تَفْعَلُهَا، أَوْ شَيْءٌ عَشِقْتَهُ كَمَا عَشِقَ الطَّنْطَاوِيُّ الْكُتُب.", "docTitle": "📔 صَفْحَةٌ مِنْ ذِكْرَيَاتِي", "min": 60, "parts": [{"lab": "الزَّمَانُ وَالْمَكَان", "guide": "كَمْ كَانَ عُمُرُكَ؟ وَأَيْنَ كُنْتَ؟", "ph": "كُنْتُ فِي … مِنْ عُمُرِي، وَكَانَ …"}, {"lab": "الْعَادَة", "guide": "مَاذَا كُنْتَ تَفْعَلُ مِرَارًا؟ اسْتَعْمِلْ (كُنْتُ + مُضَارِع) وَ(كُلَّمَا).", "ph": "وَكُنْتُ كُلَّمَا … أَ…"}, {"lab": "التَّفَاصِيلُ الْحِسِّيَّة", "guide": "مَاذَا كُنْتَ تَرَى وَتَسْمَعُ وَتَشُمُّ وَتَلْمُسُ؟ (حَاسَّتَانِ عَلَى الْأَقَلّ)", "ph": "مَا زِلْتُ أَذْكُرُ رَائِحَةَ … وَصَوْتَ …"}, {"lab": "الْمَوْقِفُ الْمُمَيَّز", "guide": "حَدَثٌ وَاحِدٌ لَا تَنْسَاهُ فِي هَذَا الْمَكَان.", "ph": "وَذَاتَ يَوْمٍ …"}, {"lab": "الْأَثَرُ الْيَوْم", "guide": "مَاذَا بَقِيَ مِنْ هَذِهِ الذِّكْرَى فِيكَ إِلَى الْيَوْم؟", "ph": "وَمُنْذُ ذَلِكَ الْيَوْمِ …"}], "auto": [{"type": "min", "t": "سِتُّونَ كَلِمَةً فَأَكْثَر"}, {"type": "parts", "t": "كَتَبْتَ الْأَجْزَاءَ الْخَمْسَة"}, {"re": "(^|\\s)(و|ف)?كنت", "t": "اسْتَعْمَلْتَ (كُنْتُ) لِلْحِكَايَةِ عَنِ الْمَاضِي"}, {"re": "(كلما|كل يوم|ذات يوم|في يوم|منذ|حين|عندما)", "t": "اسْتَعْمَلْتَ رَابِطًا زَمَنِيًّا (كُلَّمَا، ذَاتَ يَوْمٍ، مُنْذُ…)"}, {"re": "(رائحة|صوت|ملمس|طعم|لون|ضوء|نعومة|خشونة|برودة|دفء|سمعت|شممت|لمست|ذقت|رأيت|أسمع|أرى)", "n": 2, "t": "ذَكَرْتَ حَاسَّتَيْنِ عَلَى الْأَقَلّ"}, {"re": "(ما زلت|مازلت|إلى اليوم|حتى اليوم|منذ ذلك|تعلمت|عرفت)", "t": "خَتَمْتَ بِأَثَرِ الذِّكْرَى فِيك"}], "self": ["رَوَيْتُ بِضَمِيرِ الْمُتَكَلِّم (أَنَا).", "الْقَارِئُ يَسْتَطِيعُ أَنْ يَتَخَيَّلَ الْمَكَان.", "كُلُّ جُزْءٍ يَبْدَأُ بِرَابِطٍ يَصِلُهُ بِمَا قَبْلَه.", "رَاجَعْتُ هَمَزَاتِ الْقَطْعِ وَالْوَصْلِ بِقَرِينَةِ الْوَاو."], "ruleTip": "الْكَلِمَاتُ الْمُظَلَّلَةُ تَبْدَأُ بِأَلِف: ضَعْ قَبْلَ كُلٍّ مِنْهَا (وَ) فِي ذِهْنِكَ، وَتَأَكَّدْ: قَطْعٌ أَمْ وَصْل؟", "mark": "^(و|ف|ب|ل|ك)?[اأإآ](?!ل)", "flag": ["^(و|ف|ب|ل)?(إستمع|إستخدم|إستطاع|إستيقظ|إنطلق|إنتظر|إنتظار|إجتمع|إجتماع|إشترى|إشتريت|إسم|إسمي|إبن|إمرأة|إثنان|إثنين|إستغفار|إستماع|إنتهى|إنتهيت|إنتصار|إحترام|إبتسم|إبتسمت|إبتسامة|إختار|إخترت|إختيار|إتصل|إنتقل|إنتقلت|إستعمل)$", "^(و|ف)?(الى|اذا|انا|امام|اخي|اختي|امي|ابي|اسرع|اسرعت|اخذ|اخذت|اعطى|احب|اريد|اصبح|ايضا|اول|اكثر|افضل)$"]}}}, {"id": "dawn", "title": "بَيْنَ السَّابِعَةِ وَالْخَامِسَة", "emoji": "🌅", "author": "رَقَائِقُ الْقُرْآن — إِبْرَاهِيم السَّكْرَان", "readHref": "lesson2.html?s=dawn", "tech": {"name": "الْهَمْزَةُ بَعْدَ الْأَلِفِ وَالْمَدَّةُ (آ)", "discover": {"title": "مَاذَا تَفْعَلُ الْهَمْزَةُ بَعْدَ الْأَلِف؟", "prompt": "كُلُّ هَذِهِ الْكَلِمَاتِ فِيهَا هَمْزَةٌ بَعْدَ أَلِفٍ سَاكِنَة. صَنِّفْهَا بِحَسَبِ <b>حَرَكَةِ الْهَمْزَةِ نَفْسِهَا<\/b>، ثُمَّ انْظُرْ: عَلَى أَيِّ كُرْسِيٍّ جَلَسَتْ؟", "bins": [{"k": "k", "ic": "⬇️", "n": "الْهَمْزَةُ مَكْسُورَة"}, {"k": "f", "ic": "⬆️", "n": "الْهَمْزَةُ مَفْتُوحَة"}, {"k": "e", "ic": "🔚", "n": "فِي آخِرِ الْكَلِمَة"}], "items": [["طَائِفَةً", "k", "طَا + ئِـ ← مَكْسُورَةٌ فَجَلَسَتْ عَلَى نَبِرَة.", "مِنْ نَصِّ السَّكْرَان"], ["لِأَدَاءِ", "e", "أَلِفٌ ثُمَّ هَمْزَةٌ فِي الْآخِرِ ← عَلَى السَّطْر.", "مِنْ نَصِّ السَّكْرَان"], ["الثَّائِرَةَ", "k", "ثَا + ئِـ ← مَكْسُورَةٌ: نَبِرَة.", "مِنْ نَصِّ السَّكْرَان"], ["الْأَبْنَاءِ", "e", "فِي الْآخِرِ بَعْدَ أَلِف ← عَلَى السَّطْر.", "مِنْ نَصِّ السَّكْرَان"], ["الْقِرَاءَةِ", "f", "رَا + ءَ ← مَفْتُوحَةٌ بَعْدَ أَلِف: عَلَى السَّطْر.", "مِنْ نَصِّ الطَّنْطَاوِيّ"], ["الْقَائِمِ", "k", "قَا + ئِـ ← مَكْسُورَة: نَبِرَة.", "مِنْ حَدِيثِ السَّفِينَة"], ["الْمَاءِ", "e", "فِي الْآخِرِ بَعْدَ أَلِف ← عَلَى السَّطْر.", "مِنْ حَدِيثِ السَّفِينَة"], ["بَائِعِ", "k", "بَا + ئِـ ← مَكْسُورَة: نَبِرَة.", "مِنْ نَصِّ الطَّنْطَاوِيّ"], ["تَسَاءَلَ", "f", "سَا + ءَ ← مَفْتُوحَة: عَلَى السَّطْر.", "كَلِمَةٌ جَدِيدَة"]], "reveal": "الْأَلِفُ سَاكِنَةٌ دَائِمًا، فَلَا تَنْفَعُ فِي الْمُقَارَنَة. لِذَلِكَ <b>نَنْظُرُ إِلَى حَرَكَةِ الْهَمْزَةِ نَفْسِهَا<\/b>:<br>مَكْسُورَةٌ ← <b>ئـ<\/b> (طَائِفَة) · مَضْمُومَةٌ ← <b>ؤ<\/b> (تَفَاؤُل) · مَفْتُوحَةٌ ← <b>ء<\/b> عَلَى السَّطْرِ (قِرَاءَة) · فِي آخِرِ الْكَلِمَةِ ← <b>ء<\/b> (أَدَاء)."}, "clue": {"title": "🪑 قَرِينَةُ الْجَارِ السَّاكِن", "idea": "فِي الْمُسْتَوَى الثَّالِثِ قَارَنَّا حَرَكَةَ الْهَمْزَةِ بِحَرَكَةِ مَا قَبْلَهَا. فَإِذَا كَانَ قَبْلَهَا أَلِفٌ (لَا حَرَكَةَ لَهُ) فَالْقَرَارُ لِحَرَكَتِهَا هِيَ.", "steps": ["انْظُرْ إِلَى الْحَرْفِ قَبْلَ الْهَمْزَة: أَلِفُ مَدٍّ (ـا)؟", "إِنْ كَانَتِ الْهَمْزَةُ فِي آخِرِ الْكَلِمَةِ ← عَلَى السَّطْر: أَدَاء، سَمَاء، آبَاء.", "إِنْ كَانَتْ فِي الْوَسَطِ ← حَرَكَتُهَا هِيَ الَّتِي تَخْتَارُ: الْكَسْرَةُ (ئـ) · الضَّمَّةُ (ؤ) · الْفَتْحَةُ (ء).", "<b>الْمَدَّة:<\/b> إِذَا جَاءَتِ الْهَمْزَةُ وَبَعْدَهَا أَلِفُ مَدٍّ (أَا) أَوْ هَمْزَةٌ سَاكِنَةٌ (أَأْ) ← نَكْتُبُهُمَا (آ): آبَاء، آمَنَ، الْقُرْآن."], "worked": "فِي النَّصِّ: «أَنْفَاسَ <b>الْآبَاءِ<\/b>» ← (أَ + ا + بَاء) = آبَاء: فِي أَوَّلِهَا هَمْزَةٌ وَمَدٌّ فَصَارَتَا (آ)، وَفِي آخِرِهَا هَمْزَةٌ بَعْدَ أَلِفٍ فَجَلَسَتْ عَلَى السَّطْر.<br>وَفِي النَّصِّ: «الثَّائِرَةَ» ← الْهَمْزَةُ مَكْسُورَةٌ بَعْدَ أَلِف ← نَبِرَة.", "deeper": "<b>مِنْ أَعْمَقِ مَا فِي الْبَابِ:<\/b> (أَدَاء) عَلَى السَّطْرِ، لَكِنْ إِذَا أَضَفْنَا ضَمِيرًا صَارَتِ الْهَمْزَةُ فِي الْوَسَطِ فَتَتَغَيَّرُ مَعَ حَرَكَتِهَا: (أَدَاؤُهُ) مَرْفُوعًا، (أَدَاءَهُ) مَنْصُوبًا، (أَدَائِهِ) مَجْرُورًا.<br>وَجَمْعُ (مُكَافَأَة) هُوَ (مُكَافَآت): أ + ا = آ.<br>⚠️ فِي الْمُصْحَفِ الشَّرِيفِ رَسْمٌ خَاصٌّ (الرَّسْمُ الْعُثْمَانِيّ) لَا نَقِيسُ عَلَيْهِ إِمْلَاءَنَا الْحَدِيث."}, "ladder": [{"lv": "تَعَرُّف", "q": "فِي (طَائِفَةً) جَلَسَتِ الْهَمْزَةُ عَلَى نَبِرَةٍ لِأَنَّ:", "opts": [["الْهَمْزَةَ مَكْسُورَةٌ، وَقَبْلَهَا أَلِفٌ سَاكِنَة", 1], ["الطَّاءَ مَفْتُوحَة", 0], ["الْكَلِمَةَ مُؤَنَّثَة", 0]], "why": "بَعْدَ الْأَلِفِ الْحُكْمُ لِحَرَكَةِ الْهَمْزَة، وَالْكَسْرَةُ تَخْتَارُ النَّبِرَة."}, {"lv": "تَعْلِيل", "q": "لِمَاذَا نَكْتُبُ (قِرَاءَة) لَا (قِرَائَة)؟", "opts": [["لِأَنَّ الْهَمْزَةَ مَفْتُوحَةٌ بَعْدَ أَلِفٍ فَتُكْتَبُ عَلَى السَّطْر", 1], ["لِأَنَّ الرَّاءَ مَكْسُورَة", 0], ["لِأَنَّهَا فِي وَسَطِ الْكَلِمَة", 0]], "why": "الْفَتْحَةُ بَعْدَ الْأَلِفِ لَا كُرْسِيَّ لَهَا، فَتَجْلِسُ الْهَمْزَةُ عَلَى السَّطْرِ مَعَ أَنَّهَا فِي الْوَسَط."}, {"lv": "تَعْلِيل", "q": "(الْآبَاء) فِي النَّصِّ: لِمَاذَا كُتِبَ أَوَّلُهَا (آ)؟", "opts": [["أَصْلُهَا (أَابَاء): هَمْزَةٌ ثُمَّ أَلِفُ مَدٍّ، فَاجْتَمَعَتَا فِي (آ)", 1], ["لِأَنَّ اللَّامَ قَبْلَهَا", 0], ["لِأَنَّهَا جَمْعُ مُؤَنَّث", 0]], "why": "جَمْعُ (أَب) عَلَى وَزْنِ (أَفْعَال) ← أَأْبَاء ← آبَاء."}, {"lv": "نَقْل", "q": "(تَفَا_ُل) — أَيُّ كُرْسِيٍّ لِلْهَمْزَةِ الْمَضْمُومَة؟", "opts": [["ؤ ← تَفَاؤُل", 1], ["ئـ ← تَفَائُل", 0], ["ء ← تَفَاءُل", 0]], "why": "مَضْمُومَةٌ بَعْدَ أَلِف ← الضَّمَّةُ تَخْتَارُ الْوَاو."}, {"lv": "نَقْل", "q": "جَمْعُ (مُكَافَأَة):", "opts": [["مُكَافَآت", 1], ["مُكَافَأَات", 0], ["مُكَافَئَات", 0]], "why": "الْهَمْزَةُ (أَ) وَبَعْدَهَا أَلِفُ الْجَمْعِ (ا) ← تَجْتَمِعَانِ فِي (آ)."}, {"lv": "اسْتِثْنَاء", "q": "(أَدَاء) عَلَى السَّطْر، فَكَيْفَ نَكْتُبُ: «أُعْجِبْتُ بِـ(أَدَاء + ـهِ)»؟", "opts": [["أَدَائِهِ", 1], ["أَدَاءِهِ", 0], ["أَدَاؤِهِ", 0]], "why": "صَارَتِ الْهَمْزَةُ فِي الْوَسَطِ مَكْسُورَةً بَعْدَ أَلِف ← نَبِرَة."}, {"lv": "اسْتِثْنَاء", "q": "وَكَيْفَ نَكْتُبُ: «(أَدَاء + ـهُ) مُمْتَاز»؟", "opts": [["أَدَاؤُهُ", 1], ["أَدَاءُهُ", 0], ["أَدَائُهُ", 0]], "why": "مَضْمُومَةٌ فِي الْوَسَطِ بَعْدَ أَلِف ← وَاو."}, {"lv": "نَقْل", "q": "«قَرَأْتُ _لْقُرْآنَ» — كَيْفَ تُكْتَبُ فِي الْإِمْلَاءِ الْحَدِيث؟", "opts": [["الْقُرْآن", 1], ["الْقُرْأَان", 0], ["الْقُرْءَان", 0]], "why": "هَمْزَةٌ بَعْدَهَا أَلِفُ مَدٍّ ← (آ). أَمَّا (الْقُرْءَان) فَرَسْمٌ عُثْمَانِيٌّ خَاصٌّ بِالْمُصْحَف."}, {"lv": "تَعْلِيل", "q": "(الْمَاءِ) فِي حَدِيثِ السَّفِينَة: لِمَاذَا عَلَى السَّطْر؟", "opts": [["هَمْزَةٌ فِي آخِرِ الْكَلِمَةِ بَعْدَ أَلِفٍ سَاكِنَة", 1], ["لِأَنَّهَا مَكْسُورَة", 0], ["لِأَنَّ الْمِيمَ مَفْتُوحَة", 0]], "why": "الْهَمْزَةُ الْمُتَطَرِّفَةُ بَعْدَ حَرْفٍ سَاكِنٍ أَوْ مَدٍّ تَجْلِسُ عَلَى السَّطْرِ — وَهَذَا مَا عَرَفْتَهُ فِي الْمُسْتَوَى الثَّالِث."}], "build": {"title": "أَجْلِسِ الْهَمْزَةَ عَلَى كُرْسِيِّهَا", "keys": ["ئ", "ؤ", "ء", "آ"], "items": [{"w": "طَا□ِرَة", "ans": "ئ", "full": "طَائِرَة", "why": "مَكْسُورَةٌ بَعْدَ أَلِف ← نَبِرَة."}, {"w": "قِرَا□َة", "ans": "ء", "full": "قِرَاءَة", "why": "مَفْتُوحَةٌ بَعْدَ أَلِف ← عَلَى السَّطْر."}, {"w": "تَشَا□ُم", "ans": "ؤ", "full": "تَشَاؤُم", "why": "مَضْمُومَةٌ بَعْدَ أَلِف ← وَاو."}, {"w": "صَحْرَا□", "ans": "ء", "full": "صَحْرَاء", "why": "فِي الْآخِرِ بَعْدَ أَلِف ← عَلَى السَّطْر."}, {"w": "□مَنَ الْمُؤْمِنُ", "ans": "آ", "full": "آمَنَ", "ctx": "أَصْلُهَا: أَأْمَنَ", "why": "هَمْزَتَانِ: الثَّانِيَةُ سَاكِنَة ← (آ)."}, {"w": "مَسَا□ِل", "ans": "ئ", "full": "مَسَائِل", "why": "مَكْسُورَةٌ بَعْدَ أَلِف ← نَبِرَة."}, {"w": "الْ□نَ", "ans": "آ", "full": "الْآنَ", "why": "هَمْزَةٌ بَعْدَهَا مَدّ ← (آ)."}, {"w": "تَفَا□ُل", "ans": "ؤ", "full": "تَفَاؤُل", "why": "مَضْمُومَةٌ بَعْدَ أَلِف ← وَاو."}, {"w": "دُعَا□", "ans": "ء", "full": "دُعَاء", "why": "فِي الْآخِرِ بَعْدَ أَلِف ← عَلَى السَّطْر."}, {"w": "عَبَا□َة", "ans": "ء", "full": "عَبَاءَة", "why": "مَفْتُوحَةٌ بَعْدَ أَلِف ← عَلَى السَّطْر."}]}, "fix": {"title": "صَبَاحٌ بَاكِر", "tokens": [["اسْتَيْقَظَ", 0], ["الْأَبْنَاءُ", 0], ["لِأَدَاءِ", 0], ["الصَّلَاةِ،", 0], ["ثُمَّ", 0], ["جَلَسُوا", 0], ["لِقِرَائَةِ", 1, "لِقِرَاءَةِ", "مَفْتُوحَةٌ بَعْدَ أَلِف ← عَلَى السَّطْر."], ["الْقُرْأَنِ", 1, "الْقُرْآنِ", "هَمْزَةٌ بَعْدَهَا مَدّ ← آ."], ["فِي", 0], ["هُدُوءٍ،", 0], ["وَتَنَاوَلُوا", 0], ["الْفَطُورَ", 0], ["مَعَ", 0], ["الْأَبَاءِ،", 1, "الْآبَاءِ", "جَمْعُ (أَب): أَأْبَاء ← آبَاء."], ["وَخَرَجُوا", 0], ["بِتَفَائُلٍ", 1, "بِتَفَاؤُلٍ", "مَضْمُومَةٌ بَعْدَ أَلِف ← وَاو."], ["إِلَى", 0], ["الْمَدْرَسَةِ،", 0], ["وَالطُّيُورُ", 0], ["تُغَرِّدُ", 0], ["فِي", 0], ["السَّمَائِ.", 1, "السَّمَاءِ.", "هَمْزَةٌ فِي الْآخِرِ بَعْدَ أَلِف ← عَلَى السَّطْر."]]}, "game": {"title": "سِبَاقُ الْكَرَاسِيّ", "prompt": "اخْتَرْ كُرْسِيَّ الْهَمْزَةِ بِسُرْعَة.", "bins": [{"k": "y", "ic": "ئ", "n": "نَبِرَة"}, {"k": "w", "ic": "ؤ", "n": "وَاو"}, {"k": "s", "ic": "ء", "n": "السَّطْر"}, {"k": "m", "ic": "آ", "n": "مَدَّة"}], "items": [["طَا□ِفَة", "y", "طَائِفَة"], ["قِرَا□َة", "s", "قِرَاءَة"], ["تَفَا□ُل", "w", "تَفَاؤُل"], ["سَمَا□", "s", "سَمَاء"], ["□بَاء", "m", "آبَاء"], ["قَا□ِد", "y", "قَائِد"], ["مَا□", "s", "مَاء"], ["تَشَا□ُم", "w", "تَشَاؤُم"], ["عَبَا□َة", "s", "عَبَاءَة"], ["مُكَافَ□ت", "m", "مُكَافَآت"], ["جَزَا□ِر", "y", "جَزَائِر"], ["أَبْنَا□", "s", "أَبْنَاء"], ["□خِر", "m", "آخِر"], ["دَوَا□", "s", "دَوَاء"], ["سَا□ِل", "y", "سَائِل"], ["التَّسَا□ُل", "w", "التَّسَاؤُل"], ["الْقُرْ□ن", "m", "الْقُرْآن"]]}, "dict": {"s": "فِي الْخَامِسَةِ صَبَاحًا تَجِدُ طَائِفَةً مُوَفَّقَةً مِنَ النَّاسِ تَتَهَادَى بِسَكِينَةٍ لِأَدَاءِ صَلَاةِ الْفَجْرِ.", "src": "رَقَائِقُ الْقُرْآن", "focus": "طَائِفَةً، لِأَدَاءِ", "sec": 12}, "review": [{"lv": "مُرَاجَعَة", "tag": "الدَّرْسُ ١", "q": "فِي النَّصِّ: (الْإِنْذَارِ). هَمْزَتُهَا:", "opts": [["قَطْع؛ نَقُولُ (وَالْإِنْذَار) فَتَثْبُت", 1], ["وَصْل؛ لِأَنَّ قَبْلَهَا (ال)", 0]], "why": "هَمْزَةُ (ال) وَصْل، أَمَّا هَمْزَةُ (إِنْذَار) فَقَطْع: مَصْدَرُ (أَنْذَرَ) الرُّبَاعِيّ."}, {"lv": "مُرَاجَعَة", "tag": "الدَّرْسُ ١", "q": "فِي النَّصِّ: (أُطْلِقَتْ). لِمَاذَا بِهَمْزَةِ قَطْع؟", "opts": [["فِعْلُهَا (أَطْلَقَ) رُبَاعِيٌّ، وَهَمْزَتُهُ قَطْع", 1], ["لِأَنَّهَا مَضْمُومَة", 0]], "why": "(أَطْلَقَ) رُبَاعِيّ، وَهَمْزَةُ الرُّبَاعِيِّ قَطْعٌ: (وَأُطْلِقَتْ)."}, {"lv": "مُرَاجَعَة", "tag": "مِنَ الْمُسْتَوَى الثَّالِث", "q": "فِي النَّصِّ: (الْمَدِينَةُ) — لَامُ (ال):", "opts": [["قَمَرِيَّة", 1], ["شَمْسِيَّة", 0]], "why": "نَنْطِقُ اللَّامَ وَاضِحَةً سَاكِنَة: (الْـمَدِينَة)."}]}, "create": {"genre": "التَّلْخِيص", "model": {"title": "✂️ تَلْخِيصُ «بَيْنَ السَّابِعَةِ وَالْخَامِسَة»", "intro": "نَصُّ السَّكْرَانِ نَحْوُ ٨٠ كَلِمَةً مَلِيئَةً بِالْوَصْف. هَذَا تَلْخِيصُهُ فِي نَحْوِ ٤٥ كَلِمَة: الْفِكْرَةُ نَفْسُهَا، بِلَا تَفَاصِيل، وَبِكَلِمَاتٍ جَدِيدَة.", "parts": [{"lab": "الْفِكْرَةُ الْعَامَّة", "c": "#0891b2", "t": "يُقَارِنُ الْكَاتِبُ بَيْنَ حَالِ الْمَدِينَةِ فِي السَّاعَةِ الْخَامِسَةِ وَالسَّاعَةِ السَّابِعَةِ صَبَاحًا."}, {"lab": "الْمَشْهَدُ الْأَوَّل", "c": "#7c3aed", "t": "فِي الْخَامِسَةِ يَخْرُجُ قَلِيلٌ مِنَ النَّاسِ بِهُدُوءٍ إِلَى صَلَاةِ الْفَجْرِ، وَكَثِيرٌ مِنْهُمْ نَائِمُون."}, {"lab": "الْمَشْهَدُ الثَّانِي", "c": "#16a34a", "t": "وَفِي السَّابِعَةِ تَمْتَلِئُ الطُّرُقُ بِالْعَجَلَةِ إِلَى الدِّرَاسَةِ وَالْعَمَل."}, {"lab": "رِسَالَةُ الْكَاتِب", "c": "#d97706", "t": "ثُمَّ يَسْأَلُنَا: هَلْ صَارَتِ الدُّنْيَا أَهَمَّ عِنْدَنَا مِنَ الدِّين؟"}], "tips": ["<b>احْتَفِظْ:<\/b> بِالْفِكْرَةِ الْعَامَّةِ، وَطَرَفَيِ الْمُقَارَنَةِ، وَرِسَالَةِ الْكَاتِب.", "<b>احْذِفْ:<\/b> الْوَصْفَ وَالتَّشْبِيهَ وَالتَّكْرَار — (تَتَهَادَى بِسَكِينَة)، (صَافِرَاتُ الْإِنْذَار)، (حَرَكَةٌ مَوَّارَة).", "<b>عَمِّمْ:<\/b> بَدَلَ (الدِّرَاسَةُ وَالدَّوَامُ وَالْأَسْوَاق) قُلْ: (أَعْمَالُ الدُّنْيَا).", "<b>بِكَلِمَاتِك:<\/b> لَا تَنْسَخْ جُمَلَ الْكَاتِب؛ أَعِدْ صِيَاغَتَهَا.", "<b>بِلَا رَأْيِكَ:<\/b> التَّلْخِيصُ يَنْقُلُ مَا قَالَهُ الْكَاتِب، لَا مَا تَرَاهُ أَنْت."]}, "anatomyHint": "التَّلْخِيصُ الْجَيِّدُ يَبْدَأُ بِالْفِكْرَةِ الْعَامَّة، ثُمَّ يَمُرُّ عَلَى الْأَجْزَاءِ بِتَرْتِيبِ النَّصّ، ثُمَّ يَخْتِمُ بِرِسَالَةِ الْكَاتِب.", "skills": [{"lv": "مَهَارَة", "tag": "مِقَصُّ التَّفَاصِيل", "q": "«تَجِدُ طَائِفَةً مُوَفَّقَةً مِنَ النَّاسِ تَتَهَادَى بِسَكِينَةٍ لِأَدَاءِ صَلَاةِ الْفَجْرِ» — أَفْضَلُ تَلْخِيصٍ لَهَا:", "opts": [["قَلِيلٌ مِنَ النَّاسِ يَذْهَبُونَ إِلَى صَلَاةِ الْفَجْر", 1], ["تَجِدُ طَائِفَةً مُوَفَّقَةً تَتَهَادَى بِسَكِينَة", 0], ["النَّاسُ يَمْشُونَ بِبُطْءٍ فِي الصَّبَاح", 0]], "why": "حَذَفْنَا الْوَصْفَ (تَتَهَادَى بِسَكِينَة) وَأَبْقَيْنَا الْمَعْنَى: مَنْ؟ إِلَى أَيْن؟ الثَّانِيَةُ نَسْخ، وَالثَّالِثَةُ ضَيَّعَتِ الصَّلَاة."}, {"lv": "مَهَارَة", "tag": "بِكَلِمَاتِي", "q": "«وَرُبَّمَا وَجَدْتَ أَنْفَاسَ الْآبَاءِ الثَّائِرَةَ عَلَى فِرَاشِ الْأَبْنَاءِ» — أَعِدْ صِيَاغَتَهَا:", "opts": [["وَالْآبَاءُ يُوقِظُونَ أَبْنَاءَهُمْ بِغَضَبٍ لِلْمَدْرَسَة", 1], ["أَنْفَاسُ الْآبَاءِ ثَائِرَةٌ عَلَى الْفِرَاش", 0], ["الْأَبْنَاءُ يَنَامُونَ عَلَى فِرَاشٍ مُرِيح", 0]], "why": "فَهِمْنَا الصُّورَةَ (الْأَنْفَاسُ الثَّائِرَةُ = الْغَضَبُ وَالْعَجَلَة) ثُمَّ قُلْنَاهَا بِلُغَتِنَا."}, {"lv": "مَهَارَة", "tag": "بِلَا رَأْيِي", "q": "أَيُّ جُمْلَةٍ <b>لَا<\/b> تَصْلُحُ فِي التَّلْخِيص؟", "opts": [["وَأَنَا أُحِبُّ الِاسْتِيقَاظَ مُبَكِّرًا جِدًّا", 1], ["يُقَارِنُ الْكَاتِبُ بَيْنَ وَقْتَيْن", 0], ["يَسْأَلُ الْكَاتِبُ عَنِ الدُّنْيَا وَالدِّين", 0]], "why": "هَذَا رَأْيُكَ أَنْت، وَمَكَانُهُ مَقَالُ الرَّأْي، لَا التَّلْخِيص."}, {"lv": "مَهَارَة", "tag": "التَّعْمِيم", "q": "«اشْتَرَيْنَا تُفَّاحًا وَمَوْزًا وَبُرْتُقَالًا وَعِنَبًا» — لَخِّصْهَا:", "opts": [["اشْتَرَيْنَا فَوَاكِه", 1], ["اشْتَرَيْنَا تُفَّاحًا", 0], ["ذَهَبْنَا إِلَى السُّوق", 0]], "why": "كَلِمَةٌ عَامَّةٌ وَاحِدَةٌ (فَوَاكِه) تَجْمَعُ الْقَائِمَةَ كُلَّهَا."}], "game": {"title": "أَسَاسٌ أَمْ تَفْصِيل؟", "prompt": "هَلْ تَبْقَى هَذِهِ الْفِكْرَةُ فِي التَّلْخِيصِ أَمْ نَقُصُّهَا؟", "bins": [{"k": "c", "ic": "🧱", "n": "أَسَاسٌ يَبْقَى"}, {"k": "d", "ic": "✂️", "n": "تَفْصِيلٌ يُحْذَف"}], "items": [["يُقَارِنُ الْكَاتِبُ بَيْنَ سَاعَتَيْن", "c"], ["تَتَهَادَى بِسَكِينَة", "d"], ["أَكْثَرُ النَّاسِ نِيَامٌ وَقْتَ الْفَجْر", "c"], ["كَأَنَّمَا أُطْلِقَتْ صَافِرَاتُ الْإِنْذَار", "d"], ["الزِّحَامُ فِي السَّابِعَةِ لِأَعْمَالِ الدُّنْيَا", "c"], ["حَرَكَةٌ مَوَّارَة", "d"], ["سُؤَالُ الْكَاتِبِ عَنِ الدُّنْيَا وَالدِّين", "c"], ["أَنْفَاسُ الْآبَاءِ الثَّائِرَة", "d"], ["قِلَّةٌ تَخْرُجُ لِصَلَاةِ الْفَجْر", "c"], ["طُرُقٌ تَتَدَافَع", "d"]]}, "compose": {"title": "لَخِّصْ نَصَّ الطَّنْطَاوِيّ", "task": "لَخِّصْ نَصَّ «عِشْقُ الْقِرَاءَة» الَّذِي قَرَأْتَهُ فِي الدَّرْسِ الْأَوَّلِ، فِي ثَلَاثِ جُمَلٍ إِلَى خَمْس، <b>بَيْنَ ١٥ وَ٤٥ كَلِمَة<\/b>، وَبِكَلِمَاتِك.", "source": {"title": "النَّصُّ الْأَصْلِيّ (انْقُرْ لِتَفْتَحَهُ)", "text": "وَلَقَدْ كُنْتُ فِي طُفُولَتِي، أَطُوفُ عَلَى الْمَكْتَبَاتِ، فَأَقِفُ أَمَامَ وَاجِهَاتِهَا الزُّجَاجِيَّةِ، أُطِيلُ النَّظَرَ إِلَى الْكُتُبِ الْمَعْرُوضَةِ فِيهَا، أَقْرَأُ عَنَاوِينَهَا، وَأَتَمَنَّى لَوْ أَمْلِكُ ثَمَنَهَا لِأَشْتَرِيَهَا وَأَقْرَأَهَا. وَكُنْتُ إِذَا حَصَلْتُ عَلَى قِرْشٍ أَوْ قِرْشَيْنِ، أَسْرَعْتُ إِلَى بَائِعِ الْكُتُبِ الْقَدِيمَةِ، فَاشْتَرَيْتُ مِنْهُ كِتَاباً مُمَزَّقَ الْغِلَافِ، أَوْ نَاقِصَ الصَّفَحَاتِ، فَأَقْرَؤُهُ كُلَّهُ فِي يَوْمِي، ثُمَّ أَعُودُ فِي الْيَوْمِ التَّالِي لِأَسْتَبْدِلَ بِهِ غَيْرَهُ، وَأَدْفَعَ لَهُ أُجْرَةَ الْقِرَاءَةِ."}, "docTitle": "✂️ تَلْخِيصُ «عِشْقُ الْقِرَاءَة»", "min": 15, "max": 45, "parts": [{"lab": "الْفِكْرَةُ الْعَامَّة", "guide": "عَمَّ يَتَحَدَّثُ الطَّنْطَاوِيّ؟ (جُمْلَةٌ وَاحِدَة)", "ph": "يَتَحَدَّثُ الْكَاتِبُ عَنْ …"}, {"lab": "مَاذَا كَانَ يَفْعَل؟", "guide": "اجْمَعْ أَفْعَالَهُ فِي جُمْلَةٍ أَوْ جُمْلَتَيْن، وَاحْذِفِ الْوَصْف.", "ph": "فَكَانَ …"}, {"lab": "الْخُلَاصَة", "guide": "مَاذَا تَدُلُّ عَلَيْهِ أَفْعَالُه؟ (دُونَ رَأْيِك)", "ph": "وَهَذَا يَدُلُّ عَلَى …"}], "auto": [{"type": "min", "t": "خَمْسَ عَشْرَةَ كَلِمَةً فَأَكْثَر"}, {"type": "max", "t": "لَا يَزِيدُ عَلَى خَمْسٍ وَأَرْبَعِينَ كَلِمَة"}, {"type": "parts", "t": "كَتَبْتَ الْأَجْزَاءَ الثَّلَاثَة"}, {"type": "copy", "t": "كَتَبْتَ بِكَلِمَاتِكَ (لَا خَمْسَ كَلِمَاتٍ مُتَتَالِيَةً مَنْسُوخَةً مِنَ النَّصّ)"}, {"re": "(^|\\s)(أنا|أحب|أرى|رأيي|أعتقد|أظن)(\\s|$)", "neg": true, "t": "لَمْ تُضِفْ رَأْيَكَ الشَّخْصِيّ"}, {"re": "(الكتب|القراءة|يقرأ|قراءة|كتاب)", "t": "ذَكَرْتَ مَوْضُوعَ النَّصِّ (الْقِرَاءَة)"}], "self": ["بَدَأْتُ بِالْفِكْرَةِ الْعَامَّة.", "حَذَفْتُ الْوَصْفَ: (الزُّجَاجِيَّة، مُمَزَّقَ الْغِلَاف…).", "عَمَّمْتُ: (قِرْشٌ أَوْ قِرْشَانِ) ← (مَالٌ قَلِيل).", "رَاجَعْتُ الْهَمَزَاتِ بَعْدَ الْأَلِفِ (الْقِرَاءَة، بَائِع)."], "ruleTip": "الْكَلِمَاتُ الْمُظَلَّلَةُ فِيهَا هَمْزَة: إِنْ سَبَقَتْهَا أَلِفٌ فَاسْأَلْ عَنْ حَرَكَتِهَا هِيَ.", "mark": "[ءئؤآ]|اأ", "flag": ["(قرائة|قراأة|قرأة|القرأن|قرأن|الأباء|أباء$|تفائل|تشائم|سمائ$|مائ$|أدائ$|هدوئ$)"]}}}, {"id": "elephant", "title": "الْبَعُوضَةُ وَالْفِيل", "emoji": "🐘", "author": "الْبِدَايَةُ وَالنِّهَايَة — ابْنُ كَثِير", "readHref": "lesson2.html?s=elephant", "tech": {"name": "الْأَلِفُ اللَّيِّنَةُ فِي آخِرِ الْكَلِمَة", "discover": {"title": "قَائِمَةٌ (ا) أَمْ مَقْصُورَةٌ (ى)؟", "prompt": "كَلِمَاتٌ مِنْ نُصُوصِ الْوَحْدَةِ تَنْتَهِي بِأَلِفٍ نَنْطِقُهَا وَاحِدَة. صَنِّفْهَا بِحَسَبِ <b>رَسْمِهَا<\/b>، ثُمَّ ابْحَثْ عَنِ السِّرّ: مَا نَوْعُ الْكَلِمَة؟ وَكَمْ حَرْفًا فِيهَا؟", "bins": [{"k": "a", "ic": "📏", "n": "قَائِمَة (ا)"}, {"k": "y", "ic": "🦆", "n": "مَقْصُورَة (ى)"}], "items": [["إِذَا", "a", "كَلِمَةٌ مَبْنِيَّة ← أَلِفٌ قَائِمَة.", "الْبَعُوضَةُ وَالْفِيل"], ["بَلَى", "y", "حَرْفٌ… لَكِنَّهُ مِنَ الْأَرْبَعَةِ الْمُسْتَثْنَاة!", "الْبَعُوضَةُ وَالْفِيل"], ["مَا", "a", "مَبْنِيَّة ← قَائِمَة.", "الْبَعُوضَةُ وَالْفِيل"], ["عَلَى", "y", "حَرْفٌ مِنَ الْأَرْبَعَةِ الْمُسْتَثْنَاة.", "الْبَعُوضَةُ وَالْفِيل"], ["أَتَمَنَّى", "y", "فِعْلٌ مِنْ خَمْسَةِ أَحْرُف ← مَقْصُورَة.", "عِشْقُ الْقِرَاءَة"], ["تَتَهَادَى", "y", "فِعْلٌ مِنْ سِتَّةِ أَحْرُف ← مَقْصُورَة.", "بَيْنَ السَّابِعَةِ وَالْخَامِسَة"], ["الدُّنْيَا", "a", "أَكْثَرُ مِنْ ثَلَاثَةٍ… لَكِنْ قَبْلَ الْأَلِفِ يَاء ← قَائِمَة.", "بَيْنَ السَّابِعَةِ وَالْخَامِسَة"], ["إِلَى", "y", "حَرْفٌ مِنَ الْأَرْبَعَةِ الْمُسْتَثْنَاة.", "عِشْقُ الْقِرَاءَة"], ["نَجَا", "a", "فِعْلٌ ثُلَاثِيّ: يَنْجُو ← أَصْلُهُ وَاو ← قَائِمَة.", "حَدِيثُ السَّفِينَة (نَجَوْا)"]], "reveal": "١) <b>الْحُرُوفُ وَالْكَلِمَاتُ الْمَبْنِيَّة<\/b> بِالْأَلِفِ الْقَائِمَة (إِذَا، مَا، لَا، مَهْمَا) إِلَّا: <b>إِلَى، عَلَى، بَلَى، حَتَّى<\/b> — وَمِثْلُهَا (مَتَى، لَدَى، أَنَّى).<br>٢) <b>مَا زَادَ عَلَى ثَلَاثَةِ أَحْرُفٍ<\/b> فَبِالْمَقْصُورَة (أَتَمَنَّى، تَتَهَادَى) إِلَّا إِذَا سَبَقَتْهَا يَاء (الدُّنْيَا).<br>٣) <b>الثُّلَاثِيّ<\/b> نَرُدُّهُ إِلَى أَصْلِه (نَجَا ← يَنْجُو)."}, "clue": {"title": "🌳 شَجَرَةُ الْقَرَائِن", "idea": "آلَةُ الزَّمَنِ فِي الْمُسْتَوَى الثَّالِثِ تَصْلُحُ لِلْفِعْلِ الثُّلَاثِيِّ فَقَط. أَمَّا الْآنَ فَسَنَحْكُمُ عَلَى كُلِّ كَلِمَةٍ بِأَرْبَعَةِ أَسْئِلَةٍ مُتَتَابِعَة.", "steps": ["<b>هَلْ هِيَ حَرْفٌ أَوْ كَلِمَةٌ مَبْنِيَّة؟<\/b> ← قَائِمَة (إِذَا، مَا، لَا، كَلَّا، مَهْمَا) إِلَّا: إِلَى، عَلَى، بَلَى، حَتَّى، وَمَعَهَا: مَتَى، لَدَى، أَنَّى.", "<b>هَلْ زَادَتْ عَلَى ثَلَاثَةِ أَحْرُف؟<\/b> ← مَقْصُورَة (أَعْطَى، مُسْتَشْفَى، أَتَمَنَّى) إِلَّا إِذَا سَبَقَتْهَا يَاءٌ (الدُّنْيَا، الْعُلْيَا، الثُّرَيَّا).", "<b>ثُلَاثِيَّة؟<\/b> ← رُدَّهَا إِلَى أَصْلِهَا: الْفِعْلُ بِالْمُضَارِعِ (دَعَا يَدْعُو / رَمَى يَرْمِي)، وَالِاسْمُ بِالْمُثَنَّى (عَصَا ← عَصَوَانِ / فَتًى ← فَتَيَانِ).", "<b>هَلِ اتَّصَلَ بِهَا ضَمِيرٌ؟<\/b> ← تُكْتَبُ قَائِمَةً: أَعْطَى ← أَعْطَاهُ، أَعْلَى ← أَعْلَاهَا."], "worked": "فِي النَّصِّ: «فَقَالَ: <b>بَلَى<\/b>» ← حَرْف؟ نَعَمْ ← هَلْ هِيَ مِنَ الْأَرْبَعَة؟ نَعَمْ ← مَقْصُورَة.<br>وَفِي حَدِيثِ ابْنِ عُمَرَ: «وَ<b>أَعْطَاهُ<\/b> عِمَامَةً» ← (أَعْطَى) أَرْبَعَةُ أَحْرُفٍ فَهِيَ مَقْصُورَة، لَكِنِ اتَّصَلَ بِهَا الضَّمِيرُ (ـهُ) فَصَارَتْ قَائِمَة.", "deeper": "<b>لِمَاذَا تَخْتَلِفُ (الدُّنْيَا) عَنْ (أَتَمَنَّى)؟<\/b> لِأَنَّ الْعَرَبَ كَرِهُوا اجْتِمَاعَ يَاءَيْنِ فِي الرَّسْم: (دُنْيَى)، فَكَتَبُوهَا بِالْأَلِف. وَيُسْتَثْنَى الْعَلَمُ (يَحْيَى) تَمْيِيزًا لَهُ مِنَ الْفِعْلِ (يَحْيَا).<br>وَفِي حَدِيثِ السَّفِينَةِ: «<b>أَعْلَاهَا<\/b>» ← (أَعْلَى) + (هَا) ← قَائِمَة."}, "ladder": [{"lv": "تَعَرُّف", "q": "لِمَاذَا كُتِبَتْ (بَلَى) بِالْمَقْصُورَةِ مَعَ أَنَّهَا حَرْف؟", "opts": [["لِأَنَّهَا مِنَ الْحُرُوفِ الْأَرْبَعَةِ الْمُسْتَثْنَاة", 1], ["لِأَنَّ أَصْلَهَا يَاء", 0], ["لِأَنَّهَا فِي آخِرِ الْجُمْلَة", 0]], "why": "إِلَى، عَلَى، بَلَى، حَتَّى: أَرْبَعَةُ حُرُوفٍ تُحْفَظُ بِالْمَقْصُورَة، وَسَائِرُ الْحُرُوفِ بِالْقَائِمَة."}, {"lv": "تَعَرُّف", "q": "(إِذَا) فِي آخِرِ قِصَّةِ الْفِيل: «إِذَا طِرْتِ» — لِمَاذَا بِالْقَائِمَة؟", "opts": [["لِأَنَّهَا كَلِمَةٌ مَبْنِيَّةٌ لَيْسَتْ مِنَ الْمُسْتَثْنَيَات", 1], ["لِأَنَّ مُضَارِعَهَا بِالْوَاو", 0], ["لِأَنَّ قَبْلَهَا ذَالًا", 0]], "why": "الْحُرُوفُ وَالْكَلِمَاتُ الْمَبْنِيَّةُ بِالْقَائِمَةِ إِلَّا الْمُسْتَثْنَيَات: إِلَى، عَلَى، بَلَى، حَتَّى، مَتَى، لَدَى، أَنَّى."}, {"lv": "تَعْلِيل", "q": "(أَتَمَنَّى) فِي نَصِّ الطَّنْطَاوِيِّ بِالْمَقْصُورَةِ لِأَنَّ:", "opts": [["الْكَلِمَةَ أَكْثَرُ مِنْ ثَلَاثَةِ أَحْرُفٍ، وَلَيْسَ قَبْلَ أَلِفِهَا يَاء", 1], ["مُضَارِعَهَا بِالْيَاء", 0], ["لِأَنَّهَا فِعْلٌ مَاضٍ", 0]], "why": "مَا زَادَ عَلَى الثَّلَاثَةِ بِالْمَقْصُورَة. (وَأَتَمَنَّى هُنَا مُضَارِع!) — فَالْقَرِينَةُ عَدَدُ الْأَحْرُف، لَا الزَّمَن."}, {"lv": "اسْتِثْنَاء", "q": "(الدُّنْيَا) أَرْبَعَةُ أَحْرُفٍ، وَمَعَ ذَلِكَ بِالْقَائِمَة. لِمَاذَا؟", "opts": [["لِأَنَّ قَبْلَ أَلِفِهَا يَاءً، فَكَرِهُوا اجْتِمَاعَ يَاءَيْن", 1], ["لِأَنَّهَا اسْم", 0], ["لِأَنَّ مُثَنَّاهَا بِالْوَاو", 0]], "why": "مَا زَادَ عَلَى ثَلَاثَةٍ وَقَبْلَ أَلِفِهِ يَاءٌ يُكْتَبُ بِالْقَائِمَة: الدُّنْيَا، الْعُلْيَا."}, {"lv": "اسْتِثْنَاء", "q": "فِي حَدِيثِ ابْنِ عُمَرَ: «وَأَعْطَاهُ» — لِمَاذَا لَيْسَتْ (أَعْطَىهُ)؟", "opts": [["لِأَنَّ الْأَلِفَ اللَّيِّنَةَ إِذَا اتَّصَلَ بِهَا ضَمِيرٌ كُتِبَتْ قَائِمَة", 1], ["لِأَنَّ (أَعْطَى) ثُلَاثِيّ", 0], ["لِأَنَّ مُضَارِعَهَا بِالْوَاو", 0]], "why": "(أَعْطَى) وَحْدَهَا مَقْصُورَة، فَإِذَا جَاءَ الضَّمِيرُ (ـهُ) صَارَتْ فِي وَسَطِ الْكَلِمَةِ فَقَامَتْ: أَعْطَاهُ."}, {"lv": "نَقْل", "q": "«____ الْأَبُ لِابْنِهِ بِالتَّوْفِيق» (مُضَارِعُهَا: يَدْعُو)", "opts": [["دَعَا", 1], ["دَعَى", 0]], "why": "ثُلَاثِيٌّ أَصْلُهُ وَاو ← قَائِمَة."}, {"lv": "نَقْل", "q": "«____ أَبِي هَدِيَّةً لِجَدِّي» (مِنْ: يَشْتَرِي)", "opts": [["اشْتَرَى", 1], ["اشْتَرَا", 0]], "why": "أَكْثَرُ مِنْ ثَلَاثَةِ أَحْرُف ← مَقْصُورَة (وَلَا يَنْفَعُ هُنَا سُؤَالُ الْمُضَارِع)."}, {"lv": "نَقْل", "q": "«يَتَوَكَّأُ الشَّيْخُ عَلَى ____» (مُثَنَّاهَا: عَصَوَانِ)", "opts": [["الْعَصَا", 1], ["الْعَصَى", 0]], "why": "اسْمٌ ثُلَاثِيٌّ، وَمُثَنَّاهُ بِالْوَاو ← قَائِمَة."}, {"lv": "نَقْل", "q": "«انْتَظَرْتُكَ ____ الْمَسَاء»", "opts": [["حَتَّى", 1], ["حَتَّا", 0]], "why": "(حَتَّى) مِنَ الْأَرْبَعَةِ الْمُسْتَثْنَاة."}, {"lv": "نَقْل", "q": "«زُرْنَا الْمَرِيضَ فِي ____»", "opts": [["الْمُسْتَشْفَى", 1], ["الْمُسْتَشْفَا", 0]], "why": "اسْمٌ أَكْثَرُ مِنْ ثَلَاثَةِ أَحْرُفٍ، وَلَيْسَ قَبْلَ أَلِفِهِ يَاء ← مَقْصُورَة."}, {"lv": "نَقْل", "q": "«صَعِدْنَا إِلَى الطَّبَقَةِ ____»", "opts": [["الْعُلْيَا", 1], ["الْعُلْيَى", 0]], "why": "قَبْلَ الْأَلِفِ يَاء ← قَائِمَة، مِثْلُ (الدُّنْيَا)."}], "build": {"title": "أَكْمِلْ آخِرَ الْكَلِمَة", "keys": ["ا", "ى"], "items": [{"w": "رَمَ□ الْكُرَةَ", "ans": "ى", "full": "رَمَى", "ctx": "يَرْمِي", "why": "ثُلَاثِيٌّ أَصْلُهُ يَاء ← مَقْصُورَة."}, {"w": "سَمَ□ بِأَخْلَاقِهِ", "ans": "ا", "full": "سَمَا", "ctx": "يَسْمُو", "why": "ثُلَاثِيٌّ أَصْلُهُ وَاو ← قَائِمَة."}, {"w": "أَمْسَ□ الْجَوُّ بَارِدًا", "ans": "ى", "full": "أَمْسَى", "ctx": "أَرْبَعَةُ أَحْرُف", "why": "زَادَ عَلَى ثَلَاثَة ← مَقْصُورَة."}, {"w": "اسْتَدْعَ□ الْمُدِيرُ الطَّالِبَ", "ans": "ى", "full": "اسْتَدْعَى", "why": "زَادَ عَلَى ثَلَاثَة ← مَقْصُورَة."}, {"w": "لَوْلَ□ الْمَطَرُ لَجَفَّ الزَّرْعُ", "ans": "ا", "full": "لَوْلَا", "ctx": "حَرْف", "why": "حَرْفٌ غَيْرُ مُسْتَثْنًى ← قَائِمَة."}, {"w": "الْمَنْزِلَةُ الْعُلْيَ□", "ans": "ا", "full": "الْعُلْيَا", "why": "قَبْلَ الْأَلِفِ يَاء ← قَائِمَة."}, {"w": "بَنَ□ الْعُصْفُورُ عُشَّهُ", "ans": "ى", "full": "بَنَى", "ctx": "يَبْنِي", "why": "أَصْلُهُ يَاء ← مَقْصُورَة."}, {"w": "نَجَ□ الْقَوْمُ", "ans": "ا", "full": "نَجَا", "ctx": "يَنْجُو", "why": "أَصْلُهُ وَاو ← قَائِمَة، وَمِنْهُ فِي الْحَدِيثِ: «نَجَوْا»."}, {"w": "أَعْطَ□هُ عِمَامَةً", "ans": "ا", "full": "أَعْطَاهُ", "ctx": "اتَّصَلَ بِهَا ضَمِير", "why": "مَعَ الضَّمِيرِ تَقُومُ الْأَلِف."}, {"w": "مُصْطَفَ□", "ans": "ى", "full": "مُصْطَفَى", "why": "اسْمٌ زَادَ عَلَى ثَلَاثَة ← مَقْصُورَة."}]}, "fix": {"title": "مُبَارَاةُ الْأَمْس", "tokens": [["وَقَفَ", 0], ["الْحَارِسُ", 0], ["عَلا", 1, "عَلَى", "مِنَ الْأَرْبَعَةِ الْمُسْتَثْنَاة."], ["خَطِّ", 0], ["الْمَرْمَى،", 0], ["فَرَمَا", 1, "فَرَمَى", "يَرْمِي ← مَقْصُورَة."], ["الْكُرَةَ", 0], ["إِلَا", 1, "إِلَى", "مِنَ الْأَرْبَعَةِ الْمُسْتَثْنَاة."], ["زَمِيلِهِ،", 0], ["فَدَعَى", 1, "فَدَعَا", "يَدْعُو ← قَائِمَة."], ["لَهُ", 0], ["الْمُدَرِّبُ،", 0], ["وَقَالَ:", 0], ["أَلَسْتَ", 0], ["بَطَلًا؟", 0], ["قَالَ:", 0], ["بَلَا،", 1, "بَلَى", "مِنَ الْأَرْبَعَةِ الْمُسْتَثْنَاة."], ["سَأَبْقَى", 0], ["بَطَلًا", 0], ["حَتَّى", 0], ["النِّهَايَة.", 0]]}, "game": {"title": "سِبَاقُ الْأَلِفَيْن", "prompt": "قَائِمَةٌ أَمْ مَقْصُورَة؟ طَبِّقْ شَجَرَةَ الْقَرَائِنِ بِسُرْعَة.", "bins": [{"k": "a", "ic": "📏", "n": "ا"}, {"k": "y", "ic": "🦆", "n": "ى"}], "items": [["دَعَ□", "a", "يَدْعُو"], ["رَمَ□", "y", "يَرْمِي"], ["إِلَ□", "y", "حَرْفٌ مُسْتَثْنًى"], ["لَوْلَ□", "a", "حَرْف"], ["مَتَ□", "y", "مَبْنِيٌّ مُسْتَثْنًى"], ["مُصْطَفَ□", "y", "أَكْثَرُ مِنْ ثَلَاثَة"], ["الدُّنْيَ□", "a", "قَبْلَهَا يَاء"], ["سَعَ□", "y", "يَسْعَى"], ["شَكَ□", "a", "يَشْكُو"], ["عَلَ□", "y", "حَرْفٌ مُسْتَثْنًى"], ["حَتَّ□", "y", "حَرْفٌ مُسْتَثْنًى"], ["أَعْطَ□", "y", "أَكْثَرُ مِنْ ثَلَاثَة"], ["أَعْطَ□هُ", "a", "مَعَ الضَّمِير"], ["مَهْمَ□", "a", "مَبْنِيّ"], ["عَصَ□", "a", "عَصَوَان"], ["اسْتَقْصَ□", "y", "أَكْثَرُ مِنْ ثَلَاثَة"], ["الثُّرَيَّ□", "a", "قَبْلَهَا يَاء"], ["نَجَ□", "a", "يَنْجُو"]]}, "dict": {"s": "فَقَالَ: بَلَى، وَلَكِنَّكَ تُخْطِئُ فِي الْجَوَابِ. فَقَالَ لَهُ: فَقُلْ أَنْتَ مَا عِنْدَكَ لِنَسْتَفِيدَ مِنْكَ.", "src": "الْبِدَايَةُ وَالنِّهَايَة", "focus": "بَلَى، مَا — وَعَلَامَاتِ التَّرْقِيمِ بَعْدَ (فَقَالَ)", "sec": 12}, "review": [{"lv": "مُرَاجَعَة", "tag": "الدَّرْسُ ١", "q": "فِي النَّصِّ: (اسْتَمْسِكْ). هَمْزَتُهَا:", "opts": [["وَصْل؛ أَمْرُ الْفِعْلِ السُّدَاسِيّ", 1], ["قَطْع؛ لِأَنَّهَا فِي أَوَّلِ الْكَلَام", 0]], "why": "أَمْرُ السُّدَاسِيِّ (اسْتَمْسَكَ) هَمْزَتُهُ وَصْل: (فَسْتَمْسِكْ)."}, {"lv": "مُرَاجَعَة", "tag": "الدَّرْسُ ٢", "q": "فِي النَّصِّ: (السَّائِلُ). لِمَاذَا عَلَى نَبِرَة؟", "opts": [["هَمْزَةٌ مَكْسُورَةٌ بَعْدَ أَلِف", 1], ["لِأَنَّ السِّينَ مَفْتُوحَة", 0]], "why": "بَعْدَ الْأَلِفِ الْحُكْمُ لِحَرَكَةِ الْهَمْزَة: الْكَسْرَةُ ← نَبِرَة."}, {"lv": "مُرَاجَعَة", "tag": "مِنَ الْمُسْتَوَى الثَّالِث", "q": "فِي النَّصِّ: (تُخْطِئُ). لِمَاذَا عَلَى يَاء؟", "opts": [["هَمْزَةٌ فِي الْآخِرِ قَبْلَهَا كَسْرَة", 1], ["لِأَنَّهَا مَضْمُومَة", 0]], "why": "نَظَّارَةُ الْخَلْف: الْمُتَطَرِّفَةُ تَتْبَعُ حَرَكَةَ مَا قَبْلَهَا، وَالطَّاءُ مَكْسُورَة."}]}, "create": {"genre": "الْمَشْهَدُ الْحِوَارِيّ", "model": {"title": "💬 فَقُلْ أَنْتَ مَا عِنْدَك", "intro": "قِصَّةُ ابْنِ كَثِيرٍ مَبْنِيَّةٌ عَلَى <b>الْحِوَار<\/b>: سُخْرِيَةٌ، ثُمَّ رَدٌّ هَادِئٌ يَقْلِبُ الْمَوْقِف. هَذَا مَشْهَدٌ مِنْ حَيَاتِنَا عَلَى طَرِيقَتِهَا.", "parts": [{"lab": "التَّمْهِيد", "c": "#0891b2", "t": "فِي حِصَّةِ الْعُلُومِ، أَجَابَ يُوسُفُ عَنْ سُؤَالِ الْمُعَلِّمِ، فَضَحِكَ سَامِي وَقَالَ بِسُخْرِيَةٍ:", "tg": "فِي حِصَّةِ الْعُلُومِ، أَجَابَتْ مَرْيَمُ عَنْ سُؤَالِ الْمُعَلِّمَةِ، فَضَحِكَتْ سَلْمَى وَقَالَتْ بِسُخْرِيَةٍ:"}, {"lab": "الشَّرَارَة", "c": "#e11d48", "t": "— إِجَابَتُكَ خَاطِئَةٌ يَا عَبْقَرِيّ!", "tg": "— إِجَابَتُكِ خَاطِئَةٌ يَا عَبْقَرِيَّة!"}, {"lab": "الرَّدُّ الْهَادِئ", "c": "#16a34a", "t": "الْتَفَتَ يُوسُفُ إِلَيْهِ، وَابْتَسَمَ ابْتِسَامَةً هَادِئَةً، ثُمَّ قَالَ: — رُبَّمَا أَخْطَأْتُ يَا سَامِي، فَمَا الْإِجَابَةُ الصَّحِيحَةُ عِنْدَكَ؟", "tg": "الْتَفَتَتْ مَرْيَمُ إِلَيْهَا، وَابْتَسَمَتِ ابْتِسَامَةً هَادِئَةً، ثُمَّ قَالَتْ: — رُبَّمَا أَخْطَأْتُ يَا سَلْمَى، فَمَا الْإِجَابَةُ الصَّحِيحَةُ عِنْدَكِ؟"}, {"lab": "تَطَوُّرُ الْحِوَار", "c": "#7c3aed", "t": "سَكَتَ سَامِي قَلِيلًا، ثُمَّ هَمَسَ: — لَا أَعْرِفُ… كُنْتُ أَمْزَحُ فَقَط.", "tg": "سَكَتَتْ سَلْمَى قَلِيلًا، ثُمَّ هَمَسَتْ: — لَا أَعْرِفُ… كُنْتُ أَمْزَحُ فَقَط."}, {"lab": "الْخَاتِمَة", "c": "#d97706", "t": "فَقَالَ الْمُعَلِّمُ مُبْتَسِمًا: «الْهُدُوءُ فِي الرَّدِّ أَقْوَى مِنَ الصُّرَاخ». وَمُنْذُ ذَلِكَ الْيَوْمِ صَارَ سَامِي يَرْفَعُ يَدَهُ قَبْلَ أَنْ يَضْحَك.", "tg": "فَقَالَتِ الْمُعَلِّمَةُ مُبْتَسِمَةً: «الْهُدُوءُ فِي الرَّدِّ أَقْوَى مِنَ الصُّرَاخ». وَمُنْذُ ذَلِكَ الْيَوْمِ صَارَتْ سَلْمَى تَرْفَعُ يَدَهَا قَبْلَ أَنْ تَضْحَك."}], "tips": ["<b>نَوِّعْ أَفْعَالَ الْقَوْل:<\/b> قَالَ، هَمَسَ، صَاحَ، سَأَلَ، أَجَابَ، رَدَّ — كُلُّ فِعْلٍ يَحْمِلُ نَبْرَة.", "<b>صِفْ طَرِيقَةَ الْكَلَام:<\/b> بِسُخْرِيَةٍ، بِهُدُوءٍ، مُبْتَسِمًا — كَمَا فِي النَّصِّ: «فَتَبَسَّمَ ضَاحِكًا».", "<b>التَّرْقِيم:<\/b> نُقْطَتَانِ (:) بَعْدَ فِعْلِ الْقَوْل، وَشَرْطَةٌ (—) فِي أَوَّلِ كَلَامِ كُلِّ شَخْصِيَّة، أَوْ عَلَامَتَا تَنْصِيصٍ «…».", "<b>السُّؤَالُ يَقْلِبُ الْمَوْقِف:<\/b> «فَقُلْ أَنْتَ مَا عِنْدَكَ» فِي الْقِصَّةِ ← «فَمَا الْإِجَابَةُ عِنْدَكَ؟» فِي النَّمُوذَج.", "<b>الْخَاتِمَة:<\/b> تُظْهِرُ أَثَرَ الْحِوَارِ فِي الشَّخْصِيَّات."]}, "anatomyHint": "الْمَشْهَدُ الْحِوَارِيُّ: تَمْهِيدٌ، ثُمَّ شَرَارَةٌ، ثُمَّ رَدّ، ثُمَّ تَطَوُّر، ثُمَّ خَاتِمَة.", "skills": [{"lv": "مَهَارَة", "tag": "أَفْعَالُ الْقَوْل", "q": "«اقْتَرَبَ مِنْ أُذُنِ صَدِيقِهِ وَ____: لَا تُخْبِرْ أَحَدًا»", "opts": [["هَمَسَ", 1], ["صَاحَ", 0], ["أَعْلَنَ", 0]], "why": "الِاقْتِرَابُ مِنَ الْأُذُنِ وَالسِّرُّ يُنَاسِبُهُمَا الْهَمْس."}, {"lv": "مَهَارَة", "tag": "أَفْعَالُ الْقَوْل", "q": "«رَأَى الدُّخَانَ يَخْرُجُ مِنَ الْمَطْبَخِ فَـ____: حَرِيق!»", "opts": [["صَاحَ", 1], ["هَمَسَ", 0], ["تَمْتَمَ", 0]], "why": "الْخَطَرُ وَالْمُفَاجَأَةُ يُنَاسِبُهُمَا الصِّيَاح."}, {"lv": "مَهَارَة", "tag": "التَّرْقِيم", "q": "أَيُّ الْجُمَلِ مُرَقَّمَةٌ تَرْقِيمًا صَحِيحًا؟", "opts": [["قَالَ الْفِيلُ: مَا أَحْسَسْتُ بِكِ.", 1], ["قَالَ الْفِيلُ مَا أَحْسَسْتُ بِكِ؟", 0], ["قَالَ: الْفِيلُ مَا أَحْسَسْتُ بِكِ", 0]], "why": "النُّقْطَتَانِ بَعْدَ (قَالَ + الْقَائِل)، وَالنُّقْطَةُ فِي آخِرِ الْخَبَر."}, {"lv": "مَهَارَة", "tag": "الْكَلَامُ الْمُبَاشِر", "q": "حَوِّلْ إِلَى كَلَامٍ مُبَاشِر: «قَالَتِ الْبَعُوضَةُ إِنَّهَا تُرِيدُ أَنْ تَطِيرَ»", "opts": [["قَالَتِ الْبَعُوضَةُ: أُرِيدُ أَنْ أَطِيرَ.", 1], ["قَالَتِ الْبَعُوضَةُ: تُرِيدُ أَنْ تَطِيرَ.", 0], ["الْبَعُوضَةُ تُرِيدُ أَنْ تَطِيرَ.", 0]], "why": "فِي الْكَلَامِ الْمُبَاشِرِ تَتَكَلَّمُ الشَّخْصِيَّةُ بِنَفْسِهَا: (أُرِيدُ… أَطِيرُ)."}, {"lv": "مَهَارَة", "tag": "وَصْفُ النَّبْرَة", "q": "أَيُّ وَصْفٍ يُنَاسِبُ رَدًّا يَكْظِمُ فِيهِ صَاحِبُهُ غَيْظَه؟", "opts": [["قَالَ بِهُدُوءٍ وَهُوَ يَبْتَسِم", 1], ["قَالَ وَهُوَ يَضْرِبُ الطَّاوِلَة", 0], ["قَالَ بِصَوْتٍ مُرْتَفِعٍ غَاضِب", 0]], "why": "كَمَا فِي النَّصِّ: «فَتَبَسَّمَ ضَاحِكًا» — الْهُدُوءُ عَلَامَةُ الْحِلْم."}], "game": {"title": "أَيُّ عَلَامَة؟", "prompt": "مَا الْعَلَامَةُ الَّتِي تُوضَعُ مَكَانَ ▢؟", "bins": [{"k": "c", "ic": ":", "n": "نُقْطَتَان"}, {"k": "q", "ic": "؟", "n": "اسْتِفْهَام"}, {"k": "x", "ic": "!", "n": "تَعَجُّب"}, {"k": "d", "ic": ".", "n": "نُقْطَة"}], "items": [["قَالَ الْوَجِيهُ ▢ أَيُّهَا الرَّجُل", "c"], ["هَلْ فَهِمْتَ مَا أَقُولُ لَكَ ▢", "q"], ["مَا أَعْظَمَ الْحِلْمَ ▢", "x"], ["سَقَطَتِ الْبَعُوضَةُ عَلَى ظَهْرِ الْفِيلِ ▢", "d"], ["صَاحَ الطِّفْلُ ▢ النَّجْدَة", "c"], ["مَتَى نَعُودُ إِلَى الْبَيْتِ ▢", "q"], ["يَا لَهُ مِنْ يَوْمٍ جَمِيلٍ ▢", "x"], ["نَامَ الطِّفْلُ مُبَكِّرًا ▢", "d"], ["سَأَلَتِ الْمُعَلِّمَةُ ▢ مَنْ يَعْرِفُ الْجَوَاب", "c"], ["لِمَاذَا تَضْحَكُ ▢", "q"], ["مَا أَجْمَلَ الصَّبْرَ ▢", "x"], ["فَتَبَسَّمَ الشَّيْخُ ضَاحِكًا ▢", "d"]]}, "compose": {"title": "مَشْهَدٌ: رَدٌّ هَادِئ", "task": "اكْتُبْ مَشْهَدًا حِوَارِيًّا (٦ أَسْطُرٍ فَأَكْثَر) عَنْ مَوْقِفٍ سَخِرَ فِيهِ أَحَدٌ مِنْكَ أَوِ اسْتَفَزَّك، فَرَدَدْتَ بِحِلْمٍ كَمَا فَعَلَ صَاحِبُ الْقِصَّة.", "docTitle": "💬 مَشْهَدٌ حِوَارِيّ", "min": 60, "parts": [{"lab": "التَّمْهِيد", "guide": "أَيْنَ؟ مَتَى؟ مَنِ الشَّخْصِيَّات؟", "ph": "فِي …، كُنْتُ …"}, {"lab": "الشَّرَارَة", "guide": "مَاذَا قَالَ الْمُسْتَفِزّ؟ (فِعْلُ قَوْلٍ + : + — )", "ph": "قَالَ … بِسُخْرِيَةٍ: — …"}, {"lab": "الرَّدُّ الْهَادِئ", "guide": "كَيْفَ رَدَدْتَ؟ صِفْ وَجْهَكَ وَصَوْتَك.", "ph": "ابْتَسَمْتُ وَقُلْتُ بِهُدُوءٍ: — …"}, {"lab": "تَطَوُّرُ الْحِوَار", "guide": "مَاذَا قَالَ بَعْدَ رَدِّك؟ (سُؤَالٌ أَوْ تَعَجُّب)", "ph": "…"}, {"lab": "الْخَاتِمَة", "guide": "كَيْفَ انْتَهَى الْمَوْقِفُ؟ وَمَا أَثَرُه؟", "ph": "وَفِي النِّهَايَةِ …"}], "auto": [{"type": "min", "t": "سِتُّونَ كَلِمَةً فَأَكْثَر"}, {"type": "parts", "t": "كَتَبْتَ الْأَجْزَاءَ الْخَمْسَة"}, {"re": "(قال|قالت|قلت|همس|همست|همسن|صاح|صاحت|صحت|سأل|سألت|أجاب|أجابت|أجبت|رد|ردت|رددت|صرخ|صرخت|هتف|هتفت|تمتم|تمتمت|نادى|نادت)", "n": 3, "distinct": true, "t": "ثَلَاثَةُ أَفْعَالِ قَوْلٍ مُخْتَلِفَة"}, {"re": ":", "n": 2, "t": "نُقْطَتَانِ (:) بَعْدَ فِعْلِ الْقَوْلِ مَرَّتَيْنِ فَأَكْثَر"}, {"re": "[؟!]", "t": "اسْتَعْمَلْتَ (؟) أَوْ (!)"}, {"re": "(—|«|-)", "t": "مَيَّزْتَ الْكَلَامَ بِشَرْطَةٍ أَوْ عَلَامَتَيْ تَنْصِيص"}, {"re": "(بهدوء|مبتسم|مبتسما|بلطف|بصوت|بسخرية|بغضب|بحزن|بفرح|ضاحك|ضاحكا)", "t": "وَصَفْتَ طَرِيقَةَ الْكَلَام"}], "self": ["الْقَارِئُ يَعْرِفُ دَائِمًا مَنِ الَّذِي يَتَكَلَّم.", "رَدِّي هَادِئٌ وَلَيْسَ فِيهِ إِهَانَة.", "فِي الْمَشْهَدِ لَحْظَةٌ تَقْلِبُ الْمَوْقِف.", "رَاجَعْتُ كُلَّ أَلِفٍ فِي آخِرِ كَلِمَةٍ بِشَجَرَةِ الْقَرَائِن."], "ruleTip": "الْكَلِمَاتُ الْمُظَلَّلَةُ تَنْتَهِي بِأَلِف: اسْأَلْهَا أَسْئِلَةَ الشَّجَرَة: حَرْف؟ أَكْثَرُ مِنْ ثَلَاثَة؟ ثُلَاثِيٌّ أَصْلُهُ؟ ضَمِير؟", "mark": "[اى]$", "flag": ["^(و|ف)?(علا|حتا|متا|لدا|مستشفا|مصطفا|اعطا|أعطا|اشترا|دعى|رجى|نجى|شكى|مشا|بكا|رما|جرا|سعا|بنا)$"]}}}, {"id": "wafa", "title": "أَبَرُّ الْبِرّ", "emoji": "🤝", "author": "صَحِيحُ مُسْلِم — حَدِيثُ ابْنِ عُمَر", "readHref": "lesson2.html?s=wafa", "tech": {"name": "أَلِفٌ تُنْطَقُ وَلَا تُكْتَب: (ابْن) وَأَخَوَاتُهَا", "discover": {"title": "(ابْن) أَمْ (بْن)؟", "prompt": "فِي حَدِيثِ ابْنِ عُمَرَ كُتِبَتْ (ابْن) مَرَّةً بِأَلِفٍ وَمَرَّةً بِلَا أَلِف! صَنِّفِ الْعِبَارَاتِ، ثُمَّ انْظُرْ: مَا الَّذِي يَقَعُ قَبْلَ الْكَلِمَةِ وَبَعْدَهَا؟", "bins": [{"k": "h", "ic": "✂️", "n": "حُذِفَتِ الْأَلِف (بْن)"}, {"k": "k", "ic": "📌", "n": "ثَبَتَتِ الْأَلِف (ابْن)"}], "items": [["عَبْدِ اللَّهِ بْنِ عُمَرَ", "h", "بَيْنَ اسْمَيْنِ: عَبْدُ اللَّهِ، ثُمَّ أَبُوهُ عُمَر.", "مِنَ الْحَدِيث"], ["فَقَالَ ابْنُ دِينَارٍ", "k", "لَيْسَ قَبْلَهَا اسْمُ شَخْص.", "مِنَ الْحَدِيث"], ["لِعُمَرَ بْنِ الْخَطَّابِ", "h", "بَيْنَ اسْمَيْنِ: عُمَرُ، ثُمَّ أَبُوهُ الْخَطَّاب.", "مِنَ الْحَدِيث"], ["عَلِيُّ بْنُ أَبِي طَالِبٍ", "h", "بَيْنَ عَلِيٍّ وَأَبِيه.", "مِثَالٌ جَدِيد"], ["هَذَا ابْنُ جَارِنَا", "k", "(جَارُنَا) لَيْسَ اسْمَ عَلَم.", "مِثَالٌ جَدِيد"], ["خَالِدُ بْنُ الْوَلِيدِ", "h", "بَيْنَ خَالِدٍ وَأَبِيهِ الْوَلِيد.", "مِثَالٌ جَدِيد"], ["مُحَمَّدٌ وَأَحْمَدُ ابْنَا عَلِيٍّ", "k", "مُثَنًّى (ابْنَا)، لَا مُفْرَد.", "مِثَالٌ جَدِيد"], ["ابْنُ عُمَرَ كَانَ كَرِيمًا", "k", "فِي أَوَّلِ الْكَلَامِ، لَا اسْمَ قَبْلَهَا.", "مِثَالٌ جَدِيد"]], "reveal": "تُحْذَفُ أَلِفُ (ابْن) إِذَا كَانَتْ <b>جِسْرًا بَيْنَ اسْمَيْن<\/b>: قَبْلَهَا اسْمُ شَخْصٍ، وَبَعْدَهَا اسْمُ أَبِيهِ، وَهِيَ مُفْرَدَة.<br>فَإِذَا لَمْ يَسْبِقْهَا اسْمٌ (فَقَالَ ابْنُ دِينَارٍ)، أَوْ لَمْ يَأْتِ بَعْدَهَا اسْمُ الْأَب (ابْنُ جَارِنَا)، أَوْ كَانَتْ مُثَنًّى (ابْنَا) — <b>ثَبَتَتْ<\/b>."}, "clue": {"title": "🌉 قَرِينَةُ الْجِسْر", "idea": "(ابْن) جِسْرٌ يَصِلُ الشَّخْصَ بِأَبِيه. إِذَا اكْتَمَلَ الْجِسْرُ سَقَطَتِ الْأَلِف.", "steps": ["انْظُرْ <b>قَبْلَ<\/b> الْكَلِمَة: هَلْ قَبْلَهَا اسْمُ شَخْص؟ (عَبْدُ اللَّه، عُمَر)", "انْظُرْ <b>بَعْدَهَا<\/b>: هَلْ بَعْدَهَا اسْمُ أَبِيهِ أَوْ كُنْيَتُهُ؟ (عُمَر، أَبِي طَالِب)", "هَلْ هِيَ <b>مُفْرَدَة<\/b>؟ (ابْنٌ وَاحِدٌ، لَا: ابْنَا، أَبْنَاء)", "ثَلَاثُ (نَعَم) ← نَحْذِفُ الْأَلِفَ: عُمَرُ بْنُ الْخَطَّاب. وَإِنْ نَقَصَ وَاحِدٌ ← نُثْبِتُهَا: ابْنُ عُمَر."], "worked": "فِي الْحَدِيثِ: «عَنْ عَبْدِ اللَّهِ <b>بْنِ<\/b> عُمَرَ» ← قَبْلَهَا: عَبْدُ اللَّه ✓ · بَعْدَهَا: أَبُوهُ عُمَرُ ✓ · مُفْرَدَة ✓ ← حُذِفَت.<br>«فَقَالَ <b>ابْنُ<\/b> دِينَارٍ» ← قَبْلَهَا: فِعْلٌ (قَالَ)، لَا اسْمَ شَخْص ✗ ← ثَبَتَت.", "deeper": "<b>وَمِنَ الْأَلِفِ الَّتِي تُنْطَقُ وَلَا تُكْتَبُ أَيْضًا<\/b> (تَعَرَّفْتَ بَعْضَهَا فِي الْمُسْتَوَى الثَّالِث):<br>• لَفْظُ الْجَلَالَة: اللَّه، إِلَه، الرَّحْمَن — وَفِي الْحَدِيثِ: «عَبْدِ اللَّهِ»، «رَسُولَ اللَّهِ».<br>• أَسْمَاءُ الْإِشَارَة: هَذَا، هَذِهِ، ذَلِكَ، هَؤُلَاءِ، أُولَئِكَ — وَفِي الْحَدِيثِ: «إِنَّ أَبَا <b>هَذَا<\/b>».<br>• (لَكِنْ وَلَكِنَّ) — وَفِي قِصَّةِ الْفِيلِ: «وَلَكِنَّكَ».<br>• وَعَكْسُهَا: حَرْفٌ يُكْتَبُ وَلَا يُنْطَقُ: وَاوُ (أُولَئِكَ) وَ(أُولُو)."}, "ladder": [{"lv": "تَعَرُّف", "q": "فِي «عَبْدِ اللَّهِ بْنِ عُمَرَ» حُذِفَتْ أَلِفُ (ابْن) لِأَنَّ:", "opts": [["وَقَعَتْ بَيْنَ اسْمِ شَخْصٍ وَاسْمِ أَبِيه، وَهِيَ مُفْرَدَة", 1], ["لِأَنَّهَا مَجْرُورَة", 0], ["لِأَنَّهَا فِي وَسَطِ السَّطْر", 0]], "why": "اكْتَمَلَتْ شُرُوطُ الْجِسْرِ الثَّلَاثَة."}, {"lv": "تَعْلِيل", "q": "وَفِي «فَقَالَ ابْنُ دِينَارٍ» ثَبَتَتِ الْأَلِفُ لِأَنَّ:", "opts": [["لَمْ يَسْبِقْهَا اسْمُ شَخْص", 1], ["لِأَنَّ (دِينَار) لَيْسَ اسْمًا", 0], ["لِأَنَّهَا مَرْفُوعَة", 0]], "why": "قَبْلَهَا (فَقَالَ) وَهُوَ فِعْل؛ فَالْجِسْرُ نَاقِصٌ مِنْ جِهَةِ الْيَمِين."}, {"lv": "اسْتِثْنَاء", "q": "أَيُّهَا الصَّوَاب؟", "opts": [["مُحَمَّدٌ وَعَلِيٌّ ابْنَا خَالِدٍ", 1], ["مُحَمَّدٌ وَعَلِيٌّ بْنَا خَالِدٍ", 0]], "why": "الْحَذْفُ لِلْمُفْرَدِ فَقَط، وَ(ابْنَا) مُثَنًّى."}, {"lv": "اسْتِثْنَاء", "q": "«هَذَا ____ صَدِيقِي»", "opts": [["ابْنُ", 1], ["بْنُ", 0]], "why": "(صَدِيقِي) لَيْسَ اسْمَ عَلَم، وَلَيْسَ قَبْلَهَا اسْمُ شَخْص."}, {"lv": "نَقْل", "q": "«سَعْدُ ____ أَبِي وَقَّاصٍ مِنَ الصَّحَابَة»", "opts": [["بْنُ", 1], ["ابْنُ", 0]], "why": "بَيْنَ (سَعْد) وَكُنْيَةِ أَبِيهِ (أَبِي وَقَّاص) — وَالْكُنْيَةُ كَالِاسْم."}, {"lv": "نَقْل", "q": "«____ سِينَا عَالِمٌ مَشْهُور»", "opts": [["ابْنُ", 1], ["بْنُ", 0]], "why": "فِي أَوَّلِ الْكَلَامِ، لَيْسَ قَبْلَهَا اسْم."}, {"lv": "تَعَرُّف", "q": "فِي الْحَدِيثِ: «إِنَّ أَبَا هَذَا». كَيْفَ نَنْطِقُ (هَذَا)؟", "opts": [["هَاذَا: بِأَلِفٍ لَا تُكْتَب", 1], ["هَذَا: بِلَا أَلِفٍ فِي النُّطْق", 0]], "why": "أَسْمَاءُ الْإِشَارَةِ فِيهَا أَلِفٌ تُنْطَقُ وَلَا تُكْتَب."}, {"lv": "اسْتِثْنَاء", "q": "(أُولَئِكَ) تُنْطَقُ (أُلَائِكَ). أَيُّ حَرْفٍ يُكْتَبُ فِيهَا وَلَا يُنْطَق؟", "opts": [["الْوَاو", 1], ["اللَّام", 0], ["الْهَمْزَة", 0]], "why": "وَاوُ (أُولَئِكَ) زِيدَتْ فِي الرَّسْمِ وَلَا تُنْطَق، وَفِيهَا أَيْضًا أَلِفٌ تُنْطَقُ وَلَا تُكْتَبُ بَعْدَ اللَّام!"}, {"lv": "نَقْل", "q": "«الْكِتَابُ مُفِيدٌ، ____ الْقِصَّةَ أَمْتَع»", "opts": [["لَكِنَّ", 1], ["لَاكِنَّ", 0]], "why": "(لَكِنَّ) تُنْطَقُ بِأَلِفٍ وَلَا تُكْتَبُ، كَمَا فِي قِصَّةِ الْفِيلِ: «وَلَكِنَّكَ»."}, {"lv": "نَقْل", "q": "«____ الْبَيْتُ الَّذِي وُلِدْتُ فِيه» (لِلْبَعِيد)", "opts": [["ذَلِكَ", 1], ["ذَالِكَ", 0]], "why": "أَلِفٌ بَعْدَ الذَّالِ تُنْطَقُ وَلَا تُكْتَب."}], "build": {"title": "اخْتَرِ الصِّيغَةَ الصَّحِيحَة", "keys": ["ابْن", "بْن"], "items": [{"w": "عُمَرُ □ عَبْدِ الْعَزِيزِ خَلِيفَةٌ عَادِل", "ans": "بْن", "full": "عُمَرُ بْنُ عَبْدِ الْعَزِيزِ", "why": "بَيْنَ عُمَرَ وَأَبِيه."}, {"w": "□ الْجِيرَانِ يَلْعَبُ مَعَنَا", "ans": "ابْن", "full": "ابْنُ الْجِيرَانِ", "why": "لَا اسْمَ قَبْلَهَا، وَ(الْجِيرَان) لَيْسَ اسْمَ عَلَم."}, {"w": "صَلَاحُ الدِّينِ يُوسُفُ □ أَيُّوبَ", "ans": "بْن", "full": "يُوسُفُ بْنُ أَيُّوبَ", "why": "بَيْنَ يُوسُفَ وَأَبِيه."}, {"w": "زَارَنَا خَالِدٌ وَ□ عَمِّهِ", "ans": "ابْن", "full": "وَابْنُ عَمِّهِ", "why": "(عَمِّه) لَيْسَ اسْمَ عَلَم."}, {"w": "الْحَسَنُ □ عَلِيٍّ", "ans": "بْن", "full": "الْحَسَنُ بْنُ عَلِيٍّ", "why": "بَيْنَ الْحَسَنِ وَأَبِيهِ عَلِيّ."}, {"w": "□ بَطُّوطَةَ رَحَّالَةٌ مَشْهُور", "ans": "ابْن", "full": "ابْنُ بَطُّوطَةَ", "why": "فِي أَوَّلِ الْكَلَام."}, {"w": "أُسَامَةُ □ زَيْدٍ", "ans": "بْن", "full": "أُسَامَةُ بْنُ زَيْدٍ", "why": "بَيْنَ أُسَامَةَ وَأَبِيه."}, {"w": "هَذَا □ي الصَّغِير", "ans": "ابْن", "full": "ابْنِي", "why": "اتَّصَلَ بِهَا ضَمِيرٌ، وَلَيْسَتْ بَيْنَ اسْمَيْن."}]}, "fix": {"title": "زِيَارَةُ صَدِيقِ جَدِّي", "tokens": [["زَارَنَا", 0], ["الْعَمُّ", 0], ["سَعِيدُ", 0], ["ابْنُ", 1, "بْنُ", "بَيْنَ سَعِيدٍ وَأَبِيهِ أَحْمَد."], ["أَحْمَدَ،", 0], ["صَدِيقُ", 0], ["جَدِّي،", 0], ["فَقَالَ", 0], ["أَبِي:", 0], ["هَاذَا", 1, "هَذَا", "أَلِفُ الْإِشَارَةِ تُنْطَقُ وَلَا تُكْتَب."], ["رَجُلٌ", 0], ["وَفِيٌّ،", 0], ["لَاكِنَّهُ", 1, "لَكِنَّهُ", "أَلِفُ (لَكِنَّ) تُنْطَقُ وَلَا تُكْتَب."], ["مُسَافِرٌ", 0], ["دَائِمًا،", 0], ["فَأَكْرِمُوهُ", 0], ["لِلَاهِ،", 1, "لِلَّهِ", "لَفْظُ الْجَلَالَةِ بِلَا أَلِفٍ بَعْدَ اللَّام."], ["وَسَلِّمُوا", 0], ["عَلَى", 0], ["ابْنِهِ", 0], ["خَالِدِ", 0], ["ابْنِ", 1, "بْنِ", "بَيْنَ خَالِدٍ وَأَبِيهِ سَعِيد."], ["سَعِيدٍ.", 0]]}, "game": {"title": "الْجِسْرُ مُكْتَمِل؟", "prompt": "مَاذَا نَكْتُبُ مَكَانَ (…)؟", "bins": [{"k": "h", "ic": "✂️", "n": "بْن"}, {"k": "k", "ic": "📌", "n": "ابْن"}], "items": [["عُمَرُ … الْخَطَّابِ", "h"], ["… جَارِنَا", "k"], ["عَلِيُّ … أَبِي طَالِبٍ", "h"], ["… أَخِي", "k"], ["خَالِدُ … الْوَلِيدِ", "h"], ["… الْمَدِينَةِ", "k"], ["أُسَامَةُ … زَيْدٍ", "h"], ["… السَّبِيلِ", "k"], ["زَيْدُ … حَارِثَةَ", "h"], ["رَأَيْتُ … الْجِيرَانِ", "k"], ["مُعَاذُ … جَبَلٍ", "h"], ["… خَلْدُونَ مُؤَرِّخٌ", "k"]]}, "dict": {"s": "عَنْ عَبْدِ اللَّهِ بْنِ عُمَرَ: أَنَّ رَجُلًا مِنَ الْأَعْرَابِ لَقِيَهُ بِطَرِيقِ مَكَّةَ، فَسَلَّمَ عَلَيْهِ عَبْدُ اللَّهِ.", "src": "صَحِيحُ مُسْلِم", "focus": "(بْنِ) بِلَا أَلِف، وَ(اللَّه)", "sec": 12}, "review": [{"lv": "مُرَاجَعَة", "tag": "الدَّرْسُ ١", "q": "فِي الْحَدِيثِ: (ابْنُ دِينَارٍ) — هَمْزَةُ (ابْن):", "opts": [["وَصْل؛ مِنَ الْأَسْمَاءِ الْمَحْفُوظَة", 1], ["قَطْع", 0]], "why": "(ابْن) مِنْ أَسْمَاءِ الْوَصْل، فَلَا نَرْسُمُ عَلَيْهَا هَمْزَةً أَبَدًا."}, {"lv": "مُرَاجَعَة", "tag": "الدَّرْسُ ٣", "q": "فِي الْحَدِيثِ: «وَحَمَلَهُ عَلَى حِمَارٍ». لِمَاذَا (عَلَى) بِالْمَقْصُورَة؟", "opts": [["حَرْفٌ مِنَ الْأَرْبَعَةِ الْمُسْتَثْنَاة", 1], ["لِأَنَّ أَصْلَهَا يَاء", 0]], "why": "إِلَى، عَلَى، بَلَى، حَتَّى."}, {"lv": "مُرَاجَعَة", "tag": "الدَّرْسُ ٢", "q": "فِي الْحَدِيثِ: (رَأْسِهِ). لِمَاذَا الْهَمْزَةُ عَلَى أَلِف؟", "opts": [["سَاكِنَةٌ بَعْدَ فَتْحَة، وَالْفَتْحَةُ أَقْوَى", 1], ["لِأَنَّ بَعْدَهَا أَلِفًا", 0]], "why": "قَارِنْ: السُّكُونُ وَالْفَتْحَة ← الْفَتْحَةُ أَقْوَى ← أ."}]}, "create": {"genre": "وَصْفُ شَخْصِيَّة", "model": {"title": "👴 صَدِيقُ أَبِي", "intro": "ابْنُ عُمَرَ أَكْرَمَ صَدِيقَ أَبِيهِ لِأَنَّهُ عَرَفَ قَدْرَه. هَذَا نَمُوذَجٌ يَصِفُ شَخْصِيَّةً مِنْ «أَهْلِ وُدِّ الْأَب».", "parts": [{"lab": "التَّقْدِيم", "c": "#0891b2", "t": "الْعَمُّ أَبُو سَعِيدٍ صَدِيقُ أَبِي مُنْذُ أَيَّامِ الْمَدْرَسَةِ، وَهُوَ أَوَّلُ مَنْ يَطْرُقُ بَابَنَا صَبَاحَ كُلِّ عِيد."}, {"lab": "الْمَلَامِحُ الْخَارِجِيَّة", "c": "#7c3aed", "t": "رَجُلٌ طَوِيلُ الْقَامَةِ، أَبْيَضُ اللِّحْيَةِ، لَهُ عَيْنَانِ ضَاحِكَتَانِ، وَيَحْمِلُ دَائِمًا عُكَّازًا مِنْ خَشَبِ الزَّيْتُون."}, {"lab": "الصِّفَاتُ الْخُلُقِيَّة", "c": "#16a34a", "t": "وَهُوَ كَرِيمٌ صَبُورٌ، يَسْأَلُ عَنِ الصَّغِيرِ قَبْلَ الْكَبِيرِ، وَلَا يَذْكُرُ أَحَدًا إِلَّا بِخَيْر."}, {"lab": "مَوْقِفٌ يُثْبِتُ الصِّفَة", "c": "#e11d48", "t": "وَحِينَ مَرِضَ أَبِي، كَانَ يَأْتِي كُلَّ مَسَاءٍ، فَيَجْلِسُ إِلَى جَانِبِهِ، وَيَقْرَأُ لَهُ حَتَّى يَنَام، ثُمَّ يَنْصَرِفُ دُونَ أَنْ يُوقِظَ أَحَدًا."}, {"lab": "أَثَرُهُ فِيّ", "c": "#d97706", "t": "تَعَلَّمْتُ مِنْهُ أَنَّ الصَّدِيقَ الْوَفِيَّ أَخٌ لَمْ تَلِدْهُ أُمُّكَ، وَأَنَّ الْوُدَّ لَا يَشِيخُ وَإِنْ شَابَ أَصْحَابُه."}], "tips": ["<b>مِنَ الْخَارِجِ إِلَى الدَّاخِل:<\/b> ابْدَأْ بِمَا تَرَاهُ الْعَيْنُ، ثُمَّ انْتَقِلْ إِلَى الْأَخْلَاق.", "<b>الصِّفَةُ الْمُرَكَّبَة:<\/b> (طَوِيلُ الْقَامَةِ، أَبْيَضُ اللِّحْيَةِ) أَجْمَلُ مِنْ (هُوَ طَوِيلٌ وَلِحْيَتُهُ بَيْضَاء).", "<b>أَظْهِرْ وَلَا تُخْبِرْ:<\/b> لَا تَكْتَفِ بِقَوْلِ (هُوَ وَفِيٌّ)، بَلِ احْكِ مَوْقِفًا يَرَى فِيهِ الْقَارِئُ وَفَاءَهُ بِعَيْنِه.", "<b>الْأَثَر:<\/b> اخْتِمْ بِمَا تَعَلَّمْتَهُ مِنَ الشَّخْصِيَّة."]}, "anatomyHint": "نُقَدِّمُ الشَّخْصِيَّة، ثُمَّ نَرْسُمُ مَلَامِحَهَا، ثُمَّ أَخْلَاقَهَا، ثُمَّ نُثْبِتُهَا بِمَوْقِف، ثُمَّ نَخْتِمُ بِأَثَرِهَا فِينَا.", "skills": [{"lv": "مَهَارَة", "tag": "أَظْهِرْ وَلَا تُخْبِرْ", "q": "أَيُّ الْجُمْلَتَيْنِ <b>تُظْهِرُ<\/b> الْكَرَمَ وَلَا تُخْبِرُ بِهِ فَقَط؟", "opts": [["يُفْرِغُ جَيْبَهُ لِكُلِّ سَائِلٍ، وَلَوْ لَمْ يَبْقَ لَهُ شَيْء", 1], ["هُوَ رَجُلٌ كَرِيمٌ جِدًّا جِدًّا", 0]], "why": "الْأُولَى تَجْعَلُكَ تَرَى الْكَرَمَ، وَالثَّانِيَةُ تَطْلُبُ مِنْكَ أَنْ تُصَدِّقَ فَقَط."}, {"lv": "مَهَارَة", "tag": "الصِّفَةُ الْمُرَكَّبَة", "q": "«رَجُلٌ ____ الْوَجْهِ، لَا تُفَارِقُهُ الِابْتِسَامَة»", "opts": [["بَشُوشُ", 1], ["غَاضِبُ", 0], ["طَوِيلُ", 0]], "why": "الصِّفَةُ يَجِبُ أَنْ تُوَافِقَ بَقِيَّةَ الْوَصْف: الِابْتِسَامَةُ ← بَشُوش."}, {"lv": "مَهَارَة", "tag": "الصِّفَةُ وَالْمَوْقِف", "q": "«يَزُورُ صَدِيقَ أَبِيهِ بَعْدَ وَفَاتِهِ، وَيَسْأَلُ عَنْ أَوْلَادِه» — هَذَا الْمَوْقِفُ يُثْبِتُ:", "opts": [["الْوَفَاء", 1], ["الشَّجَاعَة", 0], ["الذَّكَاء", 0]], "why": "هَذَا هُوَ الْبِرُّ الَّذِي فِي حَدِيثِ ابْنِ عُمَر: صِلَةُ أَهْلِ وُدِّ الْأَب."}, {"lv": "مَهَارَة", "tag": "التَّرْتِيب", "q": "أَيُّ تَرْتِيبٍ أَحْسَنُ لِوَصْفِ شَخْصِيَّة؟", "opts": [["الْمَلَامِحُ ← الْأَخْلَاقُ ← الْمَوْقِفُ ← الْأَثَر", 1], ["الْأَثَرُ ← الْمَلَامِحُ ← الْمَوْقِفُ ← الِاسْم", 0], ["الْمَوْقِفُ ← الْأَثَرُ ← الِاسْم", 0]], "why": "مِنَ الظَّاهِرِ إِلَى الْبَاطِن، ثُمَّ الدَّلِيلُ ثُمَّ الْأَثَر."}], "game": {"title": "مَلَامِحُ أَمْ أَخْلَاق؟", "prompt": "هَلْ هَذَا وَصْفٌ لِلْخَارِجِ أَمْ لِلدَّاخِل؟", "bins": [{"k": "m", "ic": "👤", "n": "مَلَامِحُ خَارِجِيَّة"}, {"k": "a", "ic": "💛", "n": "صِفَةٌ خُلُقِيَّة"}], "items": [["طَوِيلُ الْقَامَة", "m"], ["صَادِقُ الْوَعْد", "a"], ["عَيْنَاهُ وَاسِعَتَان", "m"], ["يَعْفُو عَمَّنْ أَسَاءَ إِلَيْه", "a"], ["شَعْرُهُ أَشْيَب", "m"], ["لَا يَغْتَابُ أَحَدًا", "a"], ["يَلْبَسُ عِمَامَةً بَيْضَاء", "m"], ["يَزُورُ الْمَرِيض", "a"], ["وَجْهُهُ مُسْتَدِير", "m"], ["كَرِيمُ الْيَد", "a"], ["يَمْشِي مُتَّكِئًا عَلَى عَصَا", "m"], ["يَحْفَظُ السِّرّ", "a"]]}, "compose": {"title": "شَخْصِيَّةٌ لَا أَنْسَاهَا", "task": "صِفْ شَخْصًا تُحِبُّهُ وَتَحْتَرِمُهُ: صَدِيقًا لِأَبِيكَ أَوْ جَدِّكَ، أَوْ جَارًا، أَوْ مُعَلِّمًا. اجْعَلِ الْقَارِئَ يَرَاهُ وَيُحِبُّه.", "docTitle": "👤 شَخْصِيَّةٌ لَا أَنْسَاهَا", "min": 70, "parts": [{"lab": "التَّقْدِيم", "guide": "مَنْ هُوَ؟ وَمَا صِلَتُهُ بِكَ أَوْ بِأَهْلِك؟", "ph": "… صَدِيقُ … مُنْذُ …"}, {"lab": "الْمَلَامِحُ الْخَارِجِيَّة", "guide": "قَامَتُهُ، وَجْهُهُ، لِبَاسُهُ، شَيْءٌ يَحْمِلُهُ دَائِمًا. (جَرِّبِ الصِّفَةَ الْمُرَكَّبَة)", "ph": "… طَوِيلُ … ، … الْوَجْهِ …"}, {"lab": "الصِّفَاتُ الْخُلُقِيَّة", "guide": "صِفَتَانِ أَوْ ثَلَاثٌ مِنْ أَخْلَاقِه.", "ph": "وَهُوَ … …"}, {"lab": "مَوْقِفٌ يُثْبِتُ الصِّفَة", "guide": "احْكِ مَوْقِفًا وَاحِدًا يَرَى فِيهِ الْقَارِئُ صِفَتَهُ.", "ph": "وَحِينَ …"}, {"lab": "أَثَرُهُ فِيك", "guide": "مَاذَا تَعَلَّمْتَ مِنْه؟", "ph": "تَعَلَّمْتُ مِنْهُ أَنَّ …"}], "auto": [{"type": "min", "t": "سَبْعُونَ كَلِمَةً فَأَكْثَر"}, {"type": "parts", "t": "كَتَبْتَ الْأَجْزَاءَ الْخَمْسَة"}, {"re": "(طويل|قصير|عيناه|عينان|عيناها|وجه|شعر|لحية|صوت|قامة|ملامح|يلبس|ترتدي|يرتدي|تلبس|نحيف|ممتلئ|أبيض|أسمر)", "t": "وَصَفْتَ الْمَلَامِحَ الْخَارِجِيَّة"}, {"re": "(كريم|صبور|صادق|وفي|أمين|متواضع|رحيم|حليم|شجاع|لطيف|طيب|كريمة|صبورة|صادقة|وفية|أمينة|رحيمة|لطيفة|طيبة)", "t": "ذَكَرْتَ صِفَةً خُلُقِيَّة"}, {"re": "(حين|عندما|ذات يوم|مرة|يوم)", "t": "رَوَيْتَ مَوْقِفًا يُثْبِتُ الصِّفَة"}, {"re": "(تعلمت|علمني|علمتني|لن أنسى|لا أنسى|ما زلت)", "t": "خَتَمْتَ بِأَثَرِ الشَّخْصِيَّةِ فِيك"}], "self": ["وَصَفْتُ مِنَ الْخَارِجِ إِلَى الدَّاخِل.", "الْمَوْقِفُ يُظْهِرُ الصِّفَةَ دُونَ أَنْ أُسَمِّيَهَا.", "اسْتَعْمَلْتُ صِفَةً مُرَكَّبَةً وَاحِدَةً عَلَى الْأَقَلّ (طَوِيلُ الْقَامَة…).", "رَاجَعْتُ (ابْن / بْن) وَ(هَذَا، ذَلِكَ، لَكِنْ، اللَّه)."], "ruleTip": "الْمُظَلَّلُ: (ابْن)، وَأَسْمَاءُ الْإِشَارَة، وَ(لَكِنْ)، وَلَفْظُ الْجَلَالَة. هَلْ (ابْن) جِسْرٌ مُكْتَمِل؟ وَهَلْ حَذَفْتَ الْأَلِفَ الْمَنْطُوقَة؟", "mark": "^(و|ف|ل|ب)?(ابن|بن|ابنا|هذا|هذه|ذلك|تلك|لكن|لكنه|لكني|الله|لله|هؤلاء|أولئك)$", "flag": ["^(و|ف|ل|ب)?(هاذا|هاذه|هاذان|هاؤلاء|ذالك|لاكن|لاكنه|لاكني|لاكنها|الاه|إلاه|الرحمان|اللاه|للاه|اولائك|أولائك|ألئك)$"]}}}, {"id": "ship", "title": "حَدِيثُ السَّفِينَة", "emoji": "🚢", "author": "صَحِيحُ الْبُخَارِيّ — حَدِيثُ النُّعْمَانِ بْنِ بَشِير", "readHref": "lesson2.html?s=ship", "tech": {"name": "وَاوُ الْجَمَاعَةِ: مَتَى تُكْتَبُ الْأَلِفُ الْفَارِقَةُ وَمَتَى تُحْذَف؟", "discover": {"title": "(ـوا) أَمْ (ـو)؟", "prompt": "حَدِيثُ السَّفِينَةِ مَلِيءٌ بِوَاوِ الْجَمَاعَة! صَنِّفِ الْكَلِمَاتِ بِحَسَبِ رَسْمِهَا، ثُمَّ ابْحَثْ عَنِ السِّرِّ فِي الْكَلِمَاتِ الَّتِي لَمْ تَأْخُذِ الْأَلِف.", "bins": [{"k": "a", "ic": "🛡️", "n": "وَاوٌ بَعْدَهَا أَلِف (ـوا)"}, {"k": "n", "ic": "🚫", "n": "وَاوٌ بِلَا أَلِف (ـو)"}], "items": [["اسْتَهَمُوا", "a", "هُمُ اسْتَهَمُوا: وَاوُ جَمَاعَةٍ فِي آخِرِ الْفِعْل.", "مِنَ الْحَدِيث"], ["مَرُّوا", "a", "هُمْ مَرُّوا: وَاوُ جَمَاعَة.", "مِنَ الْحَدِيث"], ["يَتْرُكُوهُمْ", "n", "جَاءَ بَعْدَ الْوَاوِ ضَمِيرٌ (هُمْ) فَحُذِفَتِ الْأَلِف.", "مِنَ الْحَدِيث"], ["نَجَوْا", "a", "هُمْ نَجَوْا: وَاوُ جَمَاعَةٍ سَاكِنَةٌ بَعْدَ فَتْح.", "مِنَ الْحَدِيث"], ["أَخَذُوا", "a", "هُمْ أَخَذُوا: وَاوُ جَمَاعَة.", "مِنَ الْحَدِيث"], ["اسْتَقَوْا", "a", "هُمُ اسْتَقَوْا: وَاوُ جَمَاعَة.", "مِنَ الْحَدِيث"], ["يَدْعُو", "n", "أَنَا أَدْعُو: الْوَاوُ مِنْ أَصْلِ الْفِعْل، لَا جَمَاعَة.", "كَلِمَةٌ جَدِيدَة"], ["أَرَادُوا", "a", "هُمْ أَرَادُوا: وَاوُ جَمَاعَة.", "مِنَ الْحَدِيث"], ["مُعَلِّمُو الْمَدْرَسَةِ", "n", "اسْمٌ (جَمْعُ مُذَكَّرٍ مُضَاف)، لَا فِعْل.", "كَلِمَةٌ جَدِيدَة"]], "reveal": "الْأَلِفُ الْفَارِقَةُ تُكْتَبُ بَعْدَ <b>وَاوِ الْجَمَاعَةِ فِي آخِرِ الْفِعْل<\/b> (هَلَكُوا، نَجَوْا).<br>وَلَا تُكْتَبُ: إِذَا <b>اتَّصَلَ بِالْوَاوِ ضَمِيرٌ<\/b> (يَتْرُكُوهُمْ) · أَوْ كَانَتِ الْوَاوُ <b>مِنْ أَصْلِ الْفِعْل<\/b> (يَدْعُو) · أَوْ كَانَتْ فِي <b>اسْم<\/b> (مُعَلِّمُو)."}, "clue": {"title": "👥 قَرِينَةُ الْفَاعِلِين", "idea": "فِي الْمُسْتَوَى الثَّالِثِ قُلْنَا: «نَكْتُبُ الْأَلِفَ بَعْدَ وَاوِ الْجَمَاعَةِ دَائِمًا». وَالْحَقِيقَةُ أَنَّ لِهَذِهِ الْأَلِفِ ثَلَاثَةَ شُرُوط.", "steps": ["<b>هَلِ الْوَاوُ جَمَاعَة؟<\/b> ضَعْ (أَنَا) مَكَانَ (هُمْ): إِنْ بَقِيَتِ الْوَاوُ (أَنَا أَدْعُو) فَهِيَ مِنْ أَصْلِ الْفِعْلِ ← لَا أَلِف. وَإِنْ ذَهَبَتْ (أَنَا هَلَكْتُ ← هُمْ هَلَكُوا) فَهِيَ وَاوُ جَمَاعَة.", "<b>هَلْ هِيَ فِي فِعْل؟<\/b> وَاوُ جَمْعِ الْمُذَكَّرِ فِي الْأَسْمَاءِ (مُعَلِّمُو، لَاعِبُو) لَا تَأْخُذُ أَلِفًا.", "<b>هَلْ هِيَ آخِرُ الْكَلِمَة؟<\/b> إِنِ اتَّصَلَ بِهَا ضَمِيرٌ (ـهُمْ، ـهُ، ـهَا، ـنِي، ـنَا) حُذِفَتِ الْأَلِف: يَتْرُكُوهُمْ، أَكْرَمُوهُ.", "ثَلَاثُ (نَعَم) ← نَكْتُبُ الْأَلِفَ الْفَارِقَة: هَلَكُوا، لَمْ يَتْرُكُوا، اتْرُكُوا."], "worked": "فِي الْحَدِيثِ: «فَإِنْ <b>يَتْرُكُوهُمْ<\/b> وَمَا <b>أَرَادُوا<\/b> <b>هَلَكُوا<\/b> جَمِيعًا» — ثَلَاثُ وَاوَاتِ جَمَاعَة:<br>(أَرَادُوا، هَلَكُوا) فِي آخِرِ الْفِعْلِ ← بِالْأَلِف. (يَتْرُكُوهُمْ) جَاءَ بَعْدَهَا الضَّمِيرُ (هُمْ) ← بِلَا أَلِف.", "deeper": "<b>لِمَاذَا سُمِّيَتْ «فَارِقَة»؟<\/b> لِأَنَّهَا تُفَرِّقُ بَيْنَ وَاوِ الْجَمَاعَةِ وَالْوَاوِ الْأَصْلِيَّة: (هُمْ لَمْ يَدْعُوا) جَمَاعَة، وَ(هُوَ يَدْعُو) مُفْرَد. فَإِذَا جَاءَ الضَّمِيرُ لَمْ يَبْقَ لَبْس، فَسَقَطَتْ.<br>وَانْتَبِهْ لِلْوَاوِ السَّاكِنَةِ بَعْدَ فَتْحٍ: (نَجَوْا، اسْتَقَوْا، سَعَوْا، رَضُوا) — هِيَ وَاوُ جَمَاعَةٍ أَيْضًا، وَتَأْخُذُ الْأَلِف."}, "ladder": [{"lv": "تَعَرُّف", "q": "(فَقَالُوا) فِي الْحَدِيث: لِمَاذَا الْأَلِفُ بَعْدَ الْوَاو؟", "opts": [["وَاوُ جَمَاعَةٍ فِي آخِرِ فِعْلٍ، وَلَمْ يَتَّصِلْ بِهَا ضَمِير", 1], ["لِأَنَّ الْفِعْلَ مَاضٍ", 0], ["لِأَنَّ الْقَافَ مَفْتُوحَة", 0]], "why": "تَحَقَّقَتِ الشُّرُوطُ الثَّلَاثَة: جَمَاعَة، فِعْل، آخِرُ الْكَلِمَة."}, {"lv": "تَعْلِيل", "q": "(يَتْرُكُوهُمْ) بِلَا أَلِفٍ لِأَنَّ:", "opts": [["اتَّصَلَ ضَمِيرٌ (هُمْ) بِوَاوِ الْجَمَاعَة", 1], ["الْفِعْلَ مُضَارِع", 0], ["الْوَاوَ مِنْ أَصْلِ الْفِعْل", 0]], "why": "الْأَلِفُ لِآخِرِ الْكَلِمَة؛ فَلَمَّا جَاءَ الضَّمِيرُ لَمْ تَعُدِ الْوَاوُ آخِرًا."}, {"lv": "تَعْلِيل", "q": "(نَجَوْا) — الْوَاوُ سَاكِنَةٌ بَعْدَ فَتْحٍ. هَلْ هِيَ وَاوُ جَمَاعَة؟", "opts": [["نَعَمْ: (هُوَ نَجَا ← هُمْ نَجَوْا)، فَنَكْتُبُ الْأَلِف", 1], ["لَا، هِيَ مِنْ أَصْلِ الْفِعْلِ فَلَا أَلِف", 0]], "why": "الْمُفْرَدُ (نَجَا) لَا وَاوَ فِي آخِرِه؛ فَالْوَاوُ جَاءَتْ لِلْجَمَاعَة."}, {"lv": "اسْتِثْنَاء", "q": "أَيُّهَا الصَّوَاب؟", "opts": [["الْأَبُ يَدْعُو لِأَبْنَائِهِ", 1], ["الْأَبُ يَدْعُوا لِأَبْنَائِهِ", 0]], "why": "(أَنَا أَدْعُو): الْوَاوُ بَاقِيَةٌ مَعَ (أَنَا) ← مِنْ أَصْلِ الْفِعْل ← لَا أَلِف."}, {"lv": "اسْتِثْنَاء", "q": "أَيُّهَا الصَّوَاب؟", "opts": [["مُعَلِّمُو الْمَدْرَسَةِ مُجْتَهِدُونَ", 1], ["مُعَلِّمُوا الْمَدْرَسَةِ مُجْتَهِدُونَ", 0]], "why": "(مُعَلِّمُو) اسْمٌ لَا فِعْل؛ وَالْأَلِفُ الْفَارِقَةُ لِلْأَفْعَالِ فَقَط."}, {"lv": "نَقْل", "q": "الْأَمْرُ لِلْجَمَاعَةِ مِنْ (كَتَبَ):", "opts": [["اكْتُبُوا", 1], ["اكْتُبُو", 0]], "why": "وَاوُ جَمَاعَةٍ فِي آخِرِ فِعْلِ الْأَمْر ← أَلِف."}, {"lv": "نَقْل", "q": "«الطُّلَّابُ لَمْ ____ الْوَاجِبَ»", "opts": [["يَتْرُكُوا", 1], ["يَتْرُكُو", 0]], "why": "مُضَارِعٌ مَجْزُومٌ آخِرُهُ وَاوُ الْجَمَاعَة ← أَلِف."}, {"lv": "نَقْل", "q": "«الْقَوْمُ خَرَقُوا السَّفِينَةَ» ← ضَعْ ضَمِيرًا مَكَانَ (السَّفِينَة):", "opts": [["خَرَقُوهَا", 1], ["خَرَقُواهَا", 0], ["خَرَقُوا هَا", 0]], "why": "اتَّصَلَ الضَّمِيرُ (هَا) ← سَقَطَتِ الْأَلِف."}, {"lv": "نَقْل", "q": "«نَحْنُ ____ أَنْ نَنْجَحَ» (مِنْ: رَجَا يَرْجُو)", "opts": [["نَرْجُو", 1], ["نَرْجُوا", 0]], "why": "(أَنَا أَرْجُو): الْوَاوُ أَصْلِيَّة ← لَا أَلِف."}, {"lv": "نَقْل", "q": "«الرِّجَالُ ____ فِي الْخَيْر» (مِنْ: سَعَى)", "opts": [["سَعَوْا", 1], ["سَعَوْ", 0], ["سَعُوا", 0]], "why": "وَاوُ جَمَاعَةٍ سَاكِنَةٌ بَعْدَ فَتْح، مِثْلُ (نَجَوْا، اسْتَقَوْا) ← أَلِف."}], "build": {"title": "(ـوا) أَمْ (ـو)؟", "keys": ["وا", "و"], "items": [{"w": "الطُّلَّابُ ذَهَبُ□ إِلَى الْمَكْتَبَة", "ans": "وا", "full": "ذَهَبُوا", "why": "جَمَاعَةٌ فِي آخِرِ الْفِعْل."}, {"w": "أَنَا أَدْعُ□ رَبِّي", "ans": "و", "full": "أَدْعُو", "why": "وَاوٌ أَصْلِيَّة."}, {"w": "الْأَصْدِقَاءُ سَاعَدُ□نِي", "ans": "و", "full": "سَاعَدُونِي", "why": "اتَّصَلَ الضَّمِيرُ (نِي)."}, {"w": "لَاعِبُ□ الْفَرِيقِ فَرِحُونَ", "ans": "و", "full": "لَاعِبُو", "why": "اسْمٌ لَا فِعْل."}, {"w": "يَا أَبْنَائِي، اصْبِرُ□", "ans": "وا", "full": "اصْبِرُوا", "why": "أَمْرٌ لِلْجَمَاعَة."}, {"w": "هُمْ لَمْ يَنْسَوْ□ صَدِيقَهُمْ", "ans": "ا", "keys": ["ا", "—"], "full": "يَنْسَوْا", "why": "وَاوُ جَمَاعَةٍ سَاكِنَةٌ بَعْدَ فَتْح ← نُضِيفُ الْأَلِف."}, {"w": "الْمُسَافِرُونَ رَجَعُ□ سَالِمِين", "ans": "وا", "full": "رَجَعُوا", "why": "جَمَاعَةٌ فِي آخِرِ الْفِعْل."}, {"w": "زَارَنَا الضُّيُوفُ فَأَكْرَمْنَاهُمْ وَأَكْرَمُ□نَا", "ans": "و", "full": "وَأَكْرَمُونَا", "why": "اتَّصَلَ الضَّمِيرُ (نَا)."}, {"w": "الْعُصْفُورُ يَسْمُ□ فِي السَّمَاء", "ans": "و", "full": "يَسْمُو", "why": "(أَنَا أَسْمُو): وَاوٌ أَصْلِيَّة."}]}, "fix": {"title": "رِسَالَةُ الْمُعَلِّم", "tokens": [["الطُّلَّابُ", 0], ["دَخَلُو", 1, "دَخَلُوا", "وَاوُ جَمَاعَةٍ فِي آخِرِ الْفِعْل."], ["الصَّفَّ،", 0], ["وَجَلَسُوا", 0], ["فِي", 0], ["أَمَاكِنِهِمْ،", 0], ["ثُمَّ", 0], ["سَأَلُوا", 0], ["الْمُعَلِّمَ", 0], ["وَشَكَرُواهُ،", 1, "وَشَكَرُوهُ", "اتَّصَلَ الضَّمِيرُ (هُ) ← لَا أَلِف."], ["فَقَالَ:", 0], ["أَخُوكُمْ", 0], ["يَدْعُوا", 1, "يَدْعُو", "وَاوٌ أَصْلِيَّة: أَنَا أَدْعُو."], ["لَكُمْ،", 0], ["وَمُعَلِّمُوا", 1, "وَمُعَلِّمُو", "اسْمٌ لَا فِعْل."], ["الْمَدْرَسَةِ", 0], ["فَخُورُونَ", 0], ["بِكُمْ،", 0], ["فَلَا", 0], ["تَتْرُكُو", 1, "تَتْرُكُوا", "وَاوُ جَمَاعَةٍ فِي آخِرِ فِعْلٍ مَجْزُوم."], ["أَصْدِقَاءَكُمْ.", 0]]}, "game": {"title": "صَحِيحٌ أَمْ خَطَأ؟", "prompt": "احْكُمْ عَلَى الرَّسْمِ بِسُرْعَة.", "bins": [{"k": "ok", "ic": "✅", "n": "صَحِيح"}, {"k": "no", "ic": "❌", "n": "خَطَأ"}], "items": [["هَلَكُوا", "ok", "جَمَاعَةٌ فِي آخِرِ الْفِعْل"], ["يَدْعُوا", "no", "وَاوٌ أَصْلِيَّة ← يَدْعُو"], ["أَخَذُوهُمْ", "ok", "مَعَ الضَّمِيرِ تُحْذَفُ الْأَلِف"], ["نَجَوْا", "ok", "جَمَاعَة"], ["مُعَلِّمُوا الْمَدْرَسَة", "no", "اسْم ← مُعَلِّمُو"], ["اكْتُبُو", "no", "أَمْرٌ لِلْجَمَاعَة ← اكْتُبُوا"], ["نَرْجُو", "ok", "وَاوٌ أَصْلِيَّة"], ["سَاعَدُواهُ", "no", "مَعَ الضَّمِيرِ ← سَاعَدُوهُ"], ["لَمْ يَتْرُكُوا", "ok", "جَمَاعَةٌ فِي آخِرِ الْفِعْل"], ["فَرِحُو", "no", "جَمَاعَة ← فَرِحُوا"], ["لَاعِبُو الْفَرِيق", "ok", "اسْم"], ["يَسْمُو", "ok", "وَاوٌ أَصْلِيَّة"], ["اسْتَقَوْ", "no", "جَمَاعَة ← اسْتَقَوْا"], ["أَكْرَمُوهُ", "ok", "مَعَ الضَّمِير"]]}, "dict": {"s": "فَإِنْ يَتْرُكُوهُمْ وَمَا أَرَادُوا هَلَكُوا جَمِيعًا، وَإِنْ أَخَذُوا عَلَى أَيْدِيهِمْ نَجَوْا، وَنَجَوْا جَمِيعًا.", "src": "صَحِيحُ الْبُخَارِيّ", "focus": "يَتْرُكُوهُمْ (بِلَا أَلِف) — أَرَادُوا، هَلَكُوا، أَخَذُوا، نَجَوْا (بِالْأَلِف)", "sec": 12}, "review": [{"lv": "مُرَاجَعَة", "tag": "الدَّرْسُ ٤", "q": "«عَنِ النُّعْمَانِ ____ بَشِيرٍ»", "opts": [["بْنِ", 1], ["ابْنِ", 0]], "why": "جِسْرٌ مُكْتَمِل: النُّعْمَانُ، ثُمَّ أَبُوهُ بَشِير."}, {"lv": "مُرَاجَعَة", "tag": "الدَّرْسُ ٣", "q": "فِي الْحَدِيث: (أَعْلَاهَا). لِمَاذَا الْأَلِفُ قَائِمَة؟", "opts": [["(أَعْلَى) اتَّصَلَ بِهَا الضَّمِيرُ (هَا)", 1], ["لِأَنَّهَا ثُلَاثِيَّة", 0]], "why": "الْأَلِفُ اللَّيِّنَةُ مَعَ الضَّمِيرِ تَقُوم."}, {"lv": "مُرَاجَعَة", "tag": "الدَّرْسُ ١", "q": "فِي الْحَدِيث: (اسْتَهَمُوا). هَمْزَتُهَا:", "opts": [["وَصْل؛ مَاضٍ سُدَاسِيّ", 1], ["قَطْع", 0]], "why": "نَقُولُ (قَوْمٍ سْتَهَمُوا): وَصْل."}, {"lv": "مُرَاجَعَة", "tag": "الدَّرْسُ ٢", "q": "فِي الْحَدِيث: (الْقَائِمِ). لِمَاذَا عَلَى نَبِرَة؟", "opts": [["مَكْسُورَةٌ بَعْدَ أَلِف", 1], ["لِأَنَّ الْقَافَ مَفْتُوحَة", 0]], "why": "بَعْدَ الْأَلِفِ الْحُكْمُ لِحَرَكَةِ الْهَمْزَة."}]}, "create": {"genre": "فِقْرَةُ الرَّأْي", "model": {"title": "🚢 هَلْ أَسْكُتُ عَنِ الْغِشّ؟", "intro": "الْحَدِيثُ يَقُولُ: السُّكُوتُ عَنِ الْخَرْقِ يُغْرِقُ الْجَمِيع. هَذَا نَمُوذَجٌ يُنْزِلُ الْحَدِيثَ عَلَى مَوْقِفٍ مِنَ الْمَدْرَسَةِ، وَيُدَافِعُ عَنْ رَأْيٍ بِالْأَسْبَابِ وَالدَّلِيل.", "parts": [{"lab": "الرَّأْي", "c": "#0891b2", "t": "أَرَى أَنَّ السُّكُوتَ عَنِ الْغِشِّ لَيْسَ حِيَادًا، بَلْ مُشَارَكَةٌ صَامِتَةٌ فِي الْخَطَأ."}, {"lab": "السَّبَب", "c": "#7c3aed", "t": "فَالْغِشُّ يُضَيِّعُ الْعَدْلَ؛ إِذْ يَنَالُ الْغَاشُّ دَرَجَةً لَمْ يَتْعَبْ فِيهَا، وَيَتَسَاوَى مَعَ مَنْ سَهِرَ اللَّيَالِيَ يُذَاكِر."}, {"lab": "الدَّلِيل", "c": "#16a34a", "t": "وَهُوَ كَالْخَرْقِ فِي سَفِينَةِ الْحَدِيث: يَبْدَأُ صَغِيرًا ثُمَّ يُغْرِقُ ثِقَةَ الْجَمِيع، وَقَدْ قَالَ النَّبِيُّ ﷺ: «مَنْ غَشَّ فَلَيْسَ مِنِّي»."}, {"lab": "مِثَالٌ مِنَ الْوَاقِع", "c": "#e11d48", "t": "تَخَيَّلْ صَفًّا كَامِلًا يُعَادُ لَهُ الِاخْتِبَارُ بِسَبَبِ وَرَقَةٍ صَغِيرَةٍ وَاحِدَة، فَيَخْسَرُ الْمُجْتَهِدُ تَعَبَهُ مَعَ مَنْ غَشّ!"}, {"lab": "الْخَاتِمَةُ وَالْحَلّ", "c": "#d97706", "t": "لِذَلِكَ أَنْصَحُ زَمِيلِي سِرًّا وَبِلُطْفٍ، فَإِنْ أَصَرَّ أَخْبَرْتُ الْمُعَلِّمَ؛ لِأَنَّ نَجَاةَ السَّفِينَةِ أَهَمُّ مِنْ رِضَا رَاكِبٍ وَاحِد."}], "tips": ["<b>الرَّأْيُ فِي أَوَّلِ جُمْلَة:<\/b> (أَرَى أَنَّ…) (أَعْتَقِدُ أَنَّ…) — وَاضِحٌ لَا يَحْتَمِلُ الْوَجْهَيْن.", "<b>رَوَابِطُ الْحِجَاج:<\/b> فَـ / لِأَنَّ / إِذْ (لِلسَّبَب) — وَ(لِذَلِكَ) لِلنَّتِيجَة.", "<b>الدَّلِيلُ مِنَ النَّصّ:<\/b> اقْتَبِسْ مِنَ الْحَدِيثِ بَيْنَ «…».", "<b>الْإِسْقَاطُ عَلَى الْوَاقِع:<\/b> مِثَالٌ مِنْ حَيَاتِكَ يُقَرِّبُ الْفِكْرَة — هَذِهِ هِيَ مَهَارَةُ «جِسْرُ الْوَاقِع».", "<b>الْحَلّ:<\/b> الرَّأْيُ النَّاضِجُ لَا يَكْتَفِي بِالِاعْتِرَاض، بَلْ يَقْتَرِحُ طَرِيقًا — وَالْحَدِيثُ نَفْسُهُ يَقْتَرِحُ: «أَخَذُوا عَلَى أَيْدِيهِمْ»."]}, "anatomyHint": "فِقْرَةُ الرَّأْيِ تَبْدَأُ بِالرَّأْي، ثُمَّ تُعَلِّلُه، ثُمَّ تَسْتَدِلُّ عَلَيْه، ثُمَّ تُقَرِّبُهُ بِمِثَال، ثُمَّ تَخْتِمُ بِحَلّ.", "skills": [{"lv": "مَهَارَة", "tag": "الرَّأْيُ الْوَاضِح", "q": "أَيُّ جُمْلَةٍ تَصْلُحُ بِدَايَةً لِفِقْرَةِ رَأْي؟", "opts": [["أَرَى أَنَّ النَّصِيحَةَ بِلُطْفٍ أَنْفَعُ مِنَ الْفَضِيحَة", 1], ["الْغِشُّ مَوْضُوعٌ مُهِمٌّ جِدًّا", 0], ["بَعْضُ النَّاسِ يَغُشُّونَ وَبَعْضُهُمْ لَا يَغُشُّون", 0]], "why": "الْأُولَى تَتَّخِذُ مَوْقِفًا وَاضِحًا يُمْكِنُ الدِّفَاعُ عَنْه؛ الْأُخْرَيَانِ لَا رَأْيَ فِيهِمَا."}, {"lv": "مَهَارَة", "tag": "رَوَابِطُ الْحِجَاج", "q": "«لَا أَسْكُتُ عَنِ الْخَطَأِ ____ السُّكُوتَ يُشَجِّعُهُ»", "opts": [["لِأَنَّ", 1], ["لِذَلِكَ", 0], ["لَكِنَّ", 0]], "why": "مَا بَعْدَهَا سَبَبٌ لِمَا قَبْلَهَا ← (لِأَنَّ)."}, {"lv": "مَهَارَة", "tag": "رَوَابِطُ الْحِجَاج", "q": "«السُّكُوتُ يُغْرِقُ الْجَمِيعَ، ____ أَنْصَحُ صَدِيقِي سِرًّا»", "opts": [["لِذَلِكَ", 1], ["لِأَنَّ", 0], ["إِذْ", 0]], "why": "مَا بَعْدَهَا نَتِيجَةٌ لِمَا قَبْلَهَا ← (لِذَلِكَ)."}, {"lv": "مَهَارَة", "tag": "قُوَّةُ السَّبَب", "q": "أَقْوَى سَبَبٍ لِرَفْضِ الْغِشّ:", "opts": [["لِأَنَّهُ يُضَيِّعُ حَقَّ الْمُجْتَهِدِ وَثِقَةَ الْمُعَلِّم", 1], ["لِأَنِّي لَا أُحِبُّ الَّذِي يَغُشّ", 0], ["لِأَنَّ الْجَمِيعَ يَقُولُونَ ذَلِك", 0]], "why": "السَّبَبُ الْقَوِيُّ مَوْضُوعِيٌّ يُقْنِعُ غَيْرَكَ، لَا مَشَاعِرُ شَخْصِيَّةٌ وَلَا تَقْلِيد."}, {"lv": "مَهَارَة", "tag": "الْإِسْقَاطُ عَلَى الْوَاقِع", "q": "أَيُّ مَوْقِفٍ يُشْبِهُ «الْخَرْقَ فِي السَّفِينَة»؟", "opts": [["طَالِبٌ يَكْتُبُ عَلَى جِدَارِ الْمَدْرَسَةِ وَيَقُولُ: هَذَا جِدَارِي وَلَا يَضُرُّ أَحَدًا", 1], ["طَالِبٌ يُذَاكِرُ وَحْدَهُ فِي غُرْفَتِه", 0], ["طَالِبٌ يُسَاعِدُ زَمِيلَهُ فِي الْوَاجِب", 0]], "why": "خَطَأٌ يَظُنُّهُ صَاحِبُهُ فِي «نَصِيبِهِ» وَحْدَهُ، وَضَرَرُهُ يَعُمُّ الْجَمِيع — كَمَا قَالَ أَهْلُ الْأَسْفَل: «وَلَمْ نُؤْذِ مَنْ فَوْقَنَا»."}], "game": {"title": "رَأْيٌ أَمْ سَبَبٌ أَمْ دَلِيل؟", "prompt": "مَا وَظِيفَةُ هَذِهِ الْجُمْلَةِ فِي فِقْرَةِ الرَّأْي؟", "bins": [{"k": "r", "ic": "💭", "n": "رَأْي"}, {"k": "s", "ic": "🔗", "n": "سَبَب"}, {"k": "d", "ic": "📜", "n": "دَلِيل"}], "items": [["أَرَى أَنَّ السُّكُوتَ عَنِ الظُّلْمِ خَطَأ", "r"], ["لِأَنَّ الظُّلْمَ يَكْبُرُ إِذَا تُرِكَ", "s"], ["قَالَ ﷺ: «مَنْ غَشَّ فَلَيْسَ مِنِّي»", "d"], ["أَعْتَقِدُ أَنَّ النَّصِيحَةَ تَكُونُ سِرًّا", "r"], ["إِذِ النَّاسُ يَقْبَلُونَ النُّصْحَ إِذَا لَمْ يُفْضَحُوا", "s"], ["فِي الْحَدِيثِ: «فَإِنْ يَتْرُكُوهُمْ وَمَا أَرَادُوا هَلَكُوا جَمِيعًا»", "d"], ["فِي رَأْيِي أَنَّ الصَّمْتَ مُشَارَكَة", "r"], ["فَالْمُخْطِئُ يَظُنُّ أَنَّ أَحَدًا لَنْ يَمْنَعَه", "s"], ["وَفِي الْحَدِيثِ: «وَإِنْ أَخَذُوا عَلَى أَيْدِيهِمْ نَجَوْا»", "d"]]}, "compose": {"title": "رَأْيِي: لَا خَرْقَ فِي سَفِينَتِنَا", "task": "اخْتَرْ مَوْقِفًا مِنْ وَاقِعِكَ يُشْبِهُ «الْخَرْقَ فِي السَّفِينَة»: زَمِيلٌ يَسْخَرُ مِنْ آخَرَ، أَوْ مَنْ يَرْمِي النُّفَايَاتِ فِي الشَّارِع، أَوْ غِشٌّ فِي لُعْبَةٍ جَمَاعِيَّة… ثُمَّ اكْتُبْ فِقْرَةَ رَأْيٍ: هَلْ نَسْكُتُ؟ وَلِمَاذَا؟ وَمَا الْحَلّ؟", "docTitle": "🚢 فِقْرَةُ رَأْي", "min": 70, "parts": [{"lab": "رَأْيِي", "guide": "جُمْلَةٌ وَاحِدَةٌ وَاضِحَة.", "ph": "أَرَى أَنَّ …"}, {"lab": "السَّبَب", "guide": "لِمَاذَا؟ (فَـ / لِأَنَّ / إِذْ)", "ph": "لِأَنَّ …"}, {"lab": "الدَّلِيل", "guide": "اقْتَبِسْ مِنَ الْحَدِيثِ بَيْنَ «…» وَبَيِّنْ صِلَتَهُ بِمَوْقِفِك.", "ph": "وَقَدْ قَالَ النَّبِيُّ ﷺ: «…»"}, {"lab": "مِثَالٌ مِنَ الْوَاقِع", "guide": "صِفِ الْمَوْقِفَ الَّذِي اخْتَرْتَهُ وَنَتِيجَتَهُ إِذَا سَكَتْنَا.", "ph": "تَخَيَّلْ … / مَثَلًا …"}, {"lab": "الْخَاتِمَةُ وَالْحَلّ", "guide": "مَاذَا تَفْعَلُ؟ وَكَيْفَ تَنْصَحُ بِلُطْف؟", "ph": "لِذَلِكَ …"}], "auto": [{"type": "min", "t": "سَبْعُونَ كَلِمَةً فَأَكْثَر"}, {"type": "parts", "t": "كَتَبْتَ الْأَجْزَاءَ الْخَمْسَة"}, {"re": "(أرى|أعتقد|رأيي|أظن)", "t": "صَرَّحْتَ بِرَأْيِك"}, {"re": "(لأن|إذ|بسبب|فإن)", "t": "عَلَّلْتَ رَأْيَك"}, {"re": "(ﷺ|«|النبي|رسول الله|الحديث)", "t": "اسْتَشْهَدْتَ بِالْحَدِيث"}, {"re": "(مثلا|مثلًا|تخيل|تخيلي|مثال|كما حدث|رأيت)", "t": "ضَرَبْتَ مِثَالًا مِنَ الْوَاقِع"}, {"re": "(لذلك|لهذا|ولذا|وهكذا|إذن|أنصح)", "t": "خَتَمْتَ بِحَلٍّ أَوْ نَتِيجَة"}], "self": ["رَأْيِي فِي الْجُمْلَةِ الْأُولَى، وَهُوَ وَاضِح.", "سَبَبِي يُقْنِعُ غَيْرِي، لَا أَنَا وَحْدِي.", "الْحَلُّ لَطِيفٌ: لَا فَضِيحَةَ وَلَا سُكُوت.", "رَاجَعْتُ وَاوَ الْجَمَاعَةِ وَالْأَلِفَ الْفَارِقَةَ فِي كُلِّ فِعْل."], "ruleTip": "الْمُظَلَّلُ يَنْتَهِي بِـ(و) أَوْ (وا): اسْأَلْ: جَمَاعَة؟ فِعْل؟ آخِرُ الْكَلِمَة؟", "mark": "وا?$", "flag": ["^(و|ف)?(ذهبو|قالو|كانو|فعلو|أكلو|لعبو|شربو|جلسو|سألو|شكرو|دخلو|خرجو|رجعو|ساعدو|تركو|أخذو|غشو|سكتو|نجحو|درسو|اجتهدو|سخرو|رمو|ضحكو|اكتبو|اصبرو|اتركو|يتركو|تتركو|يفعلو|تفعلو)$", "^(و|ف)?(يدعوا|يرجوا|نرجوا|أرجوا|ترجوا|يسموا|يدنوا|يشكوا|يرجوا|معلموا|لاعبوا|مهندسوا|موظفوا)$", "^(و|ف)?[^\\s]+وا(ه|ها|هم|هما|ني|نا|كم)$"]}}}];
+
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var AR=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+var num=function(n){return String(n).split('').map(function(d){return /[0-9]/.test(d)?AR[+d]:d}).join('')};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]})};
+var shuffle=function(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a};
+var bare=function(s){return String(s).replace(/[ً-ْٰـ]/g,'')};
+var words=function(s){return String(s).trim().split(/\s+/).filter(Boolean)};
+var CHEER=['أَحْسَنْت! 🌟','رَائِع! 🎉','مُمْتَاز! 💚','عَمَلٌ جَمِيل! ✨'];
+var cheer=function(){return CHEER[Math.floor(Math.random()*CHEER.length)]};
+
+var L=null, cur=null, done=[], T=null;
+var S={hero:'boy', tok:0, streak:0, best:0, i:0, tries:0, scores:{tech:[],create:[]}, timer:null};
+
+var HERO={boy:{a:'#5624d0',d:'#3b1796',s:'#f3efff'},girl:{a:'#d024b0',d:'#96177b',s:'#fdf0fa'}};
+function theme(){var h=HERO[S.hero],r=document.documentElement.style;
+  r.setProperty('--accent',h.a);r.setProperty('--accent-dark',h.d);r.setProperty('--accent-soft',h.s)}
+var LV={'تَعَرُّف':['#e0f2fe','#0369a1'],'تَعْلِيل':['#fef3c7','#b45309'],'اسْتِثْنَاء':['#ffe4e6','#be123c'],
+        'نَقْل':['#dcfce7','#15803d'],'مُرَاجَعَة':['#f3efff','#5624d0'],'مَهَارَة':['#fef3c7','#b45309']};
+
+var STATIONS=[
+  {id:'discover',g:'tech',ic:'🔍',name:'اكْتَشِفْ مِنَ النَّصّ',c:'#0891b2',b:'#cffafe',
+   s:'الْمُلَاحَظَةُ وَالتَّصْنِيفُ قَبْلَ الْقَاعِدَة.',k:'تُصَنِّفُ كَلِمَاتٍ مِنْ نَصِّ الدَّرْسِ نَفْسِهِ، ثُمَّ تَسْتَنْتِجُ السِّرَّ بِنَفْسِك.',t:'حِفْظُ الْقَاعِدَةِ دُونَ فَهْمِ سَبَبِهَا.'},
+  {id:'clue',g:'tech',ic:'🗝️',name:'الْقَرِينَة',c:'#0e7490',b:'#ecfeff',
+   s:'مَعْرِفَةُ الدَّلِيلِ الَّذِي يَحْسِمُ الْكِتَابَة.',k:'خُطُوَاتٌ تُجْرِيهَا عَلَى الْكَلِمَةِ قَبْلَ أَنْ تَكْتُبَهَا.',t:'الْكِتَابَةُ بِالسَّمَاعِ وَحْدَهُ، وَالسَّمَاعُ يَخْدَعُ.'},
+  {id:'ladder',g:'tech',ic:'🪜',name:'سُلَّمُ الْأَسْئِلَة',c:'#0284c7',b:'#e0f2fe',
+   s:'التَّعَرُّفُ ثُمَّ التَّعْلِيلُ ثُمَّ الِاسْتِثْنَاءُ ثُمَّ النَّقْل.',k:'أَسْئِلَةٌ مُتَدَرِّجَةٌ تَسْأَلُكَ: لِمَاذَا؟ لَا: مَاذَا؟ فَقَط.',t:'الْإِجَابَةُ بِالتَّخْمِين.'},
+  {id:'build',g:'tech',ic:'🧩',name:'الْبَنَّاء',c:'#7c3aed',b:'#ede9fe',
+   s:'إِنْتَاجُ الشَّكْلِ الصَّحِيحِ فِي كَلِمَاتٍ جَدِيدَة.',k:'تُكْمِلُ الْكَلِمَةَ بِيَدِكَ، وَتَرَى سَبَبَ الصَّوَابِ بَعْدَهَا.',t:'الْعَجْزُ عَنْ نَقْلِ الْقَاعِدَةِ إِلَى كَلِمَاتٍ لَمْ تَرَهَا.'},
+  {id:'fix',g:'tech',ic:'🩺',name:'الْمُصَحِّح',c:'#e11d48',b:'#ffe4e6',
+   s:'اكْتِشَافُ الْخَطَأِ دَاخِلَ السِّيَاق.',k:'فِقْرَةٌ فِيهَا أَخْطَاءٌ مُخْتَبِئَةٌ بَيْنَ كَلِمَاتٍ صَحِيحَة.',t:'الْعَيْنُ الَّتِي تَمُرُّ عَلَى الْخَطَأِ وَلَا تَرَاه.'},
+  {id:'tgame',g:'tech',ic:'🎮',name:'سِبَاقُ الْقَرَائِن',c:'#16a34a',b:'#dcfce7',
+   s:'سُرْعَةُ تَطْبِيقِ الْقَرِينَة.',k:'سِتُّونَ ثَانِيَةً: صَنِّفْ أَكْبَرَ عَدَدٍ مِنَ الْكَلِمَات.',t:'الْبُطْءُ وَالتَّرَدُّدُ عِنْدَ الْكِتَابَة.'},
+  {id:'dict',g:'tech',ic:'👁️',name:'الْإِمْلَاءُ الْمَنْظُور',c:'#0f8194',b:'#cffafe',
+   s:'الذَّاكِرَةُ الْبَصَرِيَّةُ لِلْكَلِمَات.',k:'انْظُرْ إِلَى الْجُمْلَةِ، ثُمَّ أَخْفِهَا، ثُمَّ اكْتُبْهَا، ثُمَّ قَارِنْ.',t:'نَقْلُ الْكَلِمَاتِ حَرْفًا حَرْفًا دُونَ تَذَكُّر.'},
+  {id:'review',g:'tech',ic:'🔁',name:'مُرَاجَعَةُ الذَّاكِرَة',c:'#5624d0',b:'#f3efff',
+   s:'تَثْبِيتُ قَوَاعِدِ الدُّرُوسِ السَّابِقَة.',k:'أَسْئِلَةٌ مِنْ قَرَائِنَ تَعَلَّمْتَهَا مِنْ قَبْل.',t:'نِسْيَانُ الْقَاعِدَةِ بَعْدَ انْتِهَاءِ دَرْسِهَا.'},
+
+  {id:'model',g:'create',ic:'📖',name:'النَّمُوذَج',c:'#b45309',b:'#fef3c7',
+   s:'التَّعَرُّفُ عَلَى نَوْعِ النَّصِّ مِنْ مِثَالٍ حَيّ.',k:'تَقْرَأُ نَمُوذَجًا، ثُمَّ تُضِيءُ أَجْزَاءَهُ لِتَرَى بِنَاءَه.',t:'الْكِتَابَةُ بِلَا صُورَةٍ وَاضِحَةٍ لِلْهَدَف.'},
+  {id:'anatomy',g:'create',ic:'🦴',name:'تَشْرِيحُ النَّمُوذَج',c:'#c2410c',b:'#ffedd5',
+   s:'إِدْرَاكُ تَرْتِيبِ أَجْزَاءِ النَّصّ.',k:'تُعِيدُ تَرْتِيبَ أَجْزَاءِ النَّمُوذَجِ بَعْدَ أَنْ تُبَعْثَرَ.',t:'الْكِتَابَةُ الْمُبَعْثَرَةُ بِلَا بِدَايَةٍ وَلَا نِهَايَة.'},
+  {id:'skills',g:'create',ic:'🛠️',name:'تَمَارِينُ الْمَهَارَة',c:'#d97706',b:'#fef3c7',
+   s:'الْمَهَارَاتُ الصَّغِيرَةُ الَّتِي يُبْنَى بِهَا النَّصّ.',k:'تَمَارِينُ قَصِيرَةٌ عَلَى جُمْلَةٍ جُمْلَة.',t:'الْجُمَلُ الْبَاهِتَةُ وَالرَّبْطُ الضَّعِيف.'},
+  {id:'cgame',g:'create',ic:'🎲',name:'لُعْبَةُ الْوَرْشَة',c:'#db2777',b:'#fce7f3',
+   s:'تَمْيِيزُ أَدَوَاتِ الْكَاتِبِ بِسُرْعَة.',k:'لُعْبَةُ تَصْنِيفٍ سَرِيعَةٌ عَلَى مَهَارَةِ الدَّرْس.',t:'الْخَلْطُ بَيْنَ عَنَاصِرِ النَّصّ.'},
+  {id:'compose',g:'create',ic:'🖋️',name:'اكْتُبْ نَصَّك',c:'#5624d0',b:'#f3efff',
+   s:'إِنْتَاجُ نَصٍّ كَامِلٍ ثُمَّ تَدْقِيقُه.',k:'تَكْتُبُ جُزْءًا جُزْءًا، ثُمَّ تُرَاجِعُ نَصَّكَ بِقَائِمَةِ تَحَقُّقٍ وَبِقَاعِدَةِ الدَّرْس.',t:'تَسْلِيمُ الْمُسَوَّدَةِ الْأُولَى دُونَ مُرَاجَعَة.'}
+];
+function stById(id){for(var i=0;i<STATIONS.length;i++)if(STATIONS[i].id===id)return STATIONS[i];return null}
+function acts(){return STATIONS.filter(function(s){
+  if(s.id==='review')return !!(L.tech.review&&L.tech.review.length);
+  return true})}
+
+function view(h){$('#app').innerHTML=h;window.scrollTo({top:0,behavior:'instant'})}
+function neighbours(){var a=acts(),i=-1;for(var k=0;k<a.length;k++)if(cur&&a[k].id===cur.id){i=k;break}
+  return {prev:(i>0?a[i-1]:null),next:(i>=0&&i<a.length-1?a[i+1]:null)}}
+function stationNav(){var n=neighbours();
+  return '<div class="st-nav">'+
+    (n.prev?'<button class="navb" data-goto="'+n.prev.id+'">‹ '+n.prev.ic+' '+n.prev.name+'</button>':'<span></span>')+
+    '<button class="navb mid" data-map="1" title="الخريطة">🗺️</button>'+
+    (n.next?'<button class="navb" data-goto="'+n.next.id+'">'+n.next.ic+' '+n.next.name+' ›</button>':'<span></span>')+'</div>'}
+function setHud(on){$('#hud').classList.toggle('on',on!==false);
+  $('#tok').textContent=num(S.tok);$('#stk').textContent=num(S.streak);
+  $('#st-name').textContent=cur?(cur.ic+' '+cur.name):'مِداد'}
+function toast(txt,good,cb){var t=$('#toast');t.style.background=good?'#16a34a':'#0f8194';t.innerHTML=txt;t.classList.add('on');
+  setTimeout(function(){t.classList.remove('on');if(cb)cb()},good?950:1600)}
+function rec(v){S.scores[cur.g].push(v)}
+function pct(a){return a.length?Math.round(a.reduce(function(x,y){return x+y},0)/a.length*100):0}
+function win(first){S.streak++;if(S.streak>S.best)S.best=S.streak;var g=(first?10:5)+Math.min(S.streak,4)*2;S.tok+=g;rec(first?1:.5);setHud();return g}
+function lose(){S.streak=0;rec(0);setHud()}
+function stopTimer(){if(S.timer){clearInterval(S.timer);S.timer=null}}
+function prog(i,n){return '<div class="prog"><i style="width:'+Math.round(i/n*100)+'%"></i></div>'}
+function H(t){return (S.hero==='girl'&&t&&t.tg)?t.tg:(t&&t.t!==undefined?t.t:t)}
+
+function finishStation(){
+  stopTimer();
+  if(cur&&done.indexOf(cur.id)<0)done.push(cur.id);
+  S.i=0;S.tries=0;
+  var n=neighbours(),j=cur,a=acts(),got=a.filter(function(s){return done.indexOf(s.id)>=0}).length;
+  setHud();
+  view('<div class="card doneCard fade" style="margin-top:20px"><div class="big">✅</div>'+
+    '<h2>أَنْهَيْتَ: '+j.ic+' '+j.name+'</h2><p>'+num(got)+' مِنْ '+num(a.length)+' مَحَطَّة</p>'+
+    (n.next?'<button class="btn-3d btn-accent" data-goto="'+n.next.id+'">'+n.next.ic+' '+n.next.name+' ▶</button>'
+           :'<button class="btn-3d btn-accent" data-report="1">🏆 شَاهِدْ نَتِيجَتَك</button>')+
+    '<div style="margin-top:10px"><button class="btn-3d btn-ghost" data-map="1">🗺️ الْخَرِيطَة</button></div></div>');
+}
+
+/* ================= 🗺️ الخريطة ================= */
+function map(){
+  stopTimer();cur=null;setHud();
+  var a=acts();
+  function grid(g){var k=0;return a.filter(function(s){return s.g===g}).map(function(s){k++;
+    var d=done.indexOf(s.id)>=0;
+    return '<div class="st-card" data-st="'+s.id+'"><span class="stp">'+num(k)+'</span>'+
+      '<div class="ico" style="background:'+s.b+';color:'+s.c+'">'+s.ic+'</div><h3>'+s.name+'</h3>'+
+      (d?'<div class="done">✅</div>':'')+'</div>'}).join('')}
+  var got=a.filter(function(s){return done.indexOf(s.id)>=0}).length;
+  view('<div class="map-head fade"><h1>✍️ '+L.title+'</h1><p>'+L.emoji+' '+L.author+'</p>'+
+    '<div class="tracks"><span class="pill">🔤 '+L.tech.name+'</span><span class="pill">🖋️ '+L.create.genre+'</span></div>'+
+    '<p style="margin-top:12px;color:var(--accent);font-weight:800">'+num(got)+' / '+num(a.length)+' مَحَطَّة</p></div>'+
+    '<div class="fade"><div class="group-label tech">١ — الْمُخْتَبَرُ الْإِمْلَائِيّ 🔤</div>'+
+    '<div class="group-sub">الْقِسْمُ التِّقْنِيّ: '+L.tech.name+'</div>'+
+    '<div class="st-grid">'+grid('tech')+'</div>'+
+    '<div class="group-label create">٢ — وَرْشَةُ الْإِبْدَاع 🖋️</div>'+
+    '<div class="group-sub">الْقِسْمُ الْإِبْدَاعِيّ: '+L.create.genre+'</div>'+
+    '<div class="st-grid">'+grid('create')+'</div>'+
+    (got>=a.length?'<div class="finish-wrap"><button class="btn-3d btn-accent" data-report="1">🏆 شَاهِدْ نَتِيجَتَك</button></div>':'')+
+    '<div class="finish-wrap"><button class="btn-3d btn-ghost" data-read="1">📖 إِلَى قِرَاءَةِ الدَّرْس</button></div>'+
+    '<div class="finish-wrap"><button class="btn-3d btn-ghost" data-hub="1">🏠 رُجُوعٌ لِلْوَحْدَة</button></div></div>');
+}
+function stIntro(id){
+  var s=stById(id);cur=s;setHud();
+  view('<div class="card st-intro fade" style="margin-top:20px">'+
+    '<div class="big" style="background:'+s.b+';color:'+s.c+'">'+s.ic+'</div>'+
+    '<h2 style="color:'+s.c+'">'+s.name+'</h2>'+
+    '<div class="infobox"><div class="lb">📏 تَقِيسُ</div><div class="vl">'+s.s+'</div></div>'+
+    '<div class="infobox"><div class="lb">💡 الْفِكْرَة</div><div class="vl">'+s.k+'</div></div>'+
+    '<div class="infobox treat"><div class="lb">🩹 تُعَالِج</div><div class="vl">'+s.t+'</div></div>'+
+    '<div style="margin-top:22px"><button class="btn-3d btn-accent" data-start="'+id+'">هَيَّا نَبْدَأ ▶</button></div>'+
+    '<div style="margin-top:10px"><button class="btn-3d btn-ghost" data-map="1">🗺️ رُجُوعٌ لِلْخَرِيطَة</button></div></div>');
+}
+function runStation(id){
+  stopTimer();cur=stById(id);S.i=0;S.tries=0;setHud();
+  ({discover:rDiscover,clue:rClue,ladder:function(){rQuiz(L.tech.ladder)},build:rBuild,fix:rFix,
+    tgame:function(){rSort(L.tech.game,true)},dict:rDict,review:function(){rQuiz(L.tech.review)},
+    model:rModel,anatomy:rAnatomy,skills:function(){rQuiz(L.create.skills)},
+    cgame:function(){rSort(L.create.game,true)},compose:rCompose})[id]();
+}
+
+/* ============ 🔍 التصنيف (الاكتشاف + الألعاب) ============ */
+function rSort(cfg,timed){
+  T={cfg:cfg,timed:timed,items:timed?shuffle(cfg.items):cfg.items.slice(),i:0,ok:0,bad:0,left:60,basket:{}};
+  cfg.bins.forEach(function(b){T.basket[b.k]=[]});
+  if(timed){S.timer=setInterval(function(){T.left--;var e=$('#tl');if(e)e.textContent=num(T.left);
+    if(T.left<=0){stopTimer();endSort()}},1000)}
+  drawSort();
+}
+function drawSort(){
+  var c=T.cfg,it=T.items[T.i];
+  if(!it){return endSort()}
+  var nb=c.bins.length;
+  view('<div class="card fade" style="margin-top:14px">'+
+    '<div class="kicker">'+cur.ic+' '+cur.name+'</div>'+
+    '<h2 class="title">'+c.title+'</h2><div class="sub">'+c.prompt+'</div>'+
+    (T.timed?'<div class="timer"><span>⏱️ <b id="tl">'+num(T.left)+'</b> ثَانِيَة</span><span>✅ <b>'+num(T.ok)+'</b> · ❌ '+num(T.bad)+'</span></div>'
+            :prog(T.i,T.items.length))+
+    '<div class="sortword'+(bare(it[0]).length>26?' small':'')+'">'+it[0]+(it[3]?'<span class="say">'+it[3]+'</span>':'')+'</div>'+
+    '<div class="bins b'+nb+'">'+c.bins.map(function(b){
+      return '<button class="bin" data-bin="'+b.k+'"><span class="bi">'+b.ic+'</span><span>'+b.n+'</span>'+
+        (!T.timed?'<span class="basket">'+T.basket[b.k].map(function(w){return '<span>'+w+'</span>'}).join('')+'</span>':'')+'</button>'}).join('')+'</div>'+
+    '<div id="fb"></div>'+stationNav()+'</div>');
+}
+function pickBin(k,btn){
+  var it=T.items[T.i];if(!it||T.lock)return;
+  var ok=(k===it[1]);
+  if(ok){btn.classList.add('ok');T.ok++;T.basket[k].push(it[0]);
+    if(T.timed){S.tok+=4;setHud();T.i++;setTimeout(drawSort,180);return}
+    var g=win(true);T.lock=true;
+    if(it[2]){$('#fb').innerHTML='<div class="why">✅ '+it[2]+'</div><button class="btn-3d btn-accent" data-snext="1">التَّالِي ▶</button>';return}
+    toast(cheer()+' +'+num(g)+' 🪙',true,function(){T.lock=false;T.i++;drawSort()});
+  }else{
+    btn.classList.add('bad','shake');T.bad++;
+    if(T.timed){S.streak=0;setHud();var right=T.cfg.bins.filter(function(b){return b.k===it[1]})[0];
+      T.lock=true;toast('↩️ '+right.ic+' '+right.n+(it[2]?' — '+it[2]:''),false,function(){T.lock=false;T.i++;drawSort()});return}
+    lose();T.lock=true;
+    var rb=T.cfg.bins.filter(function(b){return b.k===it[1]})[0];
+    T.basket[it[1]].push(it[0]);
+    $('#fb').innerHTML='<div class="why no">مَكَانُهَا: <b>'+rb.ic+' '+rb.n+'</b>'+(it[2]?'<br>'+it[2]:'')+'</div>'+
+      '<button class="btn-3d btn-accent" data-snext="1">التَّالِي ▶</button>';
+  }
+}
+function endSort(){
+  stopTimer();
+  var c=T.cfg;
+  if(T.timed){var tot=T.ok+T.bad;rec(tot?T.ok/tot:0);S.tok+=T.ok*2;setHud()}
+  view('<div class="card fade" style="margin-top:14px;text-align:center">'+
+    '<div class="kicker">'+cur.ic+' '+cur.name+'</div>'+
+    (T.timed?'<div style="font-size:3rem">🏁</div><h2 class="title">'+num(T.ok)+' إِجَابَةً صَحِيحَة</h2><div class="sub">مِنْ '+num(T.ok+T.bad)+' فِي سِتِّينَ ثَانِيَة'+(T.bad?' — رَاجِعِ الْقَرِينَةَ وَأَعِدِ الْمُحَاوَلَة':'')+'</div>'
+            :'<div style="font-size:3rem">💡</div><h2 class="title">مَاذَا لَاحَظْتَ؟</h2>')+
+    (c.reveal&&!T.timed?'<div class="clue" style="text-align:right"><div class="idea" style="margin:0">'+c.reveal+'</div></div>':'')+
+    (!T.timed?'<div class="bins b'+c.bins.length+'" style="margin-top:14px">'+c.bins.map(function(b){
+      return '<div class="bin" style="cursor:default"><span class="bi">'+b.ic+'</span><span>'+b.n+'</span><span class="basket">'+
+        T.basket[b.k].map(function(w){return '<span>'+w+'</span>'}).join('')+'</span></div>'}).join('')+'</div>':'')+
+    '<div style="margin-top:18px">'+(T.timed?'<button class="btn-3d btn-ghost" data-again="1" style="margin-bottom:10px">🔄 حَاوِلْ مَرَّةً أُخْرَى</button>':'')+
+    '<button class="btn-3d btn-accent" data-fin="1">أَنْهَيْتُ ✓</button></div>'+stationNav()+'</div>');
+}
+function rDiscover(){rSort(L.tech.discover,false)}
+
+/* ============ 🗝️ القرينة ============ */
+function rClue(){
+  var c=L.tech.clue;
+  view('<div class="card fade" style="margin-top:14px">'+
+    '<div class="kicker">🗝️ الْقَرِينَةُ اللَّفْظِيَّة</div>'+
+    '<div class="clue"><h3>'+c.title+'</h3><div class="idea">'+c.idea+'</div>'+
+    c.steps.map(function(s,i){return '<div class="step"><span class="n">'+num(i+1)+'</span><span>'+s+'</span></div>'}).join('')+'</div>'+
+    (c.worked?'<div class="worked"><div class="wl">🧪 مِثَالٌ مَحْلُولٌ مِنَ النَّصّ</div>'+c.worked+'</div>':'')+
+    (c.deeper?'<div class="deeper"><div class="wl">🔭 أَعْمَقُ مِنَ الْمُسْتَوَى الثَّالِث</div>'+c.deeper+'</div>':'')+
+    '<div style="margin-top:18px"><button class="btn-3d btn-accent" data-fin="1">فَهِمْتُ الْقَرِينَةَ ✓</button></div>'+stationNav()+'</div>');
+  rec(1);
+}
+
+/* ============ 🪜 الأسئلة المتدرجة ============ */
+function rQuiz(list){T={list:list};S.i=0;drawQuiz()}
+function drawQuiz(){
+  var it=T.list[S.i];if(!it)return finishStation();
+  var lv=LV[it.lv]||LV['مَهَارَة'];
+  T.opts=shuffle(it.opts);T.answered=false;
+  view('<div class="card fade" style="margin-top:14px">'+
+    '<div class="kicker">'+cur.ic+' '+cur.name+' · '+num(S.i+1)+'/'+num(T.list.length)+'</div>'+prog(S.i,T.list.length)+
+    '<div style="text-align:center"><span class="lv" style="background:'+lv[0]+';color:'+lv[1]+'">'+(it.lv||'مَهَارَة')+(it.tag?' · '+it.tag:'')+'</span></div>'+
+    (it.ctx?'<div class="info" style="margin:0 0 14px">'+it.ctx+'</div>':'')+
+    '<div class="q">'+it.q+'</div>'+
+    T.opts.map(function(o,i){return '<button class="opt" data-qo="'+i+'">'+o[0]+'</button>'}).join('')+
+    '<div id="fb"></div>'+stationNav()+'</div>');
+}
+function pickQuiz(i,btn){
+  if(T.answered)return;
+  var it=T.list[S.i],o=T.opts[i];
+  if(o[1]){btn.classList.add('ok');T.answered=true;
+    var g=win(S.tries===0);
+    [].forEach.call(document.querySelectorAll('[data-qo]'),function(b){b.disabled=true;if(b!==btn)b.classList.add('dim')});
+    $('#fb').innerHTML='<div class="why">✅ '+cheer()+' +'+num(g)+' 🪙'+(it.why?'<br>'+it.why:'')+'</div>'+
+      '<button class="btn-3d btn-accent" data-qnext="1">التَّالِي ▶</button>';
+  }else{
+    btn.classList.add('bad','shake');btn.disabled=true;S.tries++;
+    if(S.tries>=2){lose();T.answered=true;
+      [].forEach.call(document.querySelectorAll('[data-qo]'),function(b){b.disabled=true;
+        var oo=T.opts[+b.dataset.qo];if(oo[1])b.classList.add('ok');else if(!b.classList.contains('bad'))b.classList.add('dim')});
+      $('#fb').innerHTML='<div class="why no">💡 '+(it.why||'')+'</div><button class="btn-3d btn-accent" data-qnext="1">التَّالِي ▶</button>';
+    }else{S.streak=0;setHud();
+      $('#fb').innerHTML='<div class="nudge">'+(it.hint||'ارْجِعْ إِلَى الْقَرِينَةِ… لَكَ فُرْصَةٌ أَخِيرَة 💪')+'</div>'}
+  }
+}
+
+/* ============ 🧩 البنّاء ============ */
+function rBuild(){S.i=0;drawBuild()}
+function drawBuild(){
+  var b=L.tech.build,it=b.items[S.i];if(!it)return finishStation();
+  var keys=it.keys||b.keys;T={answered:false};
+  view('<div class="card fade" style="margin-top:14px">'+
+    '<div class="kicker">🧩 الْبَنَّاء · '+num(S.i+1)+'/'+num(b.items.length)+'</div>'+prog(S.i,b.items.length)+
+    '<h2 class="title">'+b.title+'</h2>'+
+    '<div class="bword" id="bw">'+it.w.replace('□','<span class="hole" id="hole">؟</span>')+'</div>'+
+    (it.ctx?'<div class="bctx">'+it.ctx+'</div>':'<div style="height:12px"></div>')+
+    '<div class="keys">'+keys.map(function(k,i){return '<button class="key" data-key="'+i+'">'+k+'</button>'}).join('')+'</div>'+
+    '<div id="fb"></div>'+stationNav()+'</div>');
+  T.keys=keys;
+}
+function pickKey(i,btn){
+  if(T.answered)return;
+  var b=L.tech.build,it=b.items[S.i],k=T.keys[i];
+  if(k===it.ans){btn.classList.add('ok');T.answered=true;var h=$('#hole');h.textContent=k;h.classList.add('ok');
+    var g=win(S.tries===0);
+    $('#fb').innerHTML='<div class="why">✅ '+(it.full?'<b>'+it.full+'</b> — ':'')+(it.why||'')+' <b>+'+num(g)+' 🪙</b></div>'+
+      '<button class="btn-3d btn-accent" data-bnext="1">التَّالِي ▶</button>';
+  }else{btn.classList.add('bad','shake');btn.disabled=true;S.tries++;
+    if(S.tries>=2){lose();T.answered=true;var h2=$('#hole');h2.textContent=it.ans;h2.classList.add('ok');
+      $('#fb').innerHTML='<div class="why no">الصَّوَابُ: <b>'+(it.full||it.ans)+'</b><br>'+(it.why||'')+'</div>'+
+        '<button class="btn-3d btn-accent" data-bnext="1">التَّالِي ▶</button>';
+    }else{S.streak=0;setHud();$('#fb').innerHTML='<div class="nudge">'+(it.hint||'طَبِّقِ الْقَرِينَةَ خُطْوَةً خُطْوَة 🗝️')+'</div>'}
+  }
+}
+
+/* ============ 🩺 المصحّح ============ */
+function rFix(){
+  var f=L.tech.fix;T={found:0,total:f.tokens.filter(function(x){return x[1]}).length,taps:0};
+  view('<div class="card fade" style="margin-top:14px">'+
+    '<div class="kicker">🩺 الْمُصَحِّح</div><h2 class="title">'+f.title+'</h2>'+
+    '<div class="sub">فِي الْفِقْرَةِ <b style="color:var(--accent)">'+num(T.total)+'</b> أَخْطَاء. انْقُرْ عَلَى الْكَلِمَةِ الْخَاطِئَةِ لِتُصَحِّحَهَا.</div>'+
+    '<div class="hunt" id="txt">'+f.tokens.map(function(x,i){return '<span class="w" data-wi="'+i+'">'+x[0]+'</span>'}).join(' ')+'</div>'+
+    '<div class="count">وَجَدْتَ: <b id="fc">٠</b> / '+num(T.total)+'</div><div id="fb"></div>'+
+    '<div class="row2 noprint"><button class="btn-3d btn-ghost" data-fixgive="1">🏳️ أَظْهِرِ الْبَاقِي</button>'+
+    '<button class="btn-3d btn-ghost" data-map="1">🗺️ الْخَرِيطَة</button></div>'+stationNav()+'</div>');
+}
+function tapFix(i,el){
+  var f=L.tech.fix,x=f.tokens[i];if(el.classList.contains('hit')||el.classList.contains('miss'))return;
+  if(x[1]){el.classList.add('hit');el.textContent=x[2];T.found++;S.tok+=8;setHud();$('#fc').textContent=num(T.found);
+    $('#fb').innerHTML=x[3]?'<div class="why">✅ <b>'+x[2]+'</b> — '+x[3]+'</div>':'';
+    if(T.found>=T.total){S.streak++;if(S.streak>S.best)S.best=S.streak;rec(T.taps<=1?1:.75);setHud();
+      setTimeout(function(){toast('تَصْحِيحٌ كَامِل! 🩺',true,finishStation)},x[3]?1600:300)}
+  }else{T.taps++;el.classList.add('shake');setTimeout(function(){el.classList.remove('shake')},400);
+    $('#fb').innerHTML='<div class="nudge">«'+x[0]+'» صَحِيحَةٌ هُنَا — دَقِّقْ أَكْثَر 🔍</div>'}
+}
+function giveFix(){
+  var f=L.tech.fix;
+  [].forEach.call(document.querySelectorAll('[data-wi]'),function(el){var x=f.tokens[+el.dataset.wi];
+    if(x[1]&&!el.classList.contains('hit')){el.classList.add('miss');el.textContent=x[2]}});
+  rec(T.total?T.found/T.total:0);S.streak=0;setHud();
+  $('#fb').innerHTML='<div class="why no">الْمُصَحَّحُ بِالْأَصْفَر. وَجَدْتَ '+num(T.found)+' مِنْ '+num(T.total)+'.</div>'+
+    '<button class="btn-3d btn-accent" data-fin="1">أَنْهَيْتُ ✓</button>';
+}
+
+/* ============ 👁️ الإملاء المنظور ============ */
+function rDict(){
+  var d=L.tech.dict;T={phase:'look',left:d.sec||10,peeks:0};
+  view('<div class="card fade" style="margin-top:14px">'+
+    '<div class="kicker">👁️ الْإِمْلَاءُ الْمَنْظُور</div><h2 class="title">انْظُرْ… أَخْفِ… اكْتُبْ… قَارِنْ</h2>'+
+    '<div class="sub">'+(d.src?'مِنْ نَصِّ الدَّرْس: '+d.src+'<br>':'')+'تَأَمَّلِ الْجُمْلَةَ، وَرَكِّزْ عَلَى: <b style="color:var(--accent)">'+d.focus+'</b></div>'+
+    '<div class="dsent" id="ds">'+d.s+'</div><div class="ring" id="rg">👀 '+num(T.left)+'</div>'+
+    '<div id="dz"></div>'+stationNav()+'</div>');
+  S.timer=setInterval(function(){T.left--;var r=$('#rg');if(r)r.textContent='👀 '+num(T.left);if(T.left<=0){stopTimer();hideDict()}},1000);
+}
+function hideDict(){
+  T.phase='write';var ds=$('#ds');ds.classList.add('hidden');$('#rg').textContent='✍️ الْآنَ اكْتُبْهَا مِنْ ذَاكِرَتِك';
+  $('#dz').innerHTML='<textarea id="dt" placeholder="اكْتُبِ الْجُمْلَةَ هُنَا (التَّشْكِيلُ غَيْرُ مَطْلُوب)…" autocomplete="off"></textarea>'+
+    '<div class="row2"><button class="btn-3d btn-ghost" data-peek="1">👀 نَظْرَةٌ أُخْرَى</button>'+
+    '<button class="btn-3d btn-accent" data-dcheck="1">قَارِنْ ✓</button></div>'+
+    '<div style="margin-top:10px"><button class="btn-3d btn-ghost" data-dpaper="1">📒 كَتَبْتُهَا فِي الدَّفْتَر — أَظْهِرْهَا لِأُقَارِن</button></div><div id="dr"></div>';
+  setTimeout(function(){var t=$('#dt');if(t)t.focus()},60);
+}
+function lcs(a,b){var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++){d.push(new Array(n+1).fill(0))}
+  for(i=m-1;i>=0;i--)for(j=n-1;j>=0;j--)d[i][j]=a[i]===b[j]?d[i+1][j+1]+1:Math.max(d[i+1][j],d[i][j+1]);
+  var out=[];i=0;j=0;while(i<m&&j<n){if(a[i]===b[j]){out.push([i,j]);i++;j++}else if(d[i+1][j]>=d[i][j+1])i++;else j++}return out}
+function checkDict(){
+  var d=L.tech.dict,v=($('#dt')||{}).value||'';
+  var clean=function(s){return bare(s).replace(/[«»"'،,.؛;:؟?!…—\-()]/g,' ')};
+  var exp=words(clean(d.s)),got=words(clean(v));
+  if(got.length<2){$('#dr').innerHTML='<div class="nudge">اكْتُبِ الْجُمْلَةَ أَوَّلًا ✍️</div>';return}
+  var pairs=lcs(exp,got),okE={};pairs.forEach(function(p){okE[p[0]]=1});
+  var sc=pairs.length/exp.length;sc=Math.max(0,sc-T.peeks*.1);rec(sc);
+  if(sc>=.9){S.streak++;if(S.streak>S.best)S.best=S.streak}else S.streak=0;S.tok+=Math.round(sc*20);setHud();
+  var origW=words(d.s);
+  $('#ds').classList.remove('hidden');
+  $('#dr').innerHTML='<div class="diff">'+exp.map(function(w,i){return okE[i]?'<span class="good">'+(origW[i]||w)+'</span>':'<span class="gone">'+(origW[i]||w)+'</span>'}).join(' ')+'</div>'+
+    '<div class="why'+(sc>=.9?'':' no')+'">'+(sc>=.99?'💯 إِمْلَاءٌ كَامِل!':'صَحِيحٌ '+num(pairs.length)+' مِنْ '+num(exp.length)+' كَلِمَة. الْمُعَلَّمُ بِالْأَصْفَرِ كَتَبْتَهُ بِشَكْلٍ مُخْتَلِفٍ أَوْ نَسِيتَه.')+'</div>'+
+    '<button class="btn-3d btn-accent" data-fin="1">أَنْهَيْتُ ✓</button>';
+  var bt=$('[data-dcheck]');if(bt)bt.disabled=true;
+}
+
+/* ============ 📖 النموذج ============ */
+function rModel(){
+  var m=L.create.model;
+  view('<div class="card fade" style="margin-top:14px">'+
+    '<div class="kicker">📖 النَّمُوذَج — '+L.create.genre+'</div>'+
+    '<div class="sub">'+m.intro+'</div>'+
+    '<div class="model" id="md"><h4>'+m.title+'</h4>'+
+    m.parts.map(function(p){return '<div class="mpart" style="--pc:'+p.c+'22;--pl:'+p.c+'"><span class="mlab">'+p.lab+'</span>'+H(p)+'</div>'}).join('')+
+    '<div class="authored">✳️ نَمُوذَجٌ مِنْ إِعْدَادِ مِداد لِلتَّدْرِيب</div></div>'+
+    '<div style="margin-top:14px"><button class="btn-3d btn-ghost" data-light="1">💡 أَضِئْ أَجْزَاءَ النَّصّ</button></div>'+
+    '<div class="tips">'+m.tips.map(function(t){return '<div class="tip">'+t+'</div>'}).join('')+'</div>'+
+    '<div style="margin-top:18px"><button class="btn-3d btn-accent" data-fin="1">قَرَأْتُ النَّمُوذَجَ ✓</button></div>'+stationNav()+'</div>');
+  rec(1);
+}
+
+/* ============ 🦴 التشريح (ترتيب) ============ */
+function rAnatomy(){
+  var m=L.create.model;T={order:shuffle(m.parts.map(function(p,i){return i})),next:0,miss:0};
+  drawAnatomy();
+}
+function drawAnatomy(){
+  var m=L.create.model;
+  view('<div class="card fade" style="margin-top:14px">'+
+    '<div class="kicker">🦴 تَشْرِيحُ النَّمُوذَج</div><h2 class="title">رَتِّبْ أَجْزَاءَ النَّصِّ</h2>'+
+    '<div class="sub">'+L.create.anatomyHint+'</div>'+
+    '<div class="ordbox">'+(T.next?m.parts.slice(0,T.next).map(function(p){return '<div class="placed"><b>'+p.lab+'</b>'+H(p)+'</div>'}).join(''):
+      '<div style="text-align:center;color:#94a3b8;font-weight:800;padding:8px">انْقُرْ عَلَى الْجُزْءِ الْأَوَّلِ ⬇️</div>')+'</div>'+
+    T.order.filter(function(i){return i>=T.next}).map(function(i){return '<button class="ordpick" data-ord="'+i+'">'+H(m.parts[i])+'</button>'}).join('')+
+    '<div id="fb"></div>'+stationNav()+'</div>');
+}
+function pickOrd(i,btn){
+  var m=L.create.model;
+  if(i===T.next){T.next++;S.tok+=4;setHud();
+    if(T.next>=m.parts.length){rec(T.miss<=1?1:T.miss<=3?.75:.5);S.streak++;setHud();drawAnatomy();
+      $('#fb').innerHTML='<div class="why">✅ هَذَا هُوَ بِنَاءُ '+L.create.genre+': '+m.parts.map(function(p){return '<b>'+p.lab+'</b>'}).join(' ← ')+'</div>'+
+        '<button class="btn-3d btn-accent" data-fin="1">أَنْهَيْتُ ✓</button>';return}
+    drawAnatomy();
+  }else{T.miss++;btn.classList.add('shake');setTimeout(function(){btn.classList.remove('shake')},400);
+    $('#fb').innerHTML='<div class="nudge">لَيْسَ هَذَا مَوْضِعَهُ الْآنَ… مَا الَّذِي يَأْتِي بَعْدُ مَنْطِقِيًّا؟ 🤔</div>'}
+}
+
+/* ============ 🖋️ اكتب نصّك ============ */
+function rCompose(){
+  var c=L.create.compose;
+  view('<div class="card fade" style="margin-top:14px">'+
+    '<div class="kicker">🖋️ اكْتُبْ نَصَّك — '+L.create.genre+'</div><h2 class="title">'+c.title+'</h2>'+
+    '<div class="sub">'+c.task+'</div>'+
+    (c.source?'<details class="tip" style="margin-bottom:12px"><summary style="cursor:pointer;font-weight:800">📄 '+c.source.title+'</summary><div style="margin-top:8px">'+c.source.text+'</div></details>':'')+
+    c.parts.map(function(p,i){return '<div class="cpart"><div class="cl">'+num(i+1)+'. '+p.lab+'</div><div class="cg">'+p.guide+'</div>'+
+      '<textarea id="cp'+i+'" placeholder="'+esc(p.ph)+'"></textarea></div>'}).join('')+
+    '<div class="wc"><span>عَدَدُ الْكَلِمَات: <b id="cwc">٠</b></span><span>'+(c.max?'بَيْنَ '+num(c.min)+' وَ'+num(c.max):'الْمَطْلُوب: '+num(c.min)+' فَأَكْثَر')+'</span></div>'+
+    '<button class="btn-3d btn-accent" data-ccheck="1">🔎 دَقِّقْ نَصِّي</button>'+
+    '<div id="cr"></div>'+stationNav()+'</div>');
+}
+function composeText(){var c=L.create.compose;return c.parts.map(function(p,i){return (($('#cp'+i)||{}).value||'').trim()})}
+function countW(){var t=composeText().join(' ');var e=$('#cwc');if(e)e.textContent=num(words(t).length)}
+function checkCompose(){
+  var c=L.create.compose,parts=composeText(),all=parts.join(' '),wc=words(all).length,b=bare(all);
+  var empty=parts.filter(function(p){return !p}).length;
+  if(wc<Math.min(10,c.min)){$('#cr').innerHTML='<div class="nudge">اكْتُبْ نَصَّكَ أَوَّلًا ✍️</div>';return}
+  var auto=c.auto.map(function(a){var pass;
+    if(a.type==='min')pass=wc>=c.min;
+    else if(a.type==='max')pass=wc<=c.max;
+    else if(a.type==='parts')pass=empty===0;
+    else if(a.type==='copy'){pass=!copied(all,c.source?bare(c.source.text):'')}
+    else{var m=b.match(new RegExp(a.re,'g'));var n=m?m.length:0;
+      if(a.distinct&&m){var u={};m.forEach(function(x){u[x]=1});n=Object.keys(u).length}
+      pass=n>=(a.n||1);if(a.neg)pass=!pass}
+    return {t:a.t,pass:pass}});
+  var passN=auto.filter(function(a){return a.pass}).length;
+  var hl=highlight(parts.filter(Boolean).join('\n'));
+  T={auto:auto,passN:passN};
+  $('#cr').innerHTML='<div class="checks" style="margin-top:16px"><div style="font-weight:800;margin-bottom:6px">🤖 الْمُدَقِّقُ الْآلِيّ ('+num(passN)+'/'+num(auto.length)+')</div>'+
+    auto.map(function(a){return '<div class="ck auto '+(a.pass?'pass':'fail')+'"><i></i><span>'+a.t+'</span></div>'}).join('')+'</div>'+
+    '<div class="checks" style="margin-top:12px"><div style="font-weight:800;margin-bottom:6px">🙋 تَحَقَّقْ بِنَفْسِكَ ثُمَّ ضَعْ عَلَامَة</div>'+
+    c.self.map(function(s,i){return '<label class="ck"><input type="checkbox" class="sck" data-sc="'+i+'"><span>'+s+'</span></label>'}).join('')+'</div>'+
+    '<div class="checks" style="margin-top:12px"><div style="font-weight:800">🔤 مِرْآةُ الْقَاعِدَة: '+L.tech.name+'</div>'+
+    '<div class="nx" style="font-weight:600;color:#64748b;line-height:2">'+c.ruleTip+'</div>'+
+    '<div class="hl">'+hl.html+'</div>'+
+    (hl.errs?'<div class="nudge">🟥 فِي نَصِّكَ '+num(hl.errs)+' كَلِمَةً تَحْتَاجُ مُرَاجَعَةً (بِالْأَحْمَر)</div>':'')+'</div>'+
+    '<div class="row2"><button class="btn-3d btn-ghost" data-ccheck="1">🔄 أَعِدِ التَّدْقِيق</button>'+
+    '<button class="btn-3d btn-accent" data-cout="1">📜 أَخْرِجْ نَصِّي</button></div><div id="co"></div>';
+}
+function copied(txt,src){if(!src)return false;var a=words(bare(txt)),s=' '+words(src).join(' ')+' ';
+  for(var i=0;i+5<=a.length;i++){if(s.indexOf(' '+a.slice(i,i+5).join(' ')+' ')>=0)return true}return false}
+function highlight(t){
+  var c=L.create.compose,errs=0;
+  var html=esc(t).split('\n').map(function(line){return line.split(/(\s+)/).map(function(tok){
+    if(/^\s+$/.test(tok)||!tok)return tok;
+    var w=bare(tok).replace(/[«»"'،,.؛;:؟?!…—\-()]/g,'');
+    for(var k=0;k<(c.flag||[]).length;k++){if(new RegExp(c.flag[k]).test(w)){errs++;return '<mark class="err" title="رَاجِعْهَا">'+tok+'</mark>'}}
+    if(c.mark&&new RegExp(c.mark).test(w))return '<mark>'+tok+'</mark>';
+    return tok}).join('')}).join('<br>');
+  return {html:html,errs:errs}}
+function outCompose(){
+  var c=L.create.compose,parts=composeText(),all=parts.join(' '),wc=words(all).length;
+  var selfN=document.querySelectorAll('.sck:checked').length;
+  var sc=((T.passN||0)/c.auto.length)*.6+(selfN/c.self.length)*.4;rec(sc);S.tok+=Math.round(sc*40);S.streak++;setHud();
+  $('#co').innerHTML='<div class="doc fade" id="docout"><h4>'+c.docTitle+'</h4>'+esc(parts.filter(Boolean).join('\n\n'))+'</div>'+
+    '<div class="row2 noprint"><button class="btn-3d btn-ghost" data-copy="1">📋 انْسَخِ النَّصّ</button>'+
+    '<button class="btn-3d btn-ghost" data-print="1">🖨️ اطْبَعْ</button></div>'+
+    '<div class="noprint" style="margin-top:10px"><button class="btn-3d btn-accent" data-fin="1">أَنْهَيْتُ ✓</button></div>';
+  setTimeout(function(){var d=$('#docout');if(d)d.scrollIntoView({behavior:'smooth',block:'start'})},60);
+}
+
+/* ============ 🏆 التقرير ============ */
+function report(){
+  stopTimer();cur=null;setHud();
+  var sk=[{k:'tech',n:'الْمُخْتَبَرُ الْإِمْلَائِيّ — '+L.tech.name,i:'🔤',c:'#0891b2'},{k:'create',n:'وَرْشَةُ الْإِبْدَاع — '+L.create.genre,i:'🖋️',c:'#d97706'}];
+  var vals=sk.map(function(s){return pct(S.scores[s.k])});
+  var ov=Math.round((vals[0]+vals[1])/2);
+  var bd=ov>=85?['🏆','كَاتِبٌ بَدِيع','#f59e0b']:ov>=70?['🥈','كَاتِبٌ مُتَمَكِّن','#0ea5e9']:ov>=50?['🥉','فِي الطَّرِيقِ الصَّحِيح','#5624d0']:['🌱','بِدَايَةٌ جَمِيلَة','#64748b'];
+  view('<div class="card fade" style="margin-top:14px;text-align:center">'+
+    '<div style="font-size:3.4rem">'+bd[0]+'</div><div class="kicker">مِعْيَارُ مِداد — كِتَابَةُ '+L.title+'</div>'+
+    '<h2 class="title" style="color:'+bd[2]+'">'+bd[1]+'</h2>'+
+    '<div style="font-size:2.9rem;font-weight:800;color:var(--accent)">'+num(ov)+'<span style="font-size:1.2rem">%</span></div>'+
+    '<div class="sub">🪙 '+num(S.tok)+' · 🔥 '+num(S.best)+'</div>'+
+    '<div style="text-align:right;margin:18px 0">'+sk.map(function(s,i){return '<div style="margin-bottom:13px"><div style="display:flex;justify-content:space-between;font-weight:800;margin-bottom:4px;gap:8px">'+
+      '<span>'+s.i+' '+s.n+'</span><span style="color:'+s.c+'">'+num(vals[i])+'%</span></div><div class="bar-m"><i style="width:'+vals[i]+'%;background:'+s.c+'"></i></div></div>'}).join('')+'</div>'+
+    '<button class="btn-3d btn-accent" data-hub="1">🏠 إِلَى الْوَحْدَة</button>'+
+    '<div style="margin-top:10px"><button class="btn-3d btn-ghost" data-map="1">🗺️ الْخَرِيطَة</button></div></div>');
+}
+
+/* ============ الأحداث ============ */
+document.addEventListener('input',function(e){if(e.target.id&&e.target.id.indexOf('cp')===0)countW()});
+document.addEventListener('click',function(e){
+  var t=e.target;
+  if(t.closest('[data-hub]')){location.href='index.html';return}
+  if(t.closest('[data-read]')){location.href=L.readHref+(L.readHref.indexOf('?')>-1?'&':'?')+'h='+S.hero;return}
+  if(t.closest('[data-map]')){map();return}
+  if(t.closest('[data-report]')){report();return}
+  var sc=t.closest('[data-st]');if(sc){stIntro(sc.dataset.st);return}
+  var sb=t.closest('[data-start]');if(sb){runStation(sb.dataset.start);return}
+  var gt=t.closest('[data-goto]');if(gt){runStation(gt.dataset.goto);return}
+  if(t.closest('[data-fin]')){finishStation();return}
+  var bn=t.closest('[data-bin]');if(bn&&T&&T.cfg){pickBin(bn.dataset.bin,bn);return}
+  if(t.closest('[data-snext]')){T.lock=false;T.i++;drawSort();return}
+  if(t.closest('[data-again]')){runStation(cur.id);return}
+  var qo=t.closest('[data-qo]');if(qo){pickQuiz(+qo.dataset.qo,qo);return}
+  if(t.closest('[data-qnext]')){S.i++;S.tries=0;drawQuiz();return}
+  var ky=t.closest('[data-key]');if(ky){pickKey(+ky.dataset.key,ky);return}
+  if(t.closest('[data-bnext]')){S.i++;S.tries=0;drawBuild();return}
+  var wi=t.closest('[data-wi]');if(wi){tapFix(+wi.dataset.wi,wi);return}
+  if(t.closest('[data-fixgive]')){giveFix();return}
+  if(t.closest('[data-peek]')){T.peeks++;var ds=$('#ds');ds.classList.remove('hidden');setTimeout(function(){ds.classList.add('hidden')},2500);return}
+  if(t.closest('[data-dcheck]')){checkDict();return}
+  if(t.closest('[data-dpaper]')){$('#ds').classList.remove('hidden');rec(.75);
+    $('#dr').innerHTML='<div class="why">قَارِنْ مَا فِي دَفْتَرِكَ بِالْجُمْلَةِ أَعْلَاهُ، وَضَعْ دَائِرَةً عَلَى كُلِّ اخْتِلَاف 🔍</div><button class="btn-3d btn-accent" data-fin="1">أَنْهَيْتُ ✓</button>';return}
+  if(t.closest('[data-light]')){$('#md').classList.toggle('show');return}
+  var od=t.closest('[data-ord]');if(od){pickOrd(+od.dataset.ord,od);return}
+  if(t.closest('[data-ccheck]')){checkCompose();return}
+  if(t.closest('[data-cout]')){outCompose();return}
+  if(t.closest('[data-copy]')){var txt=composeText().filter(Boolean).join('\n\n');
+    try{navigator.clipboard.writeText(txt).then(function(){toast('نُسِخَ النَّصّ 📋',true)},function(){toast('لَمْ يُنْسَخْ — انْسَخْهُ يَدَوِيًّا',false)})}catch(er){toast('لَمْ يُنْسَخْ — انْسَخْهُ يَدَوِيًّا',false)}return}
+  if(t.closest('[data-print]')){window.print();return}
+});
+
+S.hero=(new URLSearchParams(location.search).get('h')==='girl')?'girl':'boy';
+theme();
+var sid=(new URLSearchParams(location.search).get('s')||'');
+for(var q=0;q<WLESSONS.length;q++){if(WLESSONS[q].id===sid){L=WLESSONS[q];break}}
+if(!L)L=WLESSONS[0];
+document.title='مِداد — كِتَابَةُ '+bare(L.title);
+map();
+})();
+</script>
+</body>
+</html>
