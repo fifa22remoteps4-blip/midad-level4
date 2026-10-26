@@ -34,6 +34,11 @@
   @keyframes slideUp{ from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
   .lesson-card{ transition:transform .28s cubic-bezier(.175,.885,.32,1.275), box-shadow .28s; }
+  .sess-lab{font-size:11px;font-weight:900;color:#94a3b8;margin-top:18px}
+  .sess{display:block;border-radius:1rem;padding:9px 12px;margin-top:10px;text-align:center;text-decoration:none}
+  .sess b{display:block;font-size:1.02rem}.sess span{display:block;font-size:.78rem;font-weight:800;opacity:.85;margin-top:2px}
+  .sess-c{background:#fef3c7;color:#b45309;border-bottom:5px solid #fcd34d}
+  .sess-i{background:#ffe4e6;color:#be123c;border-bottom:5px solid #fda4af}
   .lesson-card:hover{ transform:translateY(-10px); box-shadow:0 35px 60px -20px rgba(86,36,208,.32); }
   .cover{ width:100%; height:180px; object-fit:cover; object-position:center 30%; display:block; }
 
@@ -90,7 +95,7 @@
   <div id="lessons2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
 
   <p class="text-center text-xs font-bold text-slate-400 mt-12">
-    كُلُّ دَرْسٍ يَمُرُّ بِمَحَطَّاتٍ لِلْفَهْمِ وَالنَّبْرَةِ وَالدِّقَّةِ وَالطَّلَاقَةِ وَالْكِتَابَة.
+    كُلُّ دَرْسٍ ثَلَاثُ حِصَص: قِرَاءَةٌ (التِّقْنِيَّة، الْفَهْم، الرَّبْطُ بِالْوَاقِع، التَّذَوُّق) · كِتَابَةٌ إِبْدَاعِيَّة · إِمْلَاء.
   </p>
 </div>
 
@@ -104,39 +109,39 @@
     { n:1, title:'عِشْقُ الْقِرَاءَةِ', emoji:'📚',
       author:'ذِكْرَيَاتُ عَلِيّ الطَّنْطَاوِيّ',
       value:'الشَّغَفُ بِالْعِلْمِ رَغْمَ الْفَقْر',
-      href:'lesson1.html', w:'writing.html?s=qiraa', color:'#5624d0', btn:'btn-purple',
+      href:'lesson2.html?s=qiraa', c:'writing.html?s=c-qiraa', cg:'الْمُذَكِّرَات', i:'writing.html?s=imla1', ig:'الْمَدُّ وَالْحَرَكَةُ الْقَصِيرَة', color:'#5624d0', btn:'btn-purple',
       cover:'gradient:#5624d0,#8b5cf6', ic:'📖' },
     { n:2, title:'بَيْنَ السَّابِعَةِ وَالْخَامِسَة', emoji:'🌅',
       author:'رَقَائِقُ الْقُرْآن — إِبْرَاهِيم السَّكْرَان',
       value:'تَرْتِيبُ الْأَوْلَوِيَّاتِ وَتَقْدِيمُ الْأَهَمّ',
-      href:'lesson2.html?s=dawn', w:'writing.html?s=dawn', color:'#0f8194', btn:'btn-teal',
+      href:'lesson2.html?s=dawn', c:'writing.html?s=c-dawn', cg:'الْمُقَارَنَة', i:'writing.html?s=imla2', ig:'التَّنْوِينُ وَالنُّون', color:'#0f8194', btn:'btn-teal',
       cover:'gradient:#0f8194,#38bdf8', ic:'🌅' },
     { n:3, title:'الْحَمَامَةُ الْمُطَوَّقَة', emoji:'🕊️',
       author:'كَلِيلَةُ وَدِمْنَة — ابْنُ الْمُقَفَّع',
       value:'التَّعَاوُنُ وَالْإِيثَار',
-      href:'lesson2.html?s=hamama', w:'writing.html?s=hamama', color:'#b45309', btn:'btn-teal',
+      href:'lesson2.html?s=hamama', c:'writing.html?s=c-hamama', cg:'تَلْخِيصُ الْقِصَّة', i:'writing.html?s=imla3', ig:'رَسْمُ تَنْوِينِ النَّصْب', color:'#b45309', btn:'btn-teal',
       cover:'gradient:#92400e,#f59e0b', ic:'🕊️' },
     { n:4, title:'دِمَشْقُ وَأَوْقَافُهَا', emoji:'🏛️',
       author:'رِحْلَةُ ابْنِ بَطُّوطَة',
       value:'جَبْرُ الْخَوَاطِرِ وَالتَّكَافُل',
-      href:'lesson2.html?s=dimashq', w:'writing.html?s=dimashq', color:'#047857', btn:'btn-teal',
+      href:'lesson2.html?s=dimashq', c:'writing.html?s=c-dimashq', cg:'وَصْفُ مَكَانٍ وَأَهْلِه', i:'writing.html?s=imla4', ig:'التَّاءُ الْمَرْبُوطَةُ وَالْمَفْتُوحَة', color:'#047857', btn:'btn-teal',
       cover:'gradient:#065f46,#34d399', ic:'🏛️' }
   ];
   var LESSONS2=[
     { n:1, title:'حَدِيثُ السَّفِينَة', emoji:'🚢',
       author:'صَحِيحُ الْبُخَارِيّ — حَدِيثُ النُّعْمَانِ بْنِ بَشِير',
       value:'الْأَمْرُ بِالْمَعْرُوفِ وَالنَّهْيُ عَنِ الْمُنْكَر',
-      href:'lesson2.html?s=ship', w:'writing.html?s=ship', color:'#0369a1', btn:'btn-teal',
+      href:'lesson2.html?s=ship', c:'writing.html?s=c-ship', cg:'فِقْرَةُ الرَّأْي', i:'writing.html?s=imla5', ig:'(ال) الشَّمْسِيَّةُ وَالْقَمَرِيَّة', color:'#0369a1', btn:'btn-teal',
       cover:'gradient:#0c4a6e,#0ea5e9', ic:'🚢' },
     { n:2, title:'حَدِيثُ النَّخْلَة', emoji:'🌴',
       author:'صَحِيحُ الْبُخَارِيّ — حَدِيثُ ابْنِ عُمَر',
       value:'الْمُسْلِمُ نَافِعٌ كَالنَّخْلَة',
-      href:'lesson2.html?s=nakhla', w:'writing.html?s=nakhla', color:'#15803d', btn:'btn-teal',
+      href:'lesson2.html?s=nakhla', c:'writing.html?s=c-nakhla', cg:'اللُّغْزُ الْوَصْفِيّ', i:'writing.html?s=imla6', ig:'لِلْ، بِالْ، كَالْ', color:'#15803d', btn:'btn-teal',
       cover:'gradient:#14532d,#84cc16', ic:'🌴' },
     { n:3, title:'أَبَرُّ الْبِرّ', emoji:'🤝',
       author:'صَحِيحُ مُسْلِم — حَدِيثُ ابْنِ عُمَر',
       value:'الْوَفَاءُ لِأَصْدِقَاءِ الْوَالِدَيْن',
-      href:'lesson2.html?s=wafa', w:'writing.html?s=wafa', color:'#7c3aed', btn:'btn-teal',
+      href:'lesson2.html?s=wafa', c:'writing.html?s=c-wafa', cg:'وَصْفُ شَخْصِيَّة', i:'writing.html?s=imla7', ig:'هَمْزَةُ الْقَطْعِ وَالْوَصْل', color:'#7c3aed', btn:'btn-teal',
       cover:'gradient:#4c1d95,#a78bfa', ic:'🤝' }
   ];
 
@@ -174,8 +179,10 @@
           '<p class="text-xs font-bold text-slate-400 font-content mb-4" style="line-height:1.9">'+l.author+'</p>'+
           '<div class="inline-block text-[11px] font-black px-3 py-1.5 rounded-full" '+
             'style="background:'+l.color+'18;color:'+l.color+'">'+l.value+'</div>'+
-          '<a href="'+q(l.href)+'" class="btn-3d '+l.btn+' rounded-2xl py-3 mt-5 text-center font-black text-lg block">📖 الْقِرَاءَة ▶</a>'+
-          (l.w?'<a href="'+q(l.w)+'" class="rounded-2xl py-3 mt-3 text-center font-black text-lg block" style="background:#fef3c7;color:#b45309;border-bottom:6px solid #fcd34d">✍️ الْكِتَابَة ▶</a>':'')+
+          '<div class="sess-lab">ثَلَاثُ حِصَصٍ · كُلٌّ مِنْهَا ٣٠ دَقِيقَة</div>'+
+          '<a href="'+q(l.href)+'" class="btn-3d '+l.btn+' rounded-2xl py-3 mt-2 text-center font-black text-lg block">📖 الْقِرَاءَة ▶</a>'+
+          (l.c?'<a href="'+q(l.c)+'" class="sess sess-c"><b>🖋️ الْكِتَابَةُ الْإِبْدَاعِيَّة</b><span>'+l.cg+'</span></a>':'')+
+          (l.i?'<a href="'+q(l.i)+'" class="sess sess-i"><b>🔤 الْإِمْلَاء</b><span>'+l.ig+'</span></a>':'')+
         '</div></div>';
     }).join('');
   }
