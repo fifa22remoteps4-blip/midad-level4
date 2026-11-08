@@ -34,6 +34,10 @@
   @keyframes slideUp{ from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
   .lesson-card{ transition:transform .28s cubic-bezier(.175,.885,.32,1.275), box-shadow .28s; }
+  .track-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 22px;border-radius:1.6rem;border:4px solid #e2e8f0;background:#fff;cursor:pointer;min-width:230px;font-family:inherit}
+  .track-btn b{font-size:1.15rem;font-weight:900;color:#334155}.track-btn span{font-size:.8rem;font-weight:800;color:#94a3b8}
+  .track-btn.on{border-color:#15803d;background:#f0fdf4;transform:scale(1.03)}
+  .track-btn[data-track="main"].on{border-color:#5624d0;background:#f3efff}
   .sess-lab{font-size:11px;font-weight:900;color:#94a3b8;margin-top:18px}
   .sess{display:block;border-radius:1rem;padding:9px 12px;margin-top:10px;text-align:center;text-decoration:none}
   .sess b{display:block;font-size:1.02rem}.sess span{display:block;font-size:.78rem;font-weight:800;opacity:.85;margin-top:2px}
@@ -70,6 +74,16 @@
     </div>
   </div>
 
+  <!-- ===== اختيار المسار ===== -->
+  <div class="card-royal p-6 mb-10 border-4 border-slate-100 slide-up-fade" style="animation-delay:.12s">
+    <p class="text-center font-black text-slate-500 mb-4 text-lg">اخْتَرْ مَسَارَك</p>
+    <div class="flex gap-4 justify-center flex-wrap">
+      <button data-track="main" class="track-btn"><b>📘 الْمَسَارُ الْأَسَاسِيّ</b><span>نُصُوصٌ أَطْوَلُ وَأَعْلَى لُغَةً</span></button>
+      <button data-track="muyassar" class="track-btn"><b>🌱 الْمَسَارُ الْمُيَسَّر</b><span>نُصُوصٌ أَصِيلَةٌ قَصِيرَةٌ سَهْلَةُ النُّطْق</span></button>
+    </div>
+  </div>
+
+  <div id="trackMain">
   <!-- ===== الوحدة الأولى ===== -->
   <div class="flex items-center gap-4 mb-7 slide-up-fade" style="animation-delay:.16s">
     <div class="w-20 h-20 rounded-[1.75rem] bg-purple-50 flex items-center justify-center text-4xl shrink-0">📚</div>
@@ -93,6 +107,20 @@
   </div>
 
   <div id="lessons2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+  </div>
+
+  <!-- ===== المسار الميسَّر ===== -->
+  <div id="trackMuy" style="display:none">
+  <div class="flex items-center gap-4 mb-7 slide-up-fade">
+    <div class="w-20 h-20 rounded-[1.75rem] bg-green-50 flex items-center justify-center text-4xl shrink-0">🌱</div>
+    <div>
+      <div class="text-xs font-black text-green-700 mb-1">الْمَسَارُ الْمُيَسَّر · الْوَحْدَةُ الْأُولَى</div>
+      <h2 class="text-3xl md:text-4xl font-black text-slate-800">حِكَايَاتٌ قَصِيرَة</h2>
+      <p class="text-slate-400 font-bold text-sm mt-1">نُصُوصٌ تُرَاثِيَّةٌ أَصِيلَة، قَصِيرَة، قَلِيلَةُ السَّوَاكِنِ وَالشَّدَّات، مَعَ تَلْوِينِ الْمَقَاطِع</p>
+    </div>
+  </div>
+  <div id="lessonsM" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+  </div>
 
   <p class="text-center text-xs font-bold text-slate-400 mt-12">
     كُلُّ دَرْسٍ ثَلَاثُ حِصَص: قِرَاءَةٌ (التِّقْنِيَّة، الْفَهْم، الرَّبْطُ بِالْوَاقِع، التَّذَوُّق) · كِتَابَةٌ إِبْدَاعِيَّة · إِمْلَاء.
@@ -127,6 +155,13 @@
       href:'lesson2.html?s=dimashq', c:'writing.html?s=c-dimashq', cg:'وَصْفُ مَكَانٍ وَأَهْلِه', i:'writing.html?s=imla4', ig:'التَّاءُ الْمَرْبُوطَةُ وَالْمَفْتُوحَة', color:'#047857', btn:'btn-teal',
       cover:'gradient:#065f46,#34d399', ic:'🏛️' }
   ];
+  var LESSONSM=[
+    { n:1, title:'بِنْتُ الْكَرِيم', emoji:'🥚',
+      author:'الْأَذْكِيَاءُ — ابْنُ الْجَوْزِيّ',
+      value:'الْكَرَمُ وَحُسْنُ الْجَوَاب',
+      href:'lesson2.html?s=m1', c:'writing.html?s=c-m1', cg:'الْحِوَارُ الْقَصِير', i:'writing.html?s=imla1', ig:'الْمَدُّ وَالْحَرَكَةُ الْقَصِيرَة', color:'#15803d', btn:'btn-teal',
+      cover:'gradient:#166534,#4ade80', ic:'🥚' }
+  ];
   var LESSONS2=[
     { n:1, title:'حَدِيثُ السَّفِينَة', emoji:'🚢',
       author:'صَحِيحُ الْبُخَارِيّ — حَدِيثُ النُّعْمَانِ بْنِ بَشِير',
@@ -148,6 +183,7 @@
   function readHero(){ try{ return localStorage.getItem('midad4-hero')||'boy'; }catch(e){ return 'boy'; } }
   function saveHero(v){ try{ localStorage.setItem('midad4-hero',v); }catch(e){} }
   var hero = readHero();
+  var track = (new URLSearchParams(location.search).get('track')) || (function(){try{return localStorage.getItem('midad4-track')}catch(e){return null}})() || 'main';
 
   function paintHero(){
     [].forEach.call(document.querySelectorAll('[data-hero]'), function(b){
@@ -162,6 +198,10 @@
   function render(){
     document.getElementById('lessons').innerHTML = cards(LESSONS);
     document.getElementById('lessons2').innerHTML = cards(LESSONS2);
+    document.getElementById('lessonsM').innerHTML = cards(LESSONSM);
+    document.getElementById('trackMain').style.display = track==='muyassar'?'none':'';
+    document.getElementById('trackMuy').style.display = track==='muyassar'?'':'none';
+    [].forEach.call(document.querySelectorAll('[data-track]'),function(b){b.classList.toggle('on',b.dataset.track===track)});
   }
   function cards(list){
     return list.map(function(l,i){
@@ -190,6 +230,8 @@
   document.addEventListener('click', function(e){
     var b=e.target.closest('[data-hero]');
     if(b){ hero=b.dataset.hero; saveHero(hero); paintHero(); }
+    var tb=e.target.closest('[data-track]');
+    if(tb){ track=tb.dataset.track; try{localStorage.setItem('midad4-track',track)}catch(er){} render(); }
   });
 
   paintHero();
